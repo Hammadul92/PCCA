@@ -1,9 +1,33 @@
 import './Events.module.css';
 import React from 'react';
-import Auxilary from '../../hoc/Auxilary/Auxilary'
+import Auxilary from '../../hoc/Auxilary/Auxilary';
+import axios from 'axios';
+
+//https://aladhan.com/play/Vancouver/Canada
+
 
 
 class Events extends React.Component{
+
+    componentDidMount(){
+		var d = new Date();
+		var n = d.getDate();
+		axios.get('http://api.aladhan.com/v1/calendarByCity', {
+			params: {
+			  city: 'Vancouver',
+			  country: 'Canada',
+			  month: d.getMonth(),
+			  year: d.getFullYear()
+
+
+			}
+		  })
+        .then(response=>{
+
+            console.log(response.data.data[n].timings);
+            //this.setState({ingredients: response.data});
+        }).catch(error=>{this.setState({error:true})});
+    }
 
 	render (){
 		return (
