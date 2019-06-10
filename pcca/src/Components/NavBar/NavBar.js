@@ -18,10 +18,10 @@ class NavBar extends React.Component{
 						<div id="navbar" className="collapse navbar-collapse">
 							<ul className="nav navbar-nav">
 								<li className="active"><a href="index.html">Home</a></li>
-								<li><a href="#about">Lifestyle</a></li>
-								<li><a href="#contact">Travel</a></li>
-								<li><a href="#contact">Fashion</a></li>
-								<li><a href="about.html">About Me</a></li>
+								<li><a href="#about">Events</a></li>
+								<li><a href="#contact">Donations</a></li>
+								<li><a href="#contact">Gallery</a></li>
+								<li><a href="about.html">About Us</a></li>
 								<li><a href="about.html">Contact</a></li>
 							</ul>
 
@@ -29,9 +29,7 @@ class NavBar extends React.Component{
 								<li><a href="#"><i className="fa fa-facebook"></i></a></li>
 								<li><a href="#"><i className="fa fa-twitter"></i></a></li>
 								<li><a href="#"><i className="fa fa-instagram"></i></a></li>
-								<li><a href="#"><i className="fa fa-google-plus"></i></a></li>
-								<li><a href="#"><i className="fa fa-dribbble"></i></a></li>
-								<li><a href="#"><i className="fa fa-reddit"></i></a></li>
+
 							</ul>
 
 						</div>

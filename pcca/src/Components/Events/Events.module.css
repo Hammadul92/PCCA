@@ -1,0 +1,109 @@
+.sidebar-title {
+	background-color: #2B2B2B;
+	color: #fff;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 800;
+	letter-spacing: 0.8px;
+	font-size: 14px;
+	padding: 15px 0;
+	margin: 0 0 25px;
+	font-family: "Raleway", Sans-serif;
+}
+.sidebar-widget {
+	margin-bottom: 40px;	
+}
+.sidebar-widget li {
+	font-size: 17px;
+	margin-bottom: 10px;
+}
+
+
+.widget-socials {
+	text-align: center;
+}
+.widget-socials a {
+	margin: 3px 8px;
+	padding: 5px;
+	font-size: 17px;
+	color: #3C3C3C;
+}
+.widget-about img {
+	width: 100%;
+}
+.widget-about h4 {
+	text-align: center;
+	margin: 20px 0 5px;
+}
+.widget-about .author-title {
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 20px;
+	color: #B5B5B5;
+	text-align: center;
+}
+.widget-about p {
+	margin-top: 10px;
+	font-size: 17px;
+	line-height: 24px;
+	color: #000000;
+}
+.widget-post {
+	display: table;
+	margin: 0 0 20px 0;
+	border-bottom: 1px solid;
+	border-color: #E4E4E4;
+	padding-bottom: 20px;
+	width: 100%;
+}
+.widget-post:last-child {
+	border-bottom: none;
+	padding-bottom: 0px;
+	margin: 0px;
+}
+.widget-post .post-image {
+	float: left;
+	width: 90px;
+	vertical-align: middle;
+	position: relative;
+	margin-right: 20px;
+}
+.widget-review .post-image {
+	width: 70px;
+	margin-right: 15px;
+}
+.widget-post .post-body {
+	overflow: hidden;
+}
+.widget-post h2 {
+	margin: 0;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+}
+.widget-post h2 a {
+	color: #4A4A4A;
+	-webkit-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	-o-transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
+}
+.widget-post h2 a:hover {
+	color: #969696;
+}
+.widget-post .post-meta {
+	margin-top: 5px;
+	font-weight: 400;
+	font-size: 11px;
+	color: #B1B1B1;
+	font-family: "Lora";
+	font-style: italic;
+}
+.widget-post .post-meta span {
+	margin-right: 8px;
+}
+.widget-post .post-meta span a {
+	color: #B1B1B1;
+}
+
+
