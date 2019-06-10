@@ -9,9 +9,9 @@ class NavBar extends React.Component{
 					<div className="container">
 						<div className="navbar-header">
 							<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-							<span class="sr-only">Toggle navigation</span>
+							<span className="sr-only">Toggle navigation</span>
 							<span className="icon-bar"></span>
-							<span class="icon-bar"></span>
+							<span className="icon-bar"></span>
 							<span className="icon-bar"></span>
 							</button>
 						</div>
@@ -25,7 +25,7 @@ class NavBar extends React.Component{
 								<li><a href="about.html">Contact</a></li>
 							</ul>
 
-							<ul class="nav navbar-nav navbar-right">
+							<ul className="nav navbar-nav navbar-right">
 								<li><a href="#"><i className="fa fa-facebook"></i></a></li>
 								<li><a href="#"><i className="fa fa-twitter"></i></a></li>
 								<li><a href="#"><i className="fa fa-instagram"></i></a></li>
