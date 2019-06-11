@@ -106,4 +106,8 @@
 	color: #B1B1B1;
 }
 
+table, th, td {
+	text-align: center;
+  }
+
 

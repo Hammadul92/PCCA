@@ -9,7 +9,7 @@ class News extends React.Component{
 				<Auxilary>
 					<article className="blog-post">
 						<div className="blog-post-image">
-							<a href="post.html"><img className="img-responsive" src="https://markallenassets.blob.core.windows.net/communitycare/2018/10/word-culture-spelt-out-on-map-600.jpg" alt="" /></a>
+							<a href="post.html"><img className="img-responsive" src="https://d1ouwe0zp93mt3.cloudfront.net/canada-%26-pakistan2-5248378551297291402.jpg" alt="" /></a>
 						</div>
 						<div className="blog-post-body">
 							<h2><a href="post.html">Vintage-Inspired Finds for Your Home</a></h2>

@@ -2,10 +2,18 @@ import React from 'react';
 import Auxilary from '../hoc/Auxilary/Auxilary'
 import NavBar from './NavBar/NavBar';
 import Footer from './Footer/Footer';
-import Slider from './Slider/Slider';
 import News from './News/News';
 import Events from './Events/Events';
+import Gallery from './Gallery/Gallery';
+import NavEvents from './NavEvents/NavEvents';
+import Donations from './Donations/Donations';
+import Contact from './Contact/Contact';
+import AboutUs from './AboutUs/AboutUs';
+
+import Home from './Home';
+
 import './App.css';
+import {Route,Switch} from 'react-router-dom';
 //import unsplash from '../api/unsplash';
 //import ImageList from './imageList';
 
@@ -17,20 +25,20 @@ class App extends React.Component{
 
        	<Auxilary>
 	       	 <NavBar />
+		
+				<Switch>
+								
+					
+					<Route path='/events' exact component = {NavEvents}/>
+					<Route path='/donations' exact component = {Donations}/>
+					<Route path='/about' exact component = {AboutUs}/>
+					<Route path='/contact' exact component = {Contact}/>
+					<Route path='/gallery' exact component = {Gallery}/>
+					<Route path='/' exact component = {Home}/>
+	
 
-	       	 <div className="container">
-	       	    <Slider />
+				</Switch>	
 
-		       	 <section>
-				   <div className="row">
-					 <div className="col-md-8"><News /></div>
-					 <div className="col-md-4 sidebar-gutter">
-                         <Events />
-					 </div>
-				   </div>
-				 </section>
-
-			 </div>
 
 	         <Footer />
          </Auxilary>

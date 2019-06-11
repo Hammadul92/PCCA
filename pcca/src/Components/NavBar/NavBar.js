@@ -1,5 +1,10 @@
 import './NavBar.module.css';
 import React from 'react';
+import {NavLink} from 'react-router-dom';
+import Slider from '../Slider/Slider';
+import News from '../News/News';
+import Footer from '../Footer/Footer';
+
 
 class NavBar extends React.Component{
 
@@ -17,12 +22,14 @@ class NavBar extends React.Component{
 						</div>
 						<div id="navbar" className="collapse navbar-collapse">
 							<ul className="nav navbar-nav">
-								<li className="active"><a href="index.html">Home</a></li>
-								<li><a href="#about">Events</a></li>
-								<li><a href="#contact">Donations</a></li>
-								<li><a href="#contact">Gallery</a></li>
-								<li><a href="about.html">About Us</a></li>
-								<li><a href="about.html">Contact</a></li>
+							
+								<li ><NavLink exact  to="/"  activeStyle={{fontWeight: "bold", color: "White"}}>Home</NavLink></li>
+								<li><NavLink to="/events" activeStyle={{fontWeight: "bold", color: "White"}}>Events</NavLink></li>
+								<li><NavLink to="/donations" activeStyle={{fontWeight: "bold", color: "White"}}>Donations</NavLink></li>
+								<li><NavLink to="/gallery" activeStyle={{fontWeight: "bold", color: "White"}}>Gallery</NavLink></li>
+								<li><NavLink to="/about" activeStyle={{fontWeight: "bold", color: "White"}}>About Us</NavLink></li>
+								<li><NavLink to="/contact" activeStyle={{fontWeight: "bold", color: "White"}}>Contact</NavLink></li>
+
 							</ul>
 
 							<ul className="nav navbar-nav navbar-right">
@@ -31,6 +38,11 @@ class NavBar extends React.Component{
 								<li><a href="#"><i className="fa fa-instagram"></i></a></li>
 
 							</ul>
+
+						</div>
+
+						<div>
+							
 
 						</div>
 					</div>
