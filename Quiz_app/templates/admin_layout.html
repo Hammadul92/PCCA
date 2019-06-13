@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{tab}} | Admin</title>
+
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap-theme.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/froala_editor.pkgd.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/admin.css')}}">
+
+
+</head>
+<body>
+
+
+   <section style="min-height: 90px; overflow: hidden; background: #23282d;">
+     <div class="col-md-1 col-sm-2 col-xs-12 text-center" style="padding: 15px;"><a href="/"><img src="https://www.naturallysplendid.com/static/media/logo2x.png" style="width: 75px; display: inline;"></a></div>
+ 
+    <ul id="horizontal_nav" class="col-md-11 col-sm-10 col-xs-12">
+        <li><a href="/admin/dashboard"> <img src="https://www.naturallysplendid.com/static/media/dashboard.png" style="width:40px"> <br/> <span> Dashboard </span> </a></li>
+        <li><a href="/read_queries"> <img src="https://www.naturallysplendid.com/static/media/chat.png" style="width: 40px;"> <br/> <span>Customer Queries</span>  {% if read_queries >=1 %}<span class="badge">{{read_queries}}</span>{% endif %}</a></li>
+        <li><a href="/admin/sales"><img src="https://www.naturallysplendid.com/static/media/graph.png" style="width: 30px;"><br/> <span> Sales </span> </a></li>
+        <li><a href="/admin/accounts"><img src="https://www.naturallysplendid.com/static/media/money.png" style="width: 30px;"> <br/> <span> Accounts </span></a></li>
+        <li><a href="/logout"> <img src="https://www.naturallysplendid.com/static/media/logout.png" style="width:30px;"> <br/><span> Log Out </span></a></li>
+    </ul>
+   </section>
+   
+
+
+
+ 
+
+<div class="nav nav-pills nav-stacked col-md-1 col-sm-2 admin_navbar">
+  
+
+  {% if tab =='media' %}<li class ="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/media"><img src="https://www.naturallysplendid.com/static/media/photo-camera.png" style="width:20px;"> <span> Media </span> </a></li>
+
+  {% if tab =='users'%}<li class="active admin"> {% else %}<li class="admin"> {% endif %}<a href="/read_users"> <img src="https://www.naturallysplendid.com/static/media/networking.png" style="width:30px;"> <span>Users</span> {% if authentication_requests >=1 %}<span class="badge">{{authentication_requests}}</span>{% endif %}</a></li>
+
+  {% if tab == 'subscribers' %}<li class="active admin"> {% else %}<li class="admin"> {% endif %}<a href="/admin/subscribers"><img src="https://www.naturallysplendid.com/static/media/networking.png" style="width:30px;"> <span>Subscribers</span> <span class="badge">{{num_of_subscribers}}</span></a></li>
+  
+
+  {% if tab =="categories" %}<li class="active admin">{% else %}<li class="admin"> {% endif %}<a href="/admin/categories"><img src="https://www.naturallysplendid.com/static/media/list.png" style="width:20px;"> <span>Categories </span></a></li>
+
+  {% if tab =='product' %}<li class="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/product"><img src="https://www.naturallysplendid.com/static/media/box.png" style="width:20px;"> <span> Products</span> </a></li>
+
+  {% if tab =='coupons' %} <li class="active admin">{% else %}<li class="admin">{% endif %} <a href="/admin/coupons"><img src="https://www.naturallysplendid.com/static/media/coupon.png" style="width:20px;"> <span> Coupons </span></a></li>
+
+  {% if tab =='blog' %}<li class="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/blog"><img src="https://www.naturallysplendid.com/static/media/scholarship.png" style="width: 30px;"> <span>Blogs</span></a></li>
+
+  {% if tab =='status' %}<li class ="admin active"> {% else %} <li class ="admin"> {% endif %}<a href="/admin/status"><img src="https://www.naturallysplendid.com/static/media/clipboard.png" style="width: 20px;"> <span>Orders</span> {% if read_orders >=1 %}<span class="badge">{{read_orders}}</span>{% endif %} </a></li>
+
+
+  <li class="admin">
+</div>
+
+<div class="col-md-11 col-sm-10" style="height: 100vh; overflow: auto; padding: 0;">
+
+    {% with messages = get_flashed_messages(with_categories=true)%}
+      {% if messages %}
+        {% for category, message in messages %}
+           <div class="{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+     
+
+
+    {% block body %} {% endblock %}
+
+    {% include "admin_analytics.html" %}
+
+
+
+
+  {% if tab == 'update_biotech' %}
+      <form class="row" action="/update_biotech/{{update_biotech.biotech_ID}}" method="post">
+        <div class="col-md-4">
+          <input type="text" name="name" value="{{update_biotech.biotech_name}}" class="form-control form-group">
+        </div>
+        
+        <div class="col-md-4">
+          <div class="box-style3">
+              <div class="form-group">
+                    <div class="checkbox">
+                        {% if update_biotech.disable %}
+                            <input type="checkbox" id="disable_brand" name="disable" checked>
+                        {% else %}
+                            <input type="checkbox" id="disable_brand" name="disable">
+                        {% endif %}
+                            <label for="disable_brand"> &nbsp; <b> Disable {{update_biotech.biotech_name}} </b> </label>
+                    </div>
+              </div><!-- /input-group -->   
+          </div>
+        </div>  
+        <div class="col-md-4">
+          <div class="box-style3">
+             <b> Published:</b> {{update_biotech.date}} 
+             <hr/>
+             <button type="submit" class="btn btn-primary btn-sm"> Update <i class="fas fa-check-circle"></i></button>
+          </div>  
+        </div>
+
+        <div class="col-md-12 distance">          
+              <textarea id="froala-editor" name="description" class="form-control" required> {{update_biotech.biotech_desc}} </textarea>
+        </div>
+
+      </form>
+   {% endif %}
+
+   {% if tab == 'update_brand' %}
+      <form action="/update_brand/{{update_brand.brand_ID}}" method="post">
+        <div class="col-md-12">
+          <input type="text" name="name" value="{{update_brand.brand_name}}" class="form-control form-group">
+        </div>
+        <div class="col-md-12">
+          <input type="text" name="uri" value="{{update_brand.brand_uri}}" class="form-control form-group">
+        </div>
+        <div class="col-md-9">          
+              <textarea id="froala-editor" name="description" class="form-control" required> {{update_brand.brand_desc}} </textarea>
+        </div>
+        
+        <div class="col-md-3">
+          <div class="box-style3">
+              <div class="form-group">
+                    <div class="checkbox">
+                        {% if update_brand.disable %}
+                            <input type="checkbox" id="disable_brand" name="disable" checked>
+                        {% else %}
+                            <input type="checkbox" id="disable_brand" name="disable">
+                        {% endif %}
+                            <label for="disable_brand"> &nbsp; <b> Disable {{update_brand.brand_name}} </b> </label>
+                    </div>
+              </div><!-- /input-group -->  
+              
+          </div>  
+
+          <div class="box-style3">
+             <b> Published:</b> {{update_brand.date}} 
+             <hr/>
+             <button type="submit" class="btn btn-primary btn-sm"> Update <i class="fas fa-check-circle"></i></button>
+          </div>  
+        </div>
+
+      </form>
+   {% endif %}
+
+   {% if tab == 'update_about' %}
+      <form class="row" action="/update_about/{{update_about.about_ID}}" method="post">
+        <div class="col-md-12">
+          <input type="text" name="name" value="{{update_about.about_name}}" class="form-control form-group">
+        </div>
+        <div class="col-md-9">          
+              <textarea id="froala-editor" name="description" class="form-control" required> {{update_about.about_desc}} </textarea>
+        </div>
+        
+        <div class="col-md-3">
+          <div class="box-style3">
+              <div class="form-group">
+                    <div class="checkbox">
+                        {% if update_about.disable %}
+                            <input type="checkbox" id="disable_about" name="disable" checked>
+                        {% else %}
+                            <input type="checkbox" id="disable_about" name="disable">
+                        {% endif %}
+                            <label for="disable_about"> &nbsp; <b> Disable {{update_brand.brand_name}} </b> </label>
+                    </div>
+              </div><!-- /input-group -->  
+              <hr/>
+               <div class="form-group">
+                    <div class="checkbox">
+                        {% if update_about.main %}
+                            <input type="checkbox" id="main" name="main" checked>
+                        {% else %}
+                            <input type="checkbox" id="main" name="main">
+                        {% endif %}
+                            <label for="main"> &nbsp; <b> Main </b> </label>
+                    </div>
+              </div><!-- /input-group -->  
+          </div>  
+
+          <div class="box-style3">
+             <b> Published:</b> {{update_about.date}} 
+             <hr/>
+             <button type="submit" class="btn btn-primary btn-sm"> Update <i class="fas fa-check-circle"></i></button>
+          </div>  
+        </div>
+
+      </form>
+   {% endif %}
+
+
+   {% if tab == 'update_static' %}
+      <form action="/update_static/{{update_static.static_ID}}" method="post" >
+        <div class="col-md-12" style="padding: 15px;">
+          <div class="row">
+               <div class="col-md-6 form-group"><input type="text" name="name" value="{{update_static.static_name}}" class="form-control"></div>
+               <div class="col-md-6 form-group">
+                 <div class="box-style3">
+                   <b> Published:</b> {{update_static.date}} 
+                   <hr/>
+                   <button type="submit" class="btn btn-primary btn-sm"> Update <i class="fas fa-check-circle"></i></button>
+                 </div> 
+               </div>
+          </div>
+          <div>          
+              <textarea id="froala-editor" name="description" class="form-control" required> {{update_static.static_content}} </textarea>
+          </div>
+          
+        </div>   
+
+      </form>
+   {% endif %}
+
+
+
+
+   {% if tab =="media" %}
+
+
+   <div  class="row" id="media">
+
+      <div class="col-md-9">
+        <form action="/update_media/{{page}}" method="post">
+            <div class="box-style3">
+              <button type="submit" class="btn btn-danger btn-sm"> Delete <i class="fa fa-trash"></i> </button>
+            </div>
+            <ul>
+            {% for file in media.items %}           
+                <li onclick="side_view('/static/media/{{file.url}}');">
+                  <input type="checkbox" id="cb{{file.media_ID}}" name="cb{{file.media_ID}}" />
+                  <label for="cb{{file.media_ID}}"><img src="/static/media/{{file.url}}"/></label>
+                </li>               
+            {% endfor %}
+            </ul>
+
+            <div class="text-center">
+              {% if prev_url_media %} <a href="{{ prev_url_media }}" style="margin-right:5px;" class="btn paginate-btn"><i class="fa fa-arrow-left"></i></a> {% endif %}
+              {% if next_url_media %} <a href="{{ next_url_media }}" class="btn paginate-btn"> <i class="fa fa-arrow-right"></i> </a> {% endif %}
+            </div>
+        </form>
+      </div>
+
+      <div class="col-md-3">
+        <form  action="/upload_media" method="post" enctype="multipart/form-data" class="box-style3"> 
+            <div class="form-group">
+                  <div class="input-group">
+                      <input type="text" class="form-control" readonly>
+                      <div class="input-group-btn">
+                            <span class="fileUpload btn btn-primary">
+                              <span class="upl" id="upload"> <i class="fa fa-plus"></i> </span>
+                              <input type="file" class="upload up" name="image" id="up" onchange="readURL(this);"  multiple required />
+                            </span><!-- btn-orange -->
+                      </div><!-- btn -->
+                  </div><!-- group -->
+            </div><!-- form-group --> 
+            <button type="submit" class="btn btn-primary btn-sm"> Upload <i class="fa fa-upload"></i> </button>
+        </form>
+        <section class="box-style3">          
+            <div style="font-size: 11px;">
+                 <a id="open_img"><img id="selected_img" class="img-responsive"></a>
+                 <p id="small_url"></p>
+                 <p id="large_url"></p>
+            </div>          
+        </section>
+      </div>
+  </div>    
+
+{% endif %}
+
+
+ 
+
+
+{% if tab == 'update_blog'%}
+  <div class="col-md-12">
+     <form action="/update_blog_form/{{update_blog.blog_ID}}" method="post" enctype="multipart/form-data" role="form">
+        <div class="row">
+            <div class="col-md-3">
+              <div class="box-style3">
+                <input type="text" name="blogtitle" placeholder="Blog Title" class="form-control form-group" value="{{update_blog.blog_topic}}" required>              
+                <input type="text" name="img_url" value="{{update_blog.img_url}}" placeholder="Image url" class="form-control form-group" required>
+                <img src="{{update_blog.img_url}}" class="img-responsive form-group">
+                <hr/>
+                <button type="submit" class="btn btn-primary btn-sm"> Update <i class="fas fa-check-circle"></i></button> 
+              </div>
+            </div>
+            <div class="col-md-9" style="margin-top: 3px;">                     
+                <textarea id="froala-editor" name="description" class="form-control" required>{{update_blog.blog_desc}}</textarea>                    
+            </div>
+        </div>
+     </form>
+  </div>
+{% endif %}
+
+
+
+
+{% if tab == "update_product" %}
+
+        <form id="updateproductform" action="/update_product_form/{{update_product.product_ID}}" method="post" enctype="multipart/form-data" role="form">
+              <div class="col-md-8">
+                  <div class="box-style3">
+                      <div class="row">
+                        <div class="col-md-6 form-group">
+                              <input type="text" name="name" class="form-control" value="{{update_product.product_name}}" placeholder="Product Name">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input type="number" min="0" max="100" name="discount" class="form-control" value="{{update_product.discount}}" placeholder="Discount %">
+                        </div>
+                        <div class="col-md-12">
+                          <label> Meta Description</label>
+                          <ol>
+                            <li>Accurately summarize the page content. While there’s no minimal or maximal meta title length for the text in the description, Google recommends making sure that it’s long enough to be fully shown in Google results (note that users may see different sized snippets depending on how and where they search).</li>
+
+                            <li> Use unique descriptions for each page. Having a different description of meta tag for each page helps both users and Google, especially in searches where users may bring up multiple pages on your domain.</li>
+
+                            <li>Make sure to keep the ideal length of your meta description no more than 160 words, including spaces.</li>
+
+                            <li>Include your primary keyword naturally </li>
+                          </ol>
+                          <input type="text" name="meta_description" class="form-control form-group" value="{{update_product.meta_description}}">
+                        </div>
+                      </div> 
+                    </div>
+
+                    <div class="form-group">
+                        <textarea id="froala-editor" name="description"  class="form-control" rows="6">{{update_product.product_desc|safe}}</textarea>
+                    </div> 
+                  
+                    <div class="table-container box-style3">
+                        <h1> Product Data</h1>
+                        <table id="product_variation" class="table">
+                                
+                                  <tr>
+                                       <th> Weight (g's) </th>
+                                       <th> Size/Unit </th>
+                                       <th> Price $</th>
+                                       <th> L (cm's)</th>
+                                       <th> W (cm's)</th>
+                                       <th> H (cm's)</th>
+                                       <th> Inventory </th>
+                                  </tr>
+                                  <tr> 
+                                        <td>
+                                          <input type="number" min="0" name="shipping_weight_1" value="{{variations[0][5]}}" class="form-control" required>
+                                        </td>
+                                        <td>
+                                           <input type="text" name="weight_1" class="form-control"  value="{{variations[0][0]}}" required>
+                                        </td>
+                                        <td>
+                                           <input type="number" min="0" step="0.01" name="price_1" class="form-control" value="{{variations[0][1]}}" required>
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="L_1" class="form-control" value="{{variations[0][2]}}" required>
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="W_1" class="form-control" value="{{variations[0][3]}}" required>
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="H_1" class="form-control" value="{{variations[0][4]}}" required>
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="inventory_1" value="{{variations[0][6]}}" class="form-control">
+                                        </td>
+
+                                  </tr>
+                                  {% for i in range(2,6) %}
+                                  <tr> 
+                                      {% if variations[i-1] %}
+                                        <td>
+                                          <input type="number" min="0" name="shipping_weight_{{i}}" value="{{variations[i-1][5]}}" class="form-control">
+                                        </td>
+                                        <td>
+                                           <input type="text" name="weight_{{i}}" value="{{variations[i-1][0]}}" class="form-control">
+                                        </td>
+                                        <td>
+                                           <input type="number" min="0" step="0.01" name="price_{{i}}" value="{{variations[i-1][1]}}" class="form-control">
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="L_{{i}}" value="{{variations[i-1][2]}}" class="form-control">
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="W_{{i}}" value="{{variations[i-1][3]}}" class="form-control">
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="H_{{i}}" value="{{variations[i-1][4]}}" class="form-control">
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="inventory_{{i}}" value="{{variations[i-1][6]}}" class="form-control">
+                                        </td>
+
+                                      {% else %}
+                                        <td>
+                                          <input type="number" min="0" name="shipping_weight_{{i}}"  class="form-control">
+                                        </td>
+                                        <td>
+                                           <input type="text" name="weight_{{i}}" class="form-control">
+                                        </td>
+                                        <td>
+                                           <input type="number" min="0" step="0.01" name="price_{{i}}" class="form-control">
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="L_{{i}}" class="form-control">
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="W_{{i}}" class="form-control">
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="H_{{i}}" class="form-control">
+                                        </td>
+                                        <td>
+                                          <input type="number" min="0" step="0.01" name="inventory_{{i}}" class="form-control">
+                                        </td>
+                                      {% endif %}
+
+                                  </tr>
+                                  {% endfor %}
+                        </table>
+                    </div>
+                    
+                   
+                    <div class="table-container box-style3">
+                      <h1>Comments</h1>
+                      <table class="table table-striped">
+                                  
+                                  <tr>
+                                    <th>Name </th>
+                                    <th>Email</th>
+                                    <th>Title</th>
+                                    <th>Comment </th>
+                                    <th>Score</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                  </tr>
+                        
+                                  {% for comment in product_feedback %}
+                                    <tr>
+                                       <td>{{comment.user_name}}</td>
+                                       <td>{{comment.user_email}}</td>
+                                       <td>{{comment.user_comment}}</td>
+                                       <td>{{comment.user_title}}</td>
+                                       <td>{{comment.score}}</td>
+                                       <td>{{comment.date}}</td>
+                                       <td> <a href='/delete_comment/product/{{comment.feedback_ID}}' class="red"><i class="fa fa-trash"></i></a> </td>
+                                    </tr>
+                                  {% endfor %}
+                      </table>          
+                    </div>                                                                      
+          </div>
+          <div class="col-md-4">
+                  <div  class="box-style3 form-group">
+                           
+                            <div class="form-group">
+                                  <div class="checkbox">
+                                      {% if update_product.disable %}
+                                          <input type="checkbox" id="disable_{{update_product.product_ID}}" name="disable" checked>
+                                      {% else %}
+                                          <input type="checkbox" id="disable_{{update_product.product_ID}}" name="disable">
+                                      {% endif %}
+                                      <label for="disable_{{update_product.product_ID}}"> &nbsp; <b style="color: brown;"> DISABLE THIS PRODUCT</b> </label>
+                                  </div>
+                            </div><!-- /input-group -->
+
+                            <div class="form-group">
+                                  <div class="checkbox">
+                                      {% if update_product.taxable %}
+                                          <input type="checkbox" id="taxable_{{update_product.product_ID}}" name="taxable" checked>
+                                      {% else %}
+                                          <input type="checkbox" id="taxable_{{update_product.product_ID}}" name="taxable">
+                                      {% endif %}
+                                      <label for="taxable_{{update_product.product_ID}}"> &nbsp; <b style="color: grey;"> TAXABLE </b> </label>
+                                  </div>
+                            </div><!-- /input-group -->
+                            
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    {% if update_product.bogo %}
+                                        <input type="checkbox" id="bogo" name="bogo" checked>
+                                    {% else %}
+                                        <input type="checkbox" id="bogo" name="bogo">
+                                    {% endif %}
+                                    <label for="bogo"> &nbsp; <b style="color: green;"> BUY ONE GET ONE FREE (BOGO) </b> </label>
+                                </div>
+                            </div><!-- /input-group -->
+                            <hr/>
+
+                            <div class="form-group ">
+                               <select name ="parent_category" id="parent_category" onchange="populate_categories(this.id,'sub_category')" class="form-control">
+                                   <option value=''>--select parent category--</option>
+                                   {% for category in categories %}
+                                     <option value="{{category.category_name}}"> {{category.category_name}} </option>
+                                   {% endfor %}
+                               </select>
+                            </div>
+                            <div class="form-group">
+                                 <select name ="sub_category" id="sub_category" class="form-control">
+                                   
+                                 </select>
+                            </div>
+                            <div class="form-group">
+                               <select name="order" class="form-control">
+                                  <option value="{{update_product.product_order}}">{{update_product.product_order}}</option>
+                                  {% for i in range(0 , num_of_products+1)%}
+                                     {% if i != update_product.product_order%}
+                                       <option value="{{i}}"> {{i}} </option>
+                                    {% endif %}
+                                  {% endfor %}
+                                 </select>
+                            </div>
+                  </div>
+                  
+
+                    <div  class="box-style3">
+
+                          <div class="row">
+                              <div class="col-md-12 form-group">
+                                <label>Main Image</label>
+                                <input type="text" name="mainimage" class="form-control" value="{{update_product.mainimage}}">
+                              </div>
+                              <div class="col-md-12 form-group">
+                                <label>Gallery Image 1</label>
+                                <input type="text" name="galleryimage1" class="form-control" value="{{update_product.galleryimage1}}">
+                              </div>
+                              <div class="col-md-12 form-group">
+                                <label>Gallery Image 2</label>
+                                <input type="text" name="galleryimage2" class="form-control" value="{{update_product.galleryimage2}}">
+                              </div>
+                               <div class="col-md-12 form-group">
+                                <label>Nutrition Table Image</label>
+                                <input type="text" name="nutritiontable" class="form-control" value="{{update_product.nutritiontable}}">
+                              </div>
+                              
+                          </div>
+
+                                 
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h6>Main: </h6> <img src="{{update_product.mainimage}}" class="img-responsive"> 
+                          </div>  
+                           <div class="col-md-6">
+                            <h6>Gallery 1: </h6> <img src="{{update_product.galleryimage1}}" class="img-responsive"> 
+                          </div> 
+                           <div class="col-md-6">
+                            <h6>Gallery 2: </h6> <img src="{{update_product.galleryimage2}}" class="img-responsive"> 
+                          </div> 
+                           <div class="col-md-6">
+                            <h6>Nutrition Table: </h6> <img src="{{update_product.nutritiontable}}" class="img-responsive"> 
+                          </div>
+                        </div> 
+                      </div>
+                      <button type="submit" name="register-submit" id="register-submit" class="btn-primary btn"> Update <i class="fa fa-check-circle"></i></button>  
+
+                    </div>
+
+                        
+            </div>
+            
+
+        </form>
+
+        
+{% endif %}
+
+
+</div>
+
+
+<div id="userprompt" class="userprompt">
+        <div class="row">
+       <div class="w3-animate-zoom userdialog col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+           <div> Are you sure you want to carry out this action. </div>
+                 <hr>
+            <div class="pull-right"><a href="#" id="del"><button class="btn btn-danger" > DELETE</button></a></div>
+                 <div class="pull-right"><button href="#" class="btn btn-default" style="margin-right:20px;" onclick="close_userprompt()"> CANCEL </button></div>
+       </div>
+        </div>
+</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+<script src="{{url_for('static',filename='js/froala_editor.pkgd.min.js')}}"></script>
+<script src="{{url_for('static',filename='js/froala.js')}}"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="{{url_for('static',filename='js/admin_ajax.js')}}"></script>
+<script src="{{url_for('static',filename='js/app.js')}}"></script>
+
+</body>
+</html>
+
+

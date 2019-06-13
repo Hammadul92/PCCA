@@ -1,9 +1,6 @@
 import './NavBar.module.css';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import Slider from '../Slider/Slider';
-import News from '../News/News';
-import Footer from '../Footer/Footer';
 
 
 class NavBar extends React.Component{

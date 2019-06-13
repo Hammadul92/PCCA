@@ -13,12 +13,12 @@ class Home extends React.Component{
             <div className="container">
             <Slider />
             <section>
-            <div className="row">
-            <div className="col-md-8"><News /></div>
-            <div className="col-md-4 sidebar-gutter">
-                <Events />
-            </div>
-            </div>
+                <div className="row">
+                    <div className="col-md-8"><News /></div>
+                    <div className="col-md-4 sidebar-gutter">
+                        <Events />
+                    </div>
+                </div>
             </section>
 
             </div>

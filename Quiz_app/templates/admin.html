@@ -1,0 +1,691 @@
+{% extends 'admin_layout.html' %}
+{%block body%}
+
+
+
+ 
+
+
+
+
+    {% if tab =='users' %} 
+
+                
+                <div class="table-container">
+                  <section class="row">
+                     <div class="col-md-8"></div>
+                     <div class="col-md-4">
+                         <form action="/admin/users" method="POST">
+                                <div class="input-group form-group">
+                                    <input type="text" name="name" class="form-control" placeholder="Search By Name">
+                                    <div class="input-group-btn">
+                                      <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                    </div><!-- group -->
+                                </div>
+                          </form>
+                     </div>
+                  </section>
+                  <table class="table">
+
+                     <tr>
+                       <th><i class="fa fa-trash"></i></th>
+                       <th>User ID</th>
+                       <th>User Information </th>
+                       <th>Currency</th>
+                       <th>Phone</th>
+                       <th>Address</th>
+                       <th>Country</th>
+                       <th>Date Activated</th>
+                       <th> Role </th>
+                     </tr>
+                     <form action="{{url_for('delete_users', page = page)}}" method="POST">
+                         {% for user in users%}
+                          {% if user.role != 'admin' %}
+                           <tr>
+                            <td> 
+                                 <div class="checkbox">                                   
+                                      <input type="checkbox" id="{{user[0]}}" name="delete{{user[0]}}">
+                                      <label for="{{user[0]}}"></label>
+                                  </div>
+
+                            </td>
+
+
+                            <td><b>{{user[0]}}</b></td>
+
+                            <td> 
+                              <i class="far fa-user"></i> {{user[1]}} {{user[2]}} <br/>
+                              <b>Email:</b> {{user[3]}} <br/>
+                              {% if user[14] == False %}
+                                <b>Banking Info:</b> <i class="fa fa-times" style="color: brown;"></i>
+                              {% else %}
+                                <div style="background: #fff; padding: 10px; border: 1px solid #ddd;">{{user[14]}}</div>
+                              {% endif %}
+                              {% if user[13]> 0 %}
+                                 <div><b> Number Of Sales:</b>{{user[13]}}</div>
+                              {% endif %}
+                              <div><b> Cart Value: </b> $ {{user[15]}} CAD </div>
+                            </td>
+                            <td>{{user[4]}}</td>
+                            <td>{{user[5]}}</td>
+                            <td>{{user[6]}}<br/> {{user[7]}}, {{user[10]}}, {{user[9]}}</td>
+                            <td>{{user[8]}}</td>
+                            <td>{{user[11]}}</td>
+                            <td> 
+                                <select class="form-control" name="role{{user[0]}}">
+                                  <option value="{{user[12]}}"> {{user[12]}} </option>
+                                  <option value="user"> user </option>
+                                  <option value="anonymous"> anonymous</option>
+                                  <option value="customer service"> customer service </option>
+                                  <option value="sales rep"> sales rep</option>
+                                </select>
+                              </td>
+                           
+                          </tr>
+                          {% endif %}
+                        {% endfor %}
+                        <tr>
+                          <th><button type="submit" class="btn btn-primary btn-sm"> Update <i class="fas fa-check-circle"></i></button> </th>
+                          <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>                          
+                        </tr>
+                      </form>
+                  </table>
+                  <div class="text-center">
+                    {% if prev_url_user %} <a href="{{ prev_url_user }}" class="btn paginate-btn"><i class="fa fa-arrow-left"></i></a>  {% endif %}
+                    {% if next_url_user %} <a href="{{ next_url_user }}" class="btn paginate-btn"><i class="fa fa-arrow-right"></i></a> {% endif %}
+                  </div>
+                    
+               </div> 
+          
+  
+    {% endif %}
+
+
+
+    {% if tab == 'subscribers' %}
+
+            <div class="table-container">
+                <section class="row">
+                  <div class="col-md-8"></div>
+                  <div class="col-md-4 form-group">
+                    <form action="/import_subscribers/{{page}}" method="post" enctype="multipart/form-data">
+                            <p>** File allowed extension '.csv' <br/> ** Must contain column 'Email'</p>
+ 
+                                      <div class="input-group">
+                                        <input type="text" class="form-control" readonly>
+                                        <div class="input-group-btn">
+                                          <span class="fileUpload btn btn-primary">
+                                              <span class="upl" id="upload"> <i class="fa fa-plus"></i></span>
+                                              <input type="file" accept=".csv" class="upload up" name="file" id="up" onchange="readURL(this);" />
+                                            </span><!-- btn-orange -->
+                                         </div><!-- btn -->
+                                       </div><!-- group -->
+
+                            <button type="submit" class="btn btn-primary btn-sm"> Upload <i class="fa fa-upload"></i></button>
+                      </form>                    
+                  </div>
+                </section>
+
+                <table class="table">
+                  <tr>
+                     <th></th>
+                     <th>Email</th>
+                     <th></th>
+                  </tr>
+ 
+                  {% for subscriber in subscribers.items %}
+                    <tr>
+                      <td> <i class="fa fa-envelope"></i>  </td>
+                      <td>{{subscriber.email}}</td>
+                      <td> <a onclick="userprompt('/delete_subscriber/{{subscriber.joinmail_ID}}/{{page}}')" class="red"> <i class="fa fa-trash"></i> </a> </td>
+                    </tr>
+                  {% endfor %}
+                </table>
+                <div class="text-center">
+                  {% if prev_url_subscriber %} <a href="{{ prev_url_subscriber }}" class="btn paginate-btn"><i class="fa fa-arrow-left"></i></a>  {% endif %}
+                  {% if next_url_subscriber %} <a href="{{ next_url_subscriber }}" class="btn paginate-btn"><i class="fa fa-arrow-right"></i></a> {% endif %}
+                </div>
+                
+            </div>          
+
+    {% endif %}
+
+    {% if tab == 'coupons' %}
+
+        <div class="table-container">
+          <div class="row">
+             <div class="col-md-8"><h1>Coupons</h1></div>
+             <div class="col-md-4">
+                 <form action="/add_coupon" method="post">
+                      <div class="input-group form-group">
+                            <input type="text" name="coupon_name" class="form-control" placeholder="Coupon Name" required>
+                            <div class="input-group-btn"><button type="submit" class="btn btn-primary"> Add <i class="fa fa-plus-circle"></i></button></div>
+                      </div>                     
+                  </form>
+             </div>
+          </div>
+          
+          <table class="table table-striped">
+              <tr>
+                   <th> <i class="fa fa-trash"></i> </th>
+                   <th> Name </th>
+                   <th> Status </th>
+                   <th> Usage </th>
+                   <th> Discount </th>
+                   <th> Application </th>
+                   <th> Date </th>
+              </tr>
+
+              <form action="/update_coupons" method="post">
+                    {% for coupon in coupons %}
+                       
+                       <tr>
+                         <td> 
+                           <div class="checkbox">                                   
+                                <input type="checkbox" id="{{coupon.coupon_ID}}" name="delete{{coupon.coupon_ID}}">
+                                <label for="{{coupon.coupon_ID}}"></label>
+                            </div>
+                        </td>
+                         <td><b>{{coupon.coupon_name}}</b></td>
+                         <td>
+                            <div class="checkbox"> 
+                              {% if coupon.active %}                                                                 
+                                  <input type="checkbox" id="active{{coupon.coupon_ID}}" name="active{{coupon.coupon_ID}}" checked>                                  
+                              {% else %}
+                                  <input type="checkbox" id="active{{coupon.coupon_ID}}" name="active{{coupon.coupon_ID}}">
+                              {%endif%}
+                                  <label for="active{{coupon.coupon_ID}}">&nbsp;Active </label>
+                             </div>
+
+                         </td>
+                         <td>
+                           {{coupon.usage}}
+                         </td>
+                         <td>
+                           <section class="box-style3">
+                            <label> Subtotal Discount </label>
+                            <input type="number" min="0" max="100" name="{{coupon.coupon_ID}}discount_percent" value="{{coupon.discount_percent}}" class="form-control form-group">  
+                            <label> Shipping Discount </label>
+                            <input type="number" min="0" max="100" name="{{coupon.coupon_ID}}shipping_discount_percent" value="{{coupon.shipping_discount_percent}}" class="form-control form-group"></td>
+                          </section>
+                         </td>
+
+                         <td>
+                          <section class="box-style3">
+                               <div class="checkbox">
+                                 {% if coupon.all_products %}
+                                    <input type="checkbox" id="all_products{{coupon.coupon_ID}}" name="all_products{{coupon.coupon_ID}}" checked> 
+                                 {% else %}
+                                    <input type="checkbox" id="all_products{{coupon.coupon_ID}}" name="all_products{{coupon.coupon_ID}}"> 
+                                 {% endif %}
+                                    <label for="all_products{{coupon.coupon_ID}}"> &nbsp;Apply to all Products</label>
+                               </div>
+                               <hr/>
+
+                               <div class="input-group">
+                                   <div class="input-group-btn"><button class="btn btn-primary" disabled>Associated Brands</button></div>
+                                   {% if coupon.all_products %}
+                                    <select  class="form-control" onchange="add_brand('{{coupon.coupon_ID}}', this)" disabled>
+                                   {% else %}
+                                    <select class="form-control" onchange="add_brand('{{coupon.coupon_ID}}', this)">
+                                   {% endif %}
+                                           <option value=""> -- Select Brand -- </option>
+                                      {% for category in categories %}
+                                           <option value="{{category.category_name}}"> {{category.category_name}} </option>
+                                      {% endfor %}
+                                   </select> 
+                               </div>
+
+                                
+                              
+
+                                {% if coupon.associated_brands %}                    
+                                  {% for brand in coupon.associated_brands.split(',') %}
+                                     <div class="selected-tags"> <a href="/remove_brand/{{coupon.coupon_ID}}/{{brand}}"><i class="fa fa-times"></i></a> {{brand}} </div>
+                                  {% endfor %}
+                                {% endif %}
+                          </section>
+
+                               
+                                
+                         </td>
+                         <td> PUBLISHED <br/> {{coupon.date}} </td>
+                       </tr>
+                    {% endfor %}
+                    <tr>
+                      <th></th>
+                      <th></th><th></th><th></th><th></th><th></th><th><button type="submit" class="btn btn-primary"> Update <i class="fa fa-check-circle"></i></button></th>
+                    </tr>
+               </form>
+          </table>
+        </div>
+        
+
+        
+    {% endif %}
+
+
+     
+    <!-- Product tab !-->
+    {% if tab =='product' %}
+      
+          
+              <div class="table-container">
+                  <section class="row">
+                     <div class="col-md-9"></div>
+                     <div class="col-md-3">
+                         <form action="/add_product" method="post">
+                             <div class="input-group form-group">
+                                <input type="text" name="name" class="form-control" placeholder="Product Name">
+                                <div class="input-group-btn"><button class="btn btn-primary"> Add <i class="fa fa-plus-circle"></i></button></div>
+                             </div>
+                          </form>
+                     </div>
+                  </section>
+                  <table class="table">
+                    <tr>
+                      <th> <i class="fas fa-file-image" style="font-size: 18px;"></i> </th>
+                      <th> Product ID</th>
+                      <th> Name </th>
+                      <th> Discount </th>
+                      <th> Status </th>
+                      <th> Stock </th>
+                      <th> Price </th>
+                      <th> Category </th>
+                      <th> Subcategory </th>
+                      <th> Taxable </th>
+                      <th> </th>
+                    </tr>
+                    {% for product in _products %}
+                       <tr>
+                         <td> <img src="{{product[7]}}" class="img-responsive" height="50" width="50"> </td>
+                         <td>{{product[0]}}</td>
+                         <td> <a href="/update_product_form/{{product[0]}}"> <b>{{product[1]}}</b></a></td>
+                         <td> <b style="color: red;">{{product[2]}} % </b></td>
+                         <td> {% if product[8] %} <b style="color: red;"> Disabled </b> {% else%} <b style="color: green;"> Active </b> {% endif %} </td>
+                         <td> {% if product[3] == True %}  <b style="color:green;"> In stock </b> {% else %} <b style="color: red;"> Out of stock </b>{% endif %}</td>
+                         <td> $ {{product[4]}} CAD </td>
+                         <td> {{product[5]}} </td>
+                         <td> {{product[6]}} </td>
+                         <td> {% if product[9]%} <i class="fa fa-check" style="color: green;"></i>{%else%} <i class="fa fa-times red"></i>{% endif %}</td>
+                         <td> <a onclick="userprompt('/delete_product/{{product[0]}}')" class="red"> <i class="fa fa-trash"></i></a> </td>
+                       </tr>
+                    {% endfor %}
+                   
+                  </table>
+                     
+
+                  <div class="text-center">
+                        {% if prev_url_product %} <a href="{{ prev_url_product }}" style="margin-right:5px;" class="btn paginate-btn"><i class="fa fa-arrow-left "></i></a> {% endif %}
+                        {% if next_url_product %} <a href="{{ next_url_product }}" class="btn paginate-btn"><i class="fa fa-arrow-right"></i></a> {% endif %}
+                  </div>
+              </div>
+           
+
+        {% endif %}
+        <!-- !-->
+
+         
+
+    
+                <!-- Categories !-->
+        {% if tab=='categories' %}
+            
+
+                        <div class="table-container">
+                            <section class="row">
+                                <div class="col-md-8"></div>
+                                <div class="col-md-4 form-group">
+                                    <form action="/product_categories" method="post" role="form">
+                                          <div class="input-group">
+                                              <input type="text" name="new-category" class="form-control form-group" placeholder="Category Name " required>
+                                              <div class="input-group-btn"><button type="submit" class="btn btn-primary"> Add </button></div>
+                                          </div>
+                                    </form>
+                                </div>
+                            </section>
+                            <table class="table">
+            
+                               <tr>
+                                 <th> Name </th> <th> Subcategories</th> <th></th> <th></th>
+                               </tr>
+                               {% for category in categories %}
+                                 <tr>
+                                    <td>
+                      
+                                      <form action="/update_product_category/{{category.category_ID}}" method="post">
+                                        <div class="input-group">
+                                            <input type="text" name="name" class="form-control" value="{{category.category_name}}" required>
+                                            <div class="input-group-btn"><button type="submit" class="btn btn-primary"> Update</button></div>
+                                        </div>
+                                      </form>
+                                    </td>
+                                    <td>
+                                      {% for subcategory in subcategories[category.category_ID]  %}
+                                        <div  style="background: #fff; margin: 5px 5px 0 0;  padding:8px; border-radius: 5px; display: inline-block;">
+                                                  {{subcategory}} <a href="#" onclick="userprompt('/delete_product_subcategory/{{category.category_ID}}/{{subcategory}}')" class=" no-decoration"> <i class="far fa-times-circle"></i></a> 
+                                        </div>
+                                      {% endfor %} 
+                                    </td>
+                                    <td>
+                                      <form method ="post" action="/product_subcategories/{{category.category_ID}}">
+                                           <div class="input-group">
+                                              <input type="text" name="new_subcategory" placeholder="Subcategory" class="form-control">
+                                              <div class="input-group-btn"><button type="submit" class="btn btn-primary"> Add </button></div>                       
+                                            </div>
+                                      </form>
+                                    </td>
+                                    <td>
+                                      <a  onclick="userprompt('/delete_product_category/{{category.category_ID}}')" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                 </tr>
+                               {%endfor%}
+                            </table>
+                        </div>  
+
+  
+
+             
+          {% endif %}
+
+     
+
+     <!-- Blog !-->
+     {% if tab =='blog' %}
+
+          <div class="table-container">
+            <section class="row">
+              <div class="col-md-8"><h1>Blogs</h1></div>
+              <div class="col-md-4">
+                <form action="/blog_post" method="post">
+                   <div class="input-group form-group">
+                    <input type="text" name="blogtitle" class="form-control" placeholder="Blog Name">
+                    <div class="input-group-btn"><button class="btn btn-primary"> Add <i class="fa fa-plus-circle"></i></button></div>
+                   </div>
+                </form>
+              </div>
+            </section>
+            <table class="table">
+               <tr>
+                 <th><img src="https://www.naturallysplendid.com/static/media/photo-camera.png" style="width:20px;"></th>
+                 <th> Name </th>
+                 <th> Category </th>
+                 <th> <img src="https://www.naturallysplendid.com/static/media/clock.png" style="width:20px;"> </th>
+                 <th></th>
+               </tr>
+                {% for blog in blogs.items %}
+                    <tr>
+                      <td><img src="{{blog.img_url}}" style="width: 60px;"></td>
+                      <td> <a href="/update_blog_form/{{blog.blog_ID}}">{{blog.blog_topic}}</a> <br/> <i class="fa fa-eye"></i> {{blog.visits}}</td>
+                      <td> {{blog.category}}</td>
+                      <td> {{blog.date}} <br/> Published</td>
+                      <td>  
+                           
+                            <a onclick="userprompt('/delete_blog/{{blog.blog_ID}}')"> <img src="https://www.naturallysplendid.com/static/media/delete.png" style="width:20px;"></a>
+                      </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="text-center">
+               {% if prev_url_blog %} <a href="{{ prev_url_blog }}" class="btn paginate-btn"><i class="fa fa-arrow-left "></i></a>  {% endif %}
+               {% if next_url_blog %} <a href="{{ next_url_blog }}" class="btn paginate-btn"><i class="fa fa-arrow-right"></i></a> {% endif %}
+            </div>
+          </div>
+         
+         
+
+      {% endif %}
+      <!-- !-->
+
+      
+      
+
+      {% if tab== 'update_country' %}
+            
+
+                <div class="table-container">
+                       <section class="row">
+                              <div class="col-md-8"><h1>{{update_country.country_name}}</h1></div>
+                              <div class="col-md-4">
+                                <form action="/add_province/{{update_country.country_ID}}"  method="post">
+                                  <div class="input-group">
+                                    <input type="text" name="provincename" class="form-control" placeholder="Province Name ">
+                                    <div class="input-group-btn"><button type="submit" class="btn btn-primary"> Add <i class="fas fa-plus-circle"></i></button></div>
+                                  </div>
+                                </form>
+                              </div>
+                       </section>
+                       <form action="/update_provinces/{{update_country.country_ID}}" method="post">
+
+                          <table class="table table-striped">
+                             <tr>
+                                  <th>Name</th>
+                                  <th>Regular Rates $</th>
+                                  <th>Express Rates $</th>
+                                  <th>Free Shipping Threshold $</th>
+                                  <th>gst</th>
+                                  <th>pst</th>
+                                  <th></th>
+                              </tr>
+                             {% for province in update_provinces%}
+                                 <tr>
+                                    <td>{{province.province_name}}</td>
+                                    <td><input type='number' class='form-control' min='0' step='0.01' name='shippingrate{{province.province_ID}}' value='{{province.shipping_rate}}'></td>
+                                    <td><input type='number' class='form-control' min='0' step='0.01' name='expressrate{{province.province_ID}}' value='{{province.air_shipping_rate}}'></td>
+                                    <td><input type='number' class='form-control' min='0' step='0.01' name='freeshipping{{province.province_ID}}' value='{{province.set_amount}}'></td>
+                                    <td><input type='number' class='form-control' min='0' step='0.01' name='gst{{province.province_ID}}' value='{{province.gst}}'></td>
+                                    <td><input type='number' class='form-control' min='0' step='0.01' name='pst{{province.province_ID}}' value='{{province.pst}}'></td>
+                                    <td> <a href='/delete_province/{{province.province_ID}}'  class='btn btn-danger btn-sm'> Delete <i class='fa fa-trash'></i></a></td>
+                                 </tr>
+                              {% endfor %}
+                              <tr>
+                                <th></th><th></th><th></th><th></th><th></th><th><th><button type="submit" class="btn btn-primary"> Update <i class="fa fa-check-circle"></i></button></th>
+                              </tr>
+                          </table>
+                       </form>
+               </div>  
+           
+
+      {% endif %}
+       <!--  !-->
+      
+
+      {% if tab == 'status' %}
+
+
+           <div class="table-container">
+
+              <section class="row form-group">
+                  <form action="/admin/status" method="POST" class="col-md-3">
+                        <div class="row remove-margin">
+                          <div class="col-md-4">
+                            <select name="filter" class="form-control"  required>
+                              <option value=""> -- Filter By --</option>
+                              <option value="Lot Number">  Lot Number </option>
+                              <option value="Tracking Number"> Tracking Number </option>
+                            </select>
+                          </div>
+                          <div class="col-md-6" >
+                            <input type="text" name="search" class="form-control" placeholder="Search.." required>
+                          </div>
+                          <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                          </div><!-- group -->
+                        </div>
+                  </form>                 
+             </section>
+
+            <table class="table table-striped">
+             
+            <form action="/update_orders/{{page}}" method="POST">
+             
+             <tr>
+                <th> <i class="fa fa-trash"></i></th>
+                <th> </th>
+                <th>Subtotal (cad-$)</th>
+                <th>Total (cad-$)</th>
+                <th>Invoice / P. Slip </th> 
+                <th>Status </th>
+                <th>Shipping Paid (cad-$)</th> 
+                <th>Shipping Cost (cad-$)</th> 
+                <th>Tracking # </th>     
+                <th>Lot #</th>
+             </tr>
+             {% for order in orders.items %}
+             
+             
+              <tr>
+                <td>
+                    <div class="checkbox">                                   
+                          <input type="checkbox" id="{{order.sale_ID}}" name="delete{{order.sale_ID}}">
+                          <label for="{{order.sale_ID}}"></label>
+                    </div>
+                </td>
+                <td>
+                  <h5><b> Order # {{order.sale_ID}}</b></h5>
+                  {{order.firstname}} {{order.lastname}} <br/> <b>Email:</b> {{order.email}} <br/> <i class="far fa-clock"></i> {{order.date}}
+                
+                  {% if order.status != 'Completed'%}
+                        <a href="/refund/{{order.sale_ID}}" type="submit" class="btn btn-primary btn-sm"><i class="fa fa-undo"></i> </a>
+                  {% endif %}
+                   {% if order.refunded == True %} 
+                        <a class="btn btn-danger btn-sm">Cancelled</a>
+                  {% endif %}
+                  <a href="/order_details/{{order.sale_ID}}" class="btn btn-primary btn-sm"><i class="fas fa-info-circle"></i> </a> <br/>
+                  
+
+                </td>
+
+              
+                <td><b>{{order.subtotal}}</b></td>
+                <td><b>{{order.sale_amount}}</b></td>
+                <td>                                     
+                     <a href="/static/invoices/{{order.invoice}}" title="PDF invoice" target="_blank"><img src="https://www.naturallysplendid.com/static/media/packing-slip.png"></a>
+                     <a href="/static/pslips/{{order.packing_slip}}" title="PDF Packing Slip" target="_blank"><img src="https://www.naturallysplendid.com/static/media/packing-slip.png"></a>
+                </td>
+                <td>
+                       {% if order.status == 'Received' %}
+                       <select name ="status{{order.sale_ID}}" class="form-control" style="border: 2px solid brown;">
+                       {% elif order.status == 'Processing' %}
+                       <select name ="status{{order.sale_ID}}" class="form-control" style="border: 2px solid orange;">
+                       {% else %}
+                       <select name ="status{{order.sale_ID}}" class="form-control">
+                       {% endif %}
+                            {% if order.status == 'Received' %}
+                               <option value="Received" selected="selected" >Received</option>
+                            {% else %}
+                               <option value="Received" >Received</option>
+                            {% endif %}
+
+                            {% if order.status == 'Processing' %}
+                               <option value="Processing" selected="selected">Processing</option>
+                            {% else %}
+                               <option value="Processing">Processing</option>
+                            {% endif %}
+
+                            {% if order.status == 'Completed' %}
+                               <option value="Completed" selected="selected">Completed</option>
+                            {% else %}
+                               <option value="Completed">Completed</option>
+                            {% endif %}
+                          </select>                  
+
+                </td>
+
+                <td><input type='number' step="0.01" name="shipping_paid{{order.sale_ID}}"  value="{{order.shipping_charge}}" class="form-control" required></td>
+                <td><input type='number' step="0.01" name="shipping_cost{{order.sale_ID}}"  value="{{order.shipping_cost}}" class="form-control" required></td>
+                <td>
+                  <input type='text' name="tracking{{order.sale_ID}}"  value="{{order.tracking_number}}" class="form-control" required>
+                  {% if order.status == 'Completed' and order.tracking_number != 'None' %}<a href="/send_order_status/{{order.sale_ID}}/{{page}}" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i> <i class="fa fa-arrow-right"></i> </a> {% endif %} 
+                </td>
+
+                <td>
+                   <textarea name ="lot{{order.sale_ID}}" class="form-control" rows="4">{{order.lot_numbers}}</textarea>
+                </td>    
+
+        </tr>
+       
+        {% endfor %}
+        <tr> <th><button type="submit" class="btn btn-sm btn-primary"> Update <i class="fas fa-check-circle"></i></button><th/><th/><th/><th/><th/><th/><th/><th/><th/></tr>
+        </form>
+        </table>        
+
+        <div class="text-center">
+             {% if prev_url_orders %} <a href="{{ prev_url_orders }}" class="btn paginate-btn"><i class="fa fa-arrow-left"></i></a>  {% endif %}
+             {% if next_url_orders %} <a href="{{next_url_orders}}" class="btn paginate-btn"><i class="fa fa-arrow-right"></i></a> {% endif %}
+        </div>
+
+ 
+        </div>
+      </div>
+
+        
+      {% endif %}
+
+
+
+   
+      {% if tab =='customer_query' %}
+
+           <form action="/delete_all_queries" method="POST">
+
+                <div class="table-container">
+
+                    <table class="table">
+                      <tr>
+                        <th> <img src="https://www.naturallysplendid.com/static/media/delete.png" style="width:16px;"></th>
+                        <th> </th>
+                        <th> Name </th>
+                        <th> Email </th>
+                        <th> <img src="https://www.naturallysplendid.com/static/media/clock.png" style="width: 16px;"> </th>
+                        <th></th>
+
+                      </tr>
+                      {% for contact in contacts %}
+                        <tr>
+                          <td> 
+                            <div class="checkbox">                                   
+                                  <input type="checkbox" id="delete{{contact.contact_ID}}" name="delete{{contact.contact_ID}}">
+                                  <label for="delete{{contact.contact_ID}}"></label>
+                            </div>
+                          </td>
+                          <td> 
+                            {% if contact.contact_type == 'Contact' %}
+                               <img src="https://www.naturallysplendid.com/static/media/message.png"  style="width: 32px;">
+                            {% else %}
+                               <img src="https://www.naturallysplendid.com/static/media/charity.png" style="width: 32px;">
+                            {% endif %}
+                           </td>
+                          <td>{{contact.name}}</td>
+                          <td>{{contact.email}}</td>
+                          <td> {{contact.date}} </td>
+                          <td> <a style="cursor: pointer;" onclick="showme('{{contact.contact_ID}}')" class="btn btn-primary btn-sm"> View <i class="fa fa-eye"></i></a></td>
+                        </tr>
+                        <div id="{{contact.contact_ID}}" style="display:none;" class="contact-box">
+                              <div class="header"> <b>Name:</b> {{contact.name}} <a style="cursor: pointer; color: #fff;" onclick="showme('{{contact.contact_ID}}')" class="pull-right"><i class="fas fa-times-circle"></i></a> </div>
+                              <div class="contact-content"> 
+                                 <b> Email: </b>  {{contact.email}} <br/>
+                                 <p> {{contact.message|safe }} </p>
+                              </div>
+                        </div>     
+                      {% endfor %}
+                      <tr>
+                           <th/><th/><th/><th/><th></th>
+                           <th> <button type="submit" class="btn-sm btn btn-primary"> Update <i class="fa fa-check-circle"></i></button></th>
+                      </tr>
+                    </table>    
+                </div>
+
+            
+            </form>
+
+       
+           
+      {% endif %}
+
+
+
+        
+
+{% endblock %}
+

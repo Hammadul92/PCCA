@@ -1,0 +1,52 @@
+[2019-03-05 23:29:41 +0000] [31488] [INFO] Starting gunicorn 19.9.0
+[2019-03-05 23:29:41 +0000] [31488] [INFO] Listening at: http://0.0.0.0:5000 (31488)
+[2019-03-05 23:29:41 +0000] [31488] [INFO] Using worker: sync
+[2019-03-05 23:29:41 +0000] [31492] [INFO] Booting worker with pid: 31492
+[2019-03-05 23:29:41 +0000] [31492] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/workers/base.py", line 129, in init_process
+    self.load_wsgi()
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/workers/base.py", line 138, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/app/wsgiapp.py", line 52, in load
+    return self.load_wsgiapp()
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/app/wsgiapp.py", line 41, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/util.py", line 350, in import_app
+    __import__(module)
+  File "/var/www/naturallysplendid/naturallysplendid/Quiz_app/__init__.py", line 34, in <module>
+    from .models import User
+ValueError: Attempted relative import in non-package
+[2019-03-05 23:29:41 +0000] [31492] [INFO] Worker exiting (pid: 31492)
+[2019-03-05 23:29:41 +0000] [31488] [INFO] Shutting down: Master
+[2019-03-05 23:29:41 +0000] [31488] [INFO] Reason: Worker failed to boot.
+[2019-03-05 23:30:00 +0000] [31502] [INFO] Starting gunicorn 19.9.0
+[2019-03-05 23:30:00 +0000] [31502] [INFO] Listening at: http://0.0.0.0:5000 (31502)
+[2019-03-05 23:30:00 +0000] [31502] [INFO] Using worker: sync
+[2019-03-05 23:30:00 +0000] [31506] [INFO] Booting worker with pid: 31506
+[2019-03-05 23:30:01 +0000] [31506] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/workers/base.py", line 129, in init_process
+    self.load_wsgi()
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/workers/base.py", line 138, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/app/wsgiapp.py", line 52, in load
+    return self.load_wsgiapp()
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/app/wsgiapp.py", line 41, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/var/www/naturallysplendid/naturallysplendid/venv/local/lib/python2.7/site-packages/gunicorn/util.py", line 350, in import_app
+    __import__(module)
+  File "/var/www/naturallysplendid/naturallysplendid/Quiz_app/__init__.py", line 34, in <module>
+    from .models import User
+ValueError: Attempted relative import in non-package
+[2019-03-05 23:30:01 +0000] [31506] [INFO] Worker exiting (pid: 31506)
+[2019-03-05 23:30:01 +0000] [31502] [INFO] Shutting down: Master
+[2019-03-05 23:30:01 +0000] [31502] [INFO] Reason: Worker failed to boot.

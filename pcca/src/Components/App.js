@@ -2,8 +2,6 @@ import React from 'react';
 import Auxilary from '../hoc/Auxilary/Auxilary'
 import NavBar from './NavBar/NavBar';
 import Footer from './Footer/Footer';
-import News from './News/News';
-import Events from './Events/Events';
 import Gallery from './Gallery/Gallery';
 import NavEvents from './NavEvents/NavEvents';
 import Donations from './Donations/Donations';
@@ -29,12 +27,12 @@ class App extends React.Component{
 				<Switch>
 								
 					
-					<Route path='/events' exact component = {NavEvents}/>
-					<Route path='/donations' exact component = {Donations}/>
-					<Route path='/about' exact component = {AboutUs}/>
-					<Route path='/contact' exact component = {Contact}/>
-					<Route path='/gallery' exact component = {Gallery}/>
-					<Route path='/' exact component = {Home}/>
+					<Route path='/events' exact component={NavEvents}/>
+					<Route path='/donations' exact component={Donations}/>
+					<Route path='/about' exact component={AboutUs}/>
+					<Route path='/contact' exact component={Contact}/>
+					<Route path='/gallery' exact component={Gallery}/>
+					<Route path='/' exact component={Home}/>
 	
 
 				</Switch>	

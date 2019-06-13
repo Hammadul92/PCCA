@@ -1,0 +1,554 @@
+
+body{
+  font-family:  courier;
+  background: #f7f7f7;
+}
+
+
+a{
+  outline:0;
+} 
+
+
+.red{
+  color:rgb(247, 98, 98);
+}
+
+.red:hover{
+  color: darkred;
+}
+.yellow{
+  color:rgb(232, 177, 0);
+}
+.yellow:hover{
+  color: rgb(244, 158, 66);
+}
+
+.success{
+    color:rgb(2, 107, 17);
+    text-align:center;
+    font-weight:600;
+    background:rgb(2, 107, 17,0.1);
+    padding: 15px;
+    margin-bottom: 2px; 
+}
+
+.danger{
+    color:rgb(247, 98, 98);
+    text-align:center;
+    font-weight:600;
+    background:rgb(247, 98, 98, 0.1);
+    padding: 15px;
+    margin-bottom: 2px;
+}
+
+.info{
+     color:rgb(232, 177, 0);
+    text-align:center;
+    font-weight:600;
+    background-color:rgb(232, 177, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 2px;
+}
+
+
+     
+     #horizontal_nav {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;       
+        padding: 0;
+      }
+
+      #horizontal_nav > li {
+        float: left;
+      }
+
+      #horizontal_nav > li a {
+        display: block;
+        color: #fff;
+        text-align: center;
+        padding: 15px;
+        text-decoration: none;
+      }
+
+
+
+
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover{
+   background:#006799;
+}
+
+.nav-pills > li > a{
+   border-radius:0;
+   margin:0;
+}
+.nav-pills > li > a:hover{
+   background:#006799;
+   color:white;
+}
+
+
+
+
+
+.admin_navbar{
+  font-size: 10px; background: #23282d; padding: 15px 0;
+  min-height: 100vh;
+}
+
+.admin_navbar a{
+  color: rgba(255,255,255, 0.7); 
+}
+
+.badge{
+  padding-top: 4px;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+
+
+.userprompt{
+ width:100%;
+ height:100%;
+ background: rgb(0,0,0,0.4);
+ position:fixed;
+ top:0;
+ left:0;
+ display:none;
+ padding-top:2%;
+ 
+  
+}
+
+
+
+
+.userdialog{
+ padding:40px 20px;
+ background:white;
+ z-index: 1001;
+}
+
+.table{
+    margin-bottom: 0;
+    border: 1px solid #ddd;
+}
+
+.table th{
+  background: #eee;
+  font-size: 13px;
+
+}
+
+
+.table td{
+  font-size: 11px;
+}
+
+
+
+.admin_form{
+  padding:10px 20px; display:none; margin-top:30px;  box-shadow: 0 0 10px #ddd;
+}
+
+
+
+.back-circle{
+  border : 1px solid #999; 
+  padding: 10px 13px 6px;
+  background: #999;
+  color: white;
+  font-size: 16px;
+}
+
+.back-circle:hover{
+  color: white;
+}
+
+.selected-tags{
+  background: #fff; padding: 6px; margin-bottom: 5px; font-size: 10px; display: inline-block;
+  border-radius: 10px; border: 1px solid #ddd; color: #222;
+}
+
+
+
+.contact-box{
+  border:1px solid #444; margin-bottom: 15px; background: #fff;
+}
+
+.contact-box .header{
+  background: #666;
+  padding: 10px;
+  color: #fff;
+}
+
+.contact-box .contact-content{
+  padding: 10px;
+}
+
+
+.box-style3 {
+ background: #fff;
+ border: 1px solid #ddd;
+ padding: 15px;
+ margin-bottom:3px;
+ margin-top: 3px;
+ overflow: auto;
+
+}
+
+
+
+.box-style1-1{
+  height: 140px;
+  padding: 10px;
+  background: #eee;
+  border: 2px solid #fff;
+  text-align: center;
+}
+
+.box-style1-1 img{
+  max-height: 100%;
+  max-width: 100%;
+  display: inline;
+  cursor: pointer;
+}
+
+.box-style2{
+ padding: 15px;
+ border: 1px solid #fff;
+ background: #fff;
+
+}
+
+.box-style2 a{
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+.table-container{
+ overflow-x: auto;
+ overflow-y: auto;
+ background: #fff;
+ padding: 30px;
+
+}
+
+.table-container select{
+  border: none; -webkit-appearance: none; border: 1px solid #ddd;
+  color: rgba(0,0,0,0);
+  text-shadow: 0 0 0 #000;
+  background: #f7f7f7;
+  
+}
+
+.remove-margin{
+  margin: 0;
+}
+
+.remove-margin div{
+  padding: 0;
+}
+
+
+.form-control{
+  border-radius: 0;
+  border:1px solid #ddd;
+}
+
+.form-control:focus{
+  border: 1px solid #222;
+  box-shadow: none;
+}
+
+
+.checkbox input[type='checkbox'] {
+    opacity: 0;
+}
+
+.checkbox label{
+  font-size: 14px;
+
+}
+.checkbox label::before{
+    content: "";
+    display: inline-block;
+    height: 17px;
+    width: 17px;    
+    border: 1px solid;   
+}
+
+.checkbox label::after {
+    content: "";
+    display: inline-block;
+    height: 6px;
+    width: 9px;
+    border-left: 2px solid;
+    border-bottom: 2px solid;
+    
+    transform: rotate(-45deg);
+}
+
+.checkbox label{
+  position: relative;
+}
+
+
+.checkbox label::before,
+.checkbox label::after {
+    position: absolute;
+    transition: all 0.3s;
+}
+
+/*Outer-box*/
+.checkbox label::before {
+   top:2px;
+   left:1px;
+}
+
+/*Checkmark*/
+.checkbox label::after {
+    left: 5px;
+    top: 6px;
+}
+
+.checkbox input[type="checkbox"] + label::after {
+    content: none;
+}
+
+/*Unhide the checkmark on the checked state*/
+.checkbox input[type="checkbox"]:checked + label::after {
+    content: "";
+    color: white;
+}
+
+.checkbox input[type="checkbox"]:checked + label::before {
+    background: #006799;
+    box-shadow: 0 0 2px #006799;
+    border: none;
+}
+
+
+
+
+option{
+  padding: 4px 6px 2px;
+}
+
+
+a{
+  outline: 0;
+  text-decoration: none;
+}
+
+
+.paginate-btn{
+  border: 1px solid #ddd; background: #fff; font-size: 18px;
+  padding: 12px 28px 8px;
+  margin: 10px 0;
+  color: #222;
+}
+
+.paginate-btn:hover{
+  background: #eee;
+}
+
+.btn{
+  border-radius: 0;
+}
+
+
+.search-main{
+  background: #f7f7f7;
+  padding: 10px 10px;
+  margin-bottom:20px;
+}
+
+
+.SearchButton
+{
+    padding: 6px 12px;
+    margin-top: -1px; 
+    background:#707070;
+    color:#fff;
+    border:none;
+    border-radius:none;
+    transition: all 0.7s; 
+}
+.SearchButton:hover{
+    background:black;
+    color: #fff;
+}
+
+
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+
+.badge-orders{
+        display: inline-block;
+        background: #000;
+        color: #fff;
+        padding: 5px;
+        margin: 2px;
+        font-size: 13px;
+    }
+
+        .analytics-btn{
+          padding: 50px 15px; color: #fff; text-align: center; cursor: pointer;
+           border-radius: 5px; margin-bottom: 30px;
+           text-decoration: none;
+           display: block;
+           background: #708fff;
+        }
+
+        .analytics-btn:hover{
+            color: #fff;
+        }
+
+        .analytics-btn h2{
+          margin-top: 0;
+        }
+        .analytics-btn i{
+          font-size: 50px;
+        }
+
+      #media ul {
+        list-style-type: none;
+      }
+
+      #media li {
+        display: inline-block;
+      }
+
+      #media input[type="checkbox"][id^="cb"] {
+        display: none;
+      }
+
+      #media label {
+        border: 1px solid #fff;
+        padding: 10px;
+        display: block;
+        position: relative;
+        margin: 10px;
+        cursor: pointer;
+      }
+
+      #media label:before {
+        background-color: white;
+        color: white;
+        content: " ";
+        display: block;
+        border-radius: 50%;
+        border: 1px solid grey;
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        line-height: 28px;
+        transition-duration: 0.4s;
+        transform: scale(0);
+      }
+
+      #media label img {
+        max-height: 100px;
+        width: 100px;
+        transition-duration: 0.2s;
+        transform-origin: 50% 50%;
+      }
+
+      #media :checked + label {
+        border-color: #ddd;
+      }
+
+      #media :checked + label:before {
+        content: "✓";
+        background-color: grey;
+        transform: scale(1);
+      }
+
+      #media :checked + label img {
+        transform: scale(0.9);
+        box-shadow: 0 0 5px #333;
+        z-index: -1;
+      }
+
+
+
+@media(max-width:380px){
+
+    .box-style1{
+        width:100%;
+    }
+
+    .box-style2{
+        width:100%;
+    }
+ 
+}
+
+
+
+@media(min-width: 380px) and (max-width:526px){
+    .box-style1{
+        width:100%;
+    }
+
+    .box-style2{
+        width:100%;
+    }
+
+}
+
+@media(min-width:526px) and (max-width:768px) {
+    .box-style1{
+         width:49%;
+        margin-right:0.5%;
+    }
+
+    .box-style2{
+         width:49%;
+        margin-right:0.5%;
+    }
+}
+
+@media(min-width:768px) and (max-width:1100px) {
+    .box-style1{
+        width:49%;
+        margin-right:0.5%;
+    }
+
+    .box-style2{
+        width:49%;
+        margin-right:0.5%;
+    }
+}
+
+
+
+
+
+

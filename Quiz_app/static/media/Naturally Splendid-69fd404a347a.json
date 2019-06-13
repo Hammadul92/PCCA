@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "naturally-splendid",
+  "private_key_id": "69fd404a347a5bc281a847e3916bad09afaf700c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCT9paMmUBUEMee\nWBIYmFerJLW4hWhfpYQIGplWZKuB63dnTKNyT4u5A3fP/FNAuMvk9Igh/amZ2iei\n7teBVD4QzJoJEsgPxh0/AqlpKXz/YoH8MqgSrQkgzS/bJLJQpeSHrhrvonLmfkRf\nKQWBIQ3y/cOmBRbR92+STqG7nKrJXh2xgJKjPcsNaH9XDU4gnayVk3PboBTv+X0D\nv53CO8Aqaj8sBEjcnxEULlk6CSAmQqC/aozganotps977A6UfvykO7VJUH0CCFYc\nB9yoJhb0ZnBGyyiz39YkyCvQKM/351f5v6B1XnZ5ta4R0dSGiDb0Qt3vdk4rUrlD\nRGoeaCnvAgMBAAECggEAGGp7/FZ7oYOlVRFGZy2YZeLoY7sL9qCK8YVmITX6gTVY\nXkDsxbuvnEeguT7zg/4akzzwy98eYgd4O/A6upoqpb4FexLQ1Z2FDPVE/Ff+yuu3\n9GRtjKtmErYZPAnJrPo7BFKsGjgNytAyOxu7T0wjj6Hla5tyYRJ6JEP6d0mKezDe\n5ZPTjOTrRe/ZfRMpSVi8uOaL30wHUimASy+pyuaL3u95fCA77aLLhApgihXswiAo\n2k5RZ5v1ieKmptUvQZXOPQXALYujCR2d8zmq0HXvrnKjPjNS5UCZU7M+DSHM1bBH\nBOB650iRZtTb3ObDSBcs+t6DoxlCVM/iAIjTKgvwJQKBgQDIkwejCWtohA4zNM6T\nlOHGfeospMvRKgkUFwcyI6BJR+0jrnTchXs1u/RCtAGQ9imEfR2/hoJBqrdcKy6/\nib6Ykr+UyjSsJlvx4msFxs6GOG16UN2VVS2kuRX2ouuW5NrXimjc3ATVCX/UGCRa\nDR/Rj4JeIoJwhmNtBsFnKer1lQKBgQC82cJmEthhvC9t509rsck5djBO5kCVrGzL\nhpCzDE6JOxuzBh5OPp9cib1AkNYr6yHDUws512IjtSCOlfjOV9yBZuGvw4lnMUeA\nDhzbL30tO2ohuNdPWMpA8UBgFcWfEK3SKJhsX6N+lXOzm9nb4z738gOoBDqfcdJv\nLZc5AEZ4cwKBgQCLLmPdQbsTwpcr91fl1yk4mMV4Bz8bvMSh+TzYERq33z5yRSv4\nnnOaHPvpkYmIsxiqRDvxXIBk2vbz8U82QHpO234v3ITidJfW6JwFXSiQwPVPLHAm\noP3UUU8pX3KFufcWHIiZwd9kiXv3jG0lQ/gxbhk0A1RqiwbRcB+i29acZQKBgGgj\nQIKfA7kpV5IoSnBdklPga5UmfRjMAxZcNvC06Z3c/VJEHnQRLjmOLtEqzR9cwrp9\n0aPstE5yc+iMpK3MX2jv/aW5ksxXrVDc92aaklFeARFlZz12/di/8DrL5rTnMqLA\nBgVE29hSu4GggIszjaaWSxPceSMxVdQ+9LPXBgUnAoGAJdyWhDLLna07gny3EyS9\nrI1gfOmi7E5tA13391f7meyKqdIMNhgYv01LJzGQASwzzNzkG2cw2tLyKZNwspXW\ntwUTVVDlJORW+7rZbxECDBWU9/8MhaSk0P6wh/APQtWnunh+EluvzWAvE+soyeL3\n1zz++xS0nlTpPraDWOGfHj4=\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-analytics@naturally-splendid.iam.gserviceaccount.com",
+  "client_id": "103972801616795997339",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-analytics%40naturally-splendid.iam.gserviceaccount.com"
+}
