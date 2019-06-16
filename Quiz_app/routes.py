@@ -1,7 +1,7 @@
 from . import app
 from .views import get_month_name, date_now, month_now, year_now, day_now, allowed_file, decrease_inventory, inventory_remaining, variational_inventory, generate_email, year_month_day, get_month_from_date, calc_days_gap
 from flask import render_template, request, session, redirect, url_for, flash, g,json,jsonify,abort, Response
-from .models import Coupons, Media, User, BlogDatabase, Products, Cart, Joinmail, Invoices, Sales, Contact
+from .models import Media, User, Blogs, Events, Cart, Joinmail, Invoices, Sales, Contact
 from . import db
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask_login import login_required, login_user, logout_user, current_user
@@ -28,9 +28,6 @@ def page_not_found(e):
 @app.route('/sitemap')
 def sitemap():
   return render_template('sitemap.xml')
-
-
-
 
 
 
@@ -438,7 +435,7 @@ def blog_post():
     form = request.form
     if request.method== 'POST':
         try:
-          new_blog = BlogDatabase(form['blogtitle'], '', date_now())
+          new_blog = Blogs(form['blogtitle'], '', date_now())
           db.session.add(new_blog)
           db.session.commit()
         except exc.IntegrityError:
@@ -450,27 +447,11 @@ def blog_post():
 @app.route('/delete_blog/<int:blog_ID>')
 @login_required
 def delete_blog(blog_ID):
-  BlogDatabase.query.filter_by(blog_ID=blog_ID).delete()
+  Blogs.query.filter_by(blog_ID=blog_ID).delete()
   db.session.commit()
   return redirect(url_for('admin', tab='blog'))
 
 
-@app.route('/remove_blog_tag/<int:blog_ID>/<tag_name>')
-@login_required
-def remove_blog_tag(blog_ID, tag_name):
-  blog = BlogDatabase.query.filter_by(blog_ID = blog_ID).first()
-  tags = blog.category.split(',')
-  new_tags = ""
-  for tag in tags:
-    if tag != tag_name:
-       if new_tags == "":
-          new_tags = tag
-       else:
-          new_tags += ',' + tag
-  
-  blog.category = new_tags
-  db.session.commit()
-  return redirect(url_for('admin', tab='update_blog', update_ID = blog_ID))
 
 
 
@@ -480,7 +461,7 @@ def update_blog_form(blogid):
   form = request.form
   if request.method== 'POST':
     try:
-      blog=BlogDatabase.query.filter_by(blog_ID=blogid).first()
+      blog=Blogs.query.filter_by(blog_ID=blogid).first()
       blog.blog_topic = form['blogtitle']
       blog.blog_desc = form['description']
       blog.img_url = form['img_url']          
@@ -819,26 +800,13 @@ def admin(tab, subtab="edit",  update_ID = 1):
   if current_user.role == 'admin':
     page = request.args.get('page', 1, type=int)
 
-    products = Products.query.order_by(Products.product_ID.desc()).paginate(page, 20, False)
-    next_url_product = url_for('admin', tab=tab, page=products.next_num) \
-       if products.has_next else None
-    prev_url_product = url_for('admin', tab=tab, page=products.prev_num) \
-       if products.has_prev else None
+    events = Events.query.order_by(Events.event_ID.desc()).paginate(page, 20, False)
+    next_url_events = url_for('admin', tab=tab, page=events.next_num) \
+       if events.has_next else None
+    prev_url_events = url_for('admin', tab=tab, page=events.prev_num) \
+       if events.has_prev else None
 
-
-    _products = []
-    for product in products.items:
-         _in_stock = True
-         if product.inventory:
-            inventory = product.inventory.split(',')
-         else:
-            inventory = ''
-         for amount in inventory:
-             if int(amount) <= 1:
-                _in_stock = False
-         _products.append([product.product_ID, product.product_name, product.discount, _in_stock, product.product_price, product.category, product.subcategory, product.mainimage, product.disable, product.taxable])
-  
-    blogs = BlogDatabase.query.order_by(BlogDatabase.blog_ID.desc()).paginate(page, 15, False)
+    blogs = Blogs.query.order_by(Blogs.blog_ID.desc()).paginate(page, 15, False)
     next_url_blog = url_for('admin', tab=tab, page=blogs.next_num) \
        if blogs.has_next else None
     prev_url_blog = url_for('admin', tab=tab, page=blogs.prev_num) \
@@ -865,8 +833,7 @@ def admin(tab, subtab="edit",  update_ID = 1):
            bank = user.card_last4 + " (" + user.card_brand + ") Exp: " + user.card_exp_year 
         order_history = Sales.query.filter_by(user_ID = user.userID).all()
         number_of_orders = len(order_history)
-        users.append([user.userID, user.firstname, user.lastname, user.email, user.currency, user.phone, 
-        user.address, user.city, user.country, user.zipcode, user.province, user.registered_on_app, user.role, number_of_orders, bank, cart_value])
+        users.append([user.userID, user.firstname, user.lastname, user.email,  user.phone,  user.registered_on_app, user.role, number_of_orders, bank, cart_value])
 
     db.session.commit()
     authentication_requests = 0 
@@ -901,8 +868,6 @@ def admin(tab, subtab="edit",  update_ID = 1):
           read_queries +=1
 
 
-    num_of_products = Products.query.order_by(Products.product_ID).all() 
-
     media = Media.query.order_by(Media.media_ID.desc()).paginate(page, 64, False)
     next_url_media = url_for('admin', tab=tab, page=media.next_num) \
       if media.has_next else None
@@ -910,35 +875,14 @@ def admin(tab, subtab="edit",  update_ID = 1):
       if media.has_prev else None
 
 
-    coupons = Coupons.query.order_by(Coupons.coupon_ID.desc()).all()
-    all_products = Products.query.order_by(Products.product_ID).all()
-
-
     associated_brands = []
     associated_products = []
     
-    update_product = Products.query.filter_by(product_ID = update_ID).first()
-    
-    update_blog = BlogDatabase.query.filter_by(blog_ID = update_ID).first()
-    update_blog_tags = []
-    if update_blog:
-      if update_blog.category:
-        update_blog_tags = update_blog.category.split(',')
+    update_product = Events.query.filter_by(event_ID = update_ID).first()   
+    update_blog = Blogs.query.filter_by(blog_ID = update_ID).first()
+
     
   
-       
-    variations = []
-    if update_product:
-        sizes = update_product.product_weight.split(",")
-        shipping_weight = update_product.product_shipping_weight.split(",")
-        prices = update_product.product_price.split(",")
-        inventory = update_product.inventory.split(",")
-        L = update_product.L.split(",")
-        W = update_product.W.split(",")
-        H = update_product.H.split(",")
-
-        for val in range(0, len(sizes)):
-            variations.append([sizes[val], prices[val], L[val], W[val], H[val], shipping_weight[val], inventory[val]])
 
     if request.method == 'POST':
 
@@ -979,13 +923,11 @@ def admin(tab, subtab="edit",  update_ID = 1):
       if orders.has_prev else None
 
 
-    return render_template('admin.html', users=users, blogs = blogs, products=products, num_of_products = len(num_of_products), subscribers=subscribers, orders=orders, tab=tab, contacts=contacts, 
-    read_orders= read_orders, read_queries=read_queries,  
-    month_now= month_now(), year_now = year_now(),  next_url_product=next_url_product, prev_url_product = prev_url_product, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
+    return render_template('admin.html', users=users, blogs = blogs, events=events, subscribers=subscribers, orders=orders, tab=tab, contacts=contacts, 
+    read_orders= read_orders, read_queries=read_queries, next_url_events=next_url_events, prev_url_events = prev_url_events, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
     next_url_subscriber = next_url_subscriber, prev_url_subscriber = prev_url_subscriber, authentication_requests = authentication_requests, next_url_user=next_url_user, prev_url_user = prev_url_user, 
-    update_product = update_product, update_blog = update_blog, variations = variations, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, all_products = all_products, _products = _products, 
-    coupons=coupons, subtab = subtab,  num_of_subscribers = num_of_subscribers,
-    prev_url_media = prev_url_media, next_url_media = next_url_media, media=media, page = page, update_blog_tags=update_blog_tags)
+    update_product = update_product, update_blog = update_blog, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, subtab = subtab,  num_of_subscribers = num_of_subscribers,
+    prev_url_media = prev_url_media, next_url_media = next_url_media, media=media, page = page)
   else:
     abort(403)
 
@@ -997,342 +939,13 @@ def admin(tab, subtab="edit",  update_ID = 1):
 def add_blog_tags():
   if request.method == 'POST':
      result = {'message':200}
-     blog = BlogDatabase.query.filter_by(blog_ID = request.json['blog_ID']).first()
+     blog = Blogs.query.filter_by(blog_ID = request.json['blog_ID']).first()
      if blog.category and request.json['value'] not in blog.category.split(','):
         blog.category = blog.category + ',' + request.json['value']
      elif not blog.category:
         blog.category = request.json['value']
 
      db.session.commit()
-
-     r = Response(response=json.dumps(result), status=200, mimetype="application/json")
-     r.headers["Content-Type"] = "text/json; charset = utf-8"
-     return r
-
-
-############### Analytics  Ajax ####################
-
-@app.route('/accounts', methods=['POST'])
-@login_required
-def accounts():
-  if request.method == 'POST':
-      date = str(request.json['date'])
-      end_date = str(request.json['end_date'])
-      if end_date != '':
-         end_date = end_date.split('-')
-         end_year = end_date[0]
-         end_day = end_date[2][:2]
-         end_month = int(end_date[1])
-         end_month = get_month_name(end_month)
-         end_date =  end_day +' ' + end_month +', '+ end_year
-
-      date = date.split('-')
-      year = date[0]
-      day = date[2][:2]
-      month= int(date[1])
-      month = get_month_name(month)
-      date = day +' ' + month +', '+ year
-
-      result = {'date': date, 'end_date': end_date, 'orders': [], 'paid_total': 0, 'paid_subtotal': 0, 'paid_shipping': 0, 'discount': 0, 'paid_gst':0}
-      categories = Product_Category.query.order_by(Product_Category.category_ID).all()
-      
-      if end_date != '':
-         last_id = Sales.query.order_by(Sales.sale_ID.desc()).filter_by(date = end_date, refunded = False).first()
-         first_id = Sales.query.order_by(Sales.sale_ID).filter_by(date = date, refunded = False).first()
-         if first_id and last_id:
-            sales = Sales.query.filter_by(refunded = False).filter(Sales.sale_ID >= first_id.sale_ID).filter(Sales.sale_ID <= last_id.sale_ID).all()
-         elif first_id and not last_id:
-            sales = Sales.query.filter_by(refunded = False).filter(Sales.sale_ID >= first_id.sale_ID).all()
-         elif last_id and not first_id:
-            sales = Sales.query.filter_by(refunded = False).filter(Sales.sale_ID <= last_id.sale_ID).all()
-         else:
-            sales = Sales.query.order_by(Sales.sale_ID).filter_by(refunded = False).all()
-
-      else:
-         sales = Sales.query.filter_by(date = date, refunded = False).all()
-      
-      subtotal = 0 
-      for sale in sales:
-          result['orders'].append(sale.sale_ID)
-          result['paid_subtotal'] += sale.subtotal
-          result['paid_shipping'] += sale.shipping_charge
-          result['paid_total'] += sale.sale_amount;
-          result['paid_gst'] += sale.sale_amount - (sale.subtotal + sale.shipping_charge);
-
-          result['paid_gst'] = round(result['paid_gst'],2)
-          result['paid_subtotal'] = round(result['paid_subtotal'],2)
-          result['paid_shipping'] = round(result['paid_shipping'],2)
-          result['paid_total'] = round(result['paid_total'], 2)
-
-          items = Invoices.query.filter_by(sale_ID = sale.sale_ID).all()
-          for item in items:
-              product = Products.query.filter_by(product_ID = item.product_ID).first()
-              if product.category in result:
-                 result[product.category]['sales'] += item.amount
-                 result[product.category]['subtotal'] += item.price*item.amount
-                 result[product.category]['subtotal'] = round(result[item.category]['subtotal'],2)
-              else:
-                 result[product.category] = {'sales' : item.amount, 'subtotal': round(item.price*item.amount,2), 'items':{}}
-              subtotal += item.price*item.amount
-              if item.product_name in result[product.category]['items']:
-                 result[product.category]['items'][item.product_name]['amount'] += item.amount
-                 result[product.category]['items'][item.product_name]['subtotal'] += item.amount * item.price
-              else: 
-                 result[product.category]['items'][item.product_name] = {'amount': item.amount, 'price' : item.price, 'subtotal': item.amount * item.price}
-
-              result[product.category]['items'][item.product_name]['subtotal'] = round(result[item.category]['items'][item.product_name]['subtotal'],2)
-
-      result['discount'] = round(subtotal - result['paid_subtotal'] ,2)
- 
-      r = Response(response=json.dumps(result), status=200, mimetype="application/json")
-      r.headers["Content-Type"] = "text/json; charset = utf-8"
-      return r
-
-
-@app.route('/sales_analytics', methods=['POST'])
-@login_required
-def sales_analytics():
-  if request.method == 'POST':
-     year = request.json['year']
-     if request.json['year'] == '':
-        year = year_now()
-
-     result = {'year': year,'total_sales' : 0, 'num_of_sales': 0, 'sales_per_day':[], 'sales_per_month':[], 'available_years': []}
-     
-     sales_database = Sales.query.order_by(Sales.sale_ID).filter_by(refunded = False).all()
-     for sale in sales_database:
-         year = sale.date.split(',')[1]
-         if year not in result['available_years']:
-            result['available_years'].append(year)
-
-
-     if year == '':
-        sales = Sales.query.order_by(Sales.sale_ID.asc()).filter_by(refunded = False).all()
-     else:
-        sales = Sales.query.order_by(Sales.sale_ID.asc()).filter_by(refunded = False).filter(Sales.date.contains(year)).all()
-
-     step = 0
-     month_step = 0
-     for order in sales:
-         result['total_sales'] += order.sale_amount
-         result['total_sales'] = round(result['total_sales'],2)
-         result['num_of_sales'] += 1
-         if step == 0:
-            result['sales_per_day'].append([order.date.split(',')[0], 1, round(order.sale_amount,2)])
-            result['sales_per_month'].append([get_month_from_date(order.date), 1, round(order.sale_amount,2)])
-            step+=1
-            month_step +=1
-         else:
-            if result['sales_per_day'][step-1][0] == order.date.split(',')[0]:
-               result['sales_per_day'][step-1][1] += 1
-               result['sales_per_day'][step-1][2] += round(order.sale_amount,2)
-            else:
-               result['sales_per_day'].append([order.date.split(',')[0], 1, order.sale_amount ])
-               step+=1
-
-            if result['sales_per_month'][month_step-1][0] == get_month_from_date(order.date):
-               result['sales_per_month'][month_step-1][1] += 1
-               result['sales_per_month'][month_step-1][2] += order.sale_amount
-               result['sales_per_month'][month_step-1][2] = round(result['sales_per_month'][month_step-1][2],2)
-            else:
-               result['sales_per_month'].append([get_month_from_date(order.date), 1, order.sale_amount])
-               month_step+=1
-     
-     r = Response(response=json.dumps(result), status=200, mimetype="application/json")
-     r.headers["Content-Type"] = "text/json; charset = utf-8"
-     return r
-
-
-@app.route('/best_sellers', methods=['POST'])
-@login_required
-def best_sellers():
-  if request.method == 'POST':
-     result = {}
-     list_result = []
-     sales = Sales.query.order_by(Sales.sale_ID).filter_by(refunded = False).all()
-     for order in sales:
-         items = Invoices.query.filter_by(sale_ID = order.sale_ID).all()
-         for item in items:
-             if item.product_name in result:
-                result[item.product_name]['num_of_sales'] += item.amount
-                result[item.product_name]['amount_of_sales'] += item.price * item.amount
-                result[item.product_name]['amount_of_sales'] = round(result[item.product_name]['amount_of_sales'], 2)
-             else:
-                product = Products.query.filter_by(product_ID = item.product_ID).first()
-                result[item.product_name] = {'num_of_sales': item.amount, 'amount_of_sales': item.price * item.amount, 'image': product.mainimage}
-
-     
-     for item in result:
-         list_result.append([item, result[item]['num_of_sales'], result[item]['amount_of_sales'], result[item]['image']] )
-     
-     if request.json['type'] == 'num_of_sales':
-        list_result = sorted(list_result, key=lambda e: e[1], reverse = True)
-     else:
-        list_result = sorted(list_result, key=lambda e: e[2], reverse = True)
-     result = {'list_result' : list_result}
-     
-     r = Response(response=json.dumps(result), status=200, mimetype="application/json")
-     r.headers["Content-Type"] = "text/json; charset = utf-8"
-     return r
-
-@app.route('/best_selling_brands', methods=['POST'])
-@login_required
-def best_selling_brands():
-  if request.method == 'POST':
-     result = {}
-     list_result = []
-     sales = Sales.query.order_by(Sales.sale_ID).filter_by(refunded = False).all()
-     for order in sales:
-         items = Invoices.query.filter_by(sale_ID = order.sale_ID).all()
-         for item in items:
-             if item.category in result:
-                result[item.category]['num_of_sales'] += item.amount
-                result[item.category]['amount_of_sales'] += item.price * item.amount
-                result[item.category]['amount_of_sales'] = round(result[item.category]['amount_of_sales'], 2)
-             else:
-                result[item.category] = {'num_of_sales': item.amount, 'amount_of_sales': item.price * item.amount}
-
-     
-     for item in result:
-         list_result.append([item, result[item]['num_of_sales'], result[item]['amount_of_sales']])
-     
-     if request.json['type'] == 'num_of_sales':
-        list_result = sorted(list_result, key=lambda e: e[1], reverse = True)
-     else:
-        list_result = sorted(list_result, key=lambda e: e[2], reverse = True)
-     result = {'list_result' : list_result}
-     
-     r = Response(response=json.dumps(result), status=200, mimetype="application/json")
-     r.headers["Content-Type"] = "text/json; charset = utf-8"
-     return r
-
-
-
-
-
-@app.route('/change_currency', methods=['POST'])
-@login_required
-def change_currency():
-  if request.method == 'POST':
-     current_user.currency = request.json['currency']
-     db.session.commit()
-     result = {'message':200}
-     r = Response(response=json.dumps(result), status=200, mimetype="application/json")
-     r.headers["Content-Type"] = "text/json; charset = utf-8"
-     return r
-
-
-
-@app.route('/buyers', methods = ['POST'])
-@login_required
-def buyers():
-  if request.method == 'POST':
-     result={'average_revenue': 0, 'top_buyers' : {}, 'top_buyers_amount': {}, 'average_wait_time': {}}
-     list_buyers = []
-     list_buyers_amount = []
-     list_wait_time = []
-     users = User.query.order_by(User.userID).all()
-     for user in users:
-         sales = Sales.query.order_by(Sales.sale_ID).filter_by(user_ID = user.userID, refunded = False).all()
-         for sale in sales:
-
-             if user.userID in result['top_buyers']:
-                result['top_buyers'][user.userID]['num_of_sales'] += 1                
-             else:
-                result['top_buyers'][user.userID] = {'name': user.firstname + ' ' + user.lastname, 'email': user.email, 'num_of_sales': 1}
-                            
-             if user.userID in result['top_buyers_amount']:
-                result['top_buyers_amount'][user.userID]['amount_of_sales'] += sale.sale_amount
-                result['top_buyers_amount'][user.userID]['amount_of_sales']  = round(result['top_buyers_amount'][user.userID]['amount_of_sales'],2)
-             else:
-                result['top_buyers_amount'][user.userID] = {'name': user.firstname + ' ' + user.lastname, 'email': user.email, 'amount_of_sales': sale.sale_amount}
-
-             if user.userID in result['average_wait_time']:
-                result['average_wait_time'][user.userID]['time_gap'] += calc_days_gap(result['average_wait_time'][user.userID]['start_date'], sale.date)
-                result['average_wait_time'][user.userID]['start_date'] = sale.date
-             else:
-                result['average_wait_time'][user.userID] = {'name': user.firstname + ' '+ user.lastname, 'email': user.email, 'start_date': sale.date , 'time_gap': 0 }
-
-
-     total_sales = 0
-     for buyer in result['top_buyers_amount']:
-         total_sales += result['top_buyers_amount'][buyer]['amount_of_sales']
-         list_buyers_amount.append([buyer, result['top_buyers_amount'][buyer]['email'], result['top_buyers_amount'][buyer]['amount_of_sales']])
-     
-     result['average_revenue'] = round(total_sales/len(list_buyers_amount),2)
-
-     for buyer in result['average_wait_time']:
-       if result['top_buyers'][buyer]['num_of_sales'] > 1:
-         result['average_wait_time'][buyer]['time_gap'] = round(result['average_wait_time'][buyer]['time_gap']/(result['top_buyers'][buyer]['num_of_sales']-1))
-         list_wait_time.append([buyer, result['average_wait_time'][buyer]['email'], result['average_wait_time'][buyer]['time_gap']])
-
-
-     for buyer in result['top_buyers']:
-         list_buyers.append([buyer, result['top_buyers'][buyer]['email'], result['top_buyers'][buyer]['num_of_sales'] ])
-
-     list_buyers = sorted(list_buyers, key=lambda e: e[2], reverse = True)
-     list_wait_time = sorted(list_wait_time, key=lambda e: e[2])
-     list_buyers_amount = sorted(list_buyers_amount, key=lambda e: e[2], reverse = True)
-
-     
-     result['top_buyers'] = list_buyers[:20]
-     result['average_wait_time'] = list_wait_time[:20]
-     result['top_buyers_amount'] = list_buyers_amount[:20]
-    
-     r = Response(response=json.dumps(result), status=200, mimetype="application/json")
-     r.headers["Content-Type"] = "text/json; charset = utf-8"
-     return r
-
-
-@app.route('/locations', methods = ['POST'])
-def locations():
-    if request.method == 'POST':
-       result = {'stores':[]}
-       stores = Stores.query.order_by(Stores.store_id).all()
-       for store in stores:
-           location_string = '<div class="infobox"><h3 class="title"><a href="'+store.map_url + '">'+store.store_name+'</a></h3><span>'+store.address+ ', '+store.city+ ', '+ store.province + ', '+ store.country + '</span>' 
-           location_string += '<br/> <h3 class="title">Contact: </h3>'+store.contact_name + ' (' + store.contact_number + ') </div>'
-           result['stores'].append([location_string, float(store.latitude), float(store.longitude), 5, store.icon_url])
-       
-       r = Response(response=json.dumps(result), status=200, mimetype="application/json")
-       r.headers["Content-Type"] = "text/json; charset = utf-8"
-       return r
-
-
-@app.route('/shipping', methods = ['POST'])
-@login_required
-def shipping():
-  if request.method == 'POST':
-     result={'total_charge': 0, 'total_cost': 0,  'shipping_diff' : {}, 'shipping_diff_country':{}, 'shipping_diff_province': {}}
-     sales = Sales.query.order_by(Sales.sale_ID).filter_by(refunded = False).all()
-     for sale in sales:   
-         result['total_charge'] += sale.shipping_charge
-         result['total_cost'] += sale.shipping_cost    
-         result['shipping_diff'][sale.sale_ID] = round(sale.shipping_charge  - sale.shipping_cost, 2)
-         location = User.query.filter_by(userID = sale.user_ID).first()
-         if location.country in result['shipping_diff_country']:
-            result['shipping_diff_country'][location.country]['difference'] += sale.shipping_charge - sale.shipping_cost
-            result['shipping_diff_country'][location.country]['difference'] = round(result['shipping_diff_country'][location.country]['difference'] ,2)
-            result['shipping_diff_country'][location.country]['num_of_orders'] += 1
-         else:
-            result['shipping_diff_country'][location.country] = {'difference': sale.shipping_charge - sale.shipping_cost, 'num_of_orders' : 1}
-            result['shipping_diff_country'][location.country]['difference'] = round(result['shipping_diff_country'][location.country]['difference'] ,2)
-
-         if location.country in result['shipping_diff_province']:
-            if location.province in result['shipping_diff_province'][location.country]:
-               result['shipping_diff_province'][location.country][location.province]['difference'] += sale.shipping_charge - sale.shipping_cost
-               result['shipping_diff_province'][location.country][location.province]['difference'] = round(result['shipping_diff_province'][location.country][location.province]['difference'],2)
-               result['shipping_diff_province'][location.country][location.province]['num_of_orders'] += 1
-            else:
-               result['shipping_diff_province'][location.country][location.province] = {'difference':sale.shipping_charge - sale.shipping_cost, 'num_of_orders': 1}
-               result['shipping_diff_province'][location.country][location.province]['difference'] = round(result['shipping_diff_province'][location.country][location.province]['difference'],2)
-         else:
-            result['shipping_diff_province'][location.country] = {}
-            result['shipping_diff_province'][location.country][location.province] = {'difference': sale.shipping_charge - sale.shipping_cost, 'num_of_orders' : 1}
-            result['shipping_diff_province'][location.country][location.province]['difference'] = round(result['shipping_diff_province'][location.country][location.province]['difference'],2)
-
-     result['total_charge'] = round(result['total_charge'], 2)
-     result['total_cost'] = round(result['total_cost'], 2)
 
      r = Response(response=json.dumps(result), status=200, mimetype="application/json")
      r.headers["Content-Type"] = "text/json; charset = utf-8"

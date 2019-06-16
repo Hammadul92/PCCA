@@ -27,10 +27,7 @@ class Config(object):
     MAIL_ASCII_ATTACHMENTS = True
     MAIL_DEFAULT_SENDER = 'admin@naturallysplendid.com'
     ADMINS = ['hammad@naturallysplendid.com']
-    SHIPPING_OPTION = 'flat'
-    UPLOADED_PHOTOS_DEST = Top_level_dir + '/Quiz_app/static/img/'
     INVOICE_FILES_DEST = Top_level_dir + '/Quiz_app/static/invoices/'
     PSLIPS_FILES_DEST = Top_level_dir + '/Quiz_app/static/pslips/'
-    FM_FILES_DEST = Top_level_dir + '/Quiz_app/static/fm/'
     UPLOADED_MEDIA_DEST = Top_level_dir + '/Quiz_app/static/media/'
 

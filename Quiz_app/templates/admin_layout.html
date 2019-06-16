@@ -22,10 +22,8 @@
      <div class="col-md-1 col-sm-2 col-xs-12 text-center" style="padding: 15px;"><a href="/"><img src="https://www.naturallysplendid.com/static/media/logo2x.png" style="width: 75px; display: inline;"></a></div>
  
     <ul id="horizontal_nav" class="col-md-11 col-sm-10 col-xs-12">
-        <li><a href="/admin/dashboard"> <img src="https://www.naturallysplendid.com/static/media/dashboard.png" style="width:40px"> <br/> <span> Dashboard </span> </a></li>
-        <li><a href="/read_queries"> <img src="https://www.naturallysplendid.com/static/media/chat.png" style="width: 40px;"> <br/> <span>Customer Queries</span>  {% if read_queries >=1 %}<span class="badge">{{read_queries}}</span>{% endif %}</a></li>
-        <li><a href="/admin/sales"><img src="https://www.naturallysplendid.com/static/media/graph.png" style="width: 30px;"><br/> <span> Sales </span> </a></li>
-        <li><a href="/admin/accounts"><img src="https://www.naturallysplendid.com/static/media/money.png" style="width: 30px;"> <br/> <span> Accounts </span></a></li>
+        <li><a href="/admin/dashboard"> <img src="https://www.naturallysplendid.com/static/media/dashboard.png" style="width:30px"> <br/> <span> Dashboard </span> </a></li>
+        <li><a href="/read_queries"> <img src="https://www.naturallysplendid.com/static/media/chat.png" style="width: 30px;"> <br/> <span>Customer Queries</span>  {% if read_queries >=1 %}<span class="badge">{{read_queries}}</span>{% endif %}</a></li>
         <li><a href="/logout"> <img src="https://www.naturallysplendid.com/static/media/logout.png" style="width:30px;"> <br/><span> Log Out </span></a></li>
     </ul>
    </section>
@@ -38,28 +36,26 @@
 <div class="nav nav-pills nav-stacked col-md-1 col-sm-2 admin_navbar">
   
 
-  {% if tab =='media' %}<li class ="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/media"><img src="https://www.naturallysplendid.com/static/media/photo-camera.png" style="width:20px;"> <span> Media </span> </a></li>
+  {% if tab =='media' %}<li class ="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/media"><img src="https://www.naturallysplendid.com/static/media/photo-camera.png"> <span> Media </span> </a></li>
 
-  {% if tab =='users'%}<li class="active admin"> {% else %}<li class="admin"> {% endif %}<a href="/read_users"> <img src="https://www.naturallysplendid.com/static/media/networking.png" style="width:30px;"> <span>Users</span> {% if authentication_requests >=1 %}<span class="badge">{{authentication_requests}}</span>{% endif %}</a></li>
+  {% if tab =='users'%}<li class="active admin"> {% else %}<li class="admin"> {% endif %}<a href="/read_users"> <img src="https://www.naturallysplendid.com/static/media/networking.png"> <span>Users</span> {% if authentication_requests >=1 %}<span class="badge">{{authentication_requests}}</span>{% endif %}</a></li>
 
-  {% if tab == 'subscribers' %}<li class="active admin"> {% else %}<li class="admin"> {% endif %}<a href="/admin/subscribers"><img src="https://www.naturallysplendid.com/static/media/networking.png" style="width:30px;"> <span>Subscribers</span> <span class="badge">{{num_of_subscribers}}</span></a></li>
+  {% if tab == 'subscribers' %}<li class="active admin"> {% else %}<li class="admin"> {% endif %}<a href="/admin/subscribers"><img src="https://www.naturallysplendid.com/static/media/networking.png"> <span>Subscribers</span> <span class="badge">{{num_of_subscribers}}</span></a></li>
   
 
-  {% if tab =="categories" %}<li class="active admin">{% else %}<li class="admin"> {% endif %}<a href="/admin/categories"><img src="https://www.naturallysplendid.com/static/media/list.png" style="width:20px;"> <span>Categories </span></a></li>
+  {% if tab =='product' %}<li class="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/product"><img src="https://www.naturallysplendid.com/static/media/box.png"> <span> Products</span> </a></li>
 
-  {% if tab =='product' %}<li class="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/product"><img src="https://www.naturallysplendid.com/static/media/box.png" style="width:20px;"> <span> Products</span> </a></li>
+  {% if tab =='coupons' %} <li class="active admin">{% else %}<li class="admin">{% endif %} <a href="/admin/coupons"><img src="https://www.naturallysplendid.com/static/media/coupon.png"> <span> Coupons </span></a></li>
 
-  {% if tab =='coupons' %} <li class="active admin">{% else %}<li class="admin">{% endif %} <a href="/admin/coupons"><img src="https://www.naturallysplendid.com/static/media/coupon.png" style="width:20px;"> <span> Coupons </span></a></li>
+  {% if tab =='blog' %}<li class="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/blog"><img src="https://www.naturallysplendid.com/static/media/scholarship.png"> <span>Blogs</span></a></li>
 
-  {% if tab =='blog' %}<li class="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/blog"><img src="https://www.naturallysplendid.com/static/media/scholarship.png" style="width: 30px;"> <span>Blogs</span></a></li>
-
-  {% if tab =='status' %}<li class ="admin active"> {% else %} <li class ="admin"> {% endif %}<a href="/admin/status"><img src="https://www.naturallysplendid.com/static/media/clipboard.png" style="width: 20px;"> <span>Orders</span> {% if read_orders >=1 %}<span class="badge">{{read_orders}}</span>{% endif %} </a></li>
+  {% if tab =='status' %}<li class ="admin active"> {% else %} <li class ="admin"> {% endif %}<a href="/admin/status"><img src="https://www.naturallysplendid.com/static/media/clipboard.png"> <span>Orders</span> {% if read_orders >=1 %}<span class="badge">{{read_orders}}</span>{% endif %} </a></li>
 
 
   <li class="admin">
 </div>
 
-<div class="col-md-11 col-sm-10" style="height: 100vh; overflow: auto; padding: 0;">
+<div class="col-md-11 col-sm-10" style="height: 100vh; overflow: auto; padding: 15px;">
 
     {% with messages = get_flashed_messages(with_categories=true)%}
       {% if messages %}
@@ -71,9 +67,9 @@
      
 
 
-    {% block body %} {% endblock %}
 
-    {% include "admin_analytics.html" %}
+ {% block body %} {% endblock %}
+
 
 
 

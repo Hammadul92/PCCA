@@ -99,6 +99,10 @@ a{
   min-height: 100vh;
 }
 
+.admin_navbar img{
+  width: 20px;
+}
+
 .admin_navbar a{
   color: rgba(255,255,255, 0.7); 
 }
