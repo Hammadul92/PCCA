@@ -12,12 +12,34 @@ from logging.handlers import SMTPHandler
 from logging.handlers import RotatingFileHandler
 import os
 
+
+from flask_cors import CORS, cross_origin
+
+from flask_json import FlaskJSON, JsonError, json_response, as_json
+
+from flask_restful import Api
+
+
+
+from flask_jwt_extended import JWTManager
+
+
+
+
+
 #import flask_whooshalchemy as whooshalchemy
 
 #configurtion
 
 
 app = Flask(__name__)
+app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
+api = Api(app)
+jwt = JWTManager(app)
+FlaskJSON(app)
+CORS(app)
+
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config.from_object(Config)
 #database using SQLAlchemy and postgresql
 db = SQLAlchemy(app)
@@ -75,3 +97,13 @@ def load_user(userID):
 
 
 from . import routes
+
+import resources
+api.add_resource(resources.UserRegistration, '/registration')
+api.add_resource(resources.UserLogin, '/login')
+api.add_resource(resources.UserLogoutAccess, '/logout/access')
+api.add_resource(resources.UserLogoutRefresh, '/logout/refresh')
+api.add_resource(resources.TokenRefresh, '/token/refresh')
+api.add_resource(resources.AllUsers, '/users')
+api.add_resource(resources.SecretResource, '/secret')
+

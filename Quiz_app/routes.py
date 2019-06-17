@@ -18,7 +18,7 @@ import random
 import math
 import os
 import time
-
+from flask_json import FlaskJSON, JsonError, json_response, as_json
 
 
 @app.errorhandler(404)
@@ -109,7 +109,7 @@ def signup():
 
 
 
-@app.route('/login', methods=['POST', 'GET'])
+@app.route('/loginn', methods=['POST', 'GET'])
 def login():
   form = LoginForm(request.form)
   form3 = PasswordResetForm(request.form)
@@ -921,15 +921,26 @@ def admin(tab, subtab="edit",  update_ID = 1):
       if orders.has_next else None
     prev_url_orders = url_for('admin', tab=tab, page=orders.prev_num) \
       if orders.has_prev else None
-
-
-    return render_template('admin.html', users=users, blogs = blogs, events=events, subscribers=subscribers, orders=orders, tab=tab, contacts=contacts, 
-    read_orders= read_orders, read_queries=read_queries, next_url_events=next_url_events, prev_url_events = prev_url_events, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
-    next_url_subscriber = next_url_subscriber, prev_url_subscriber = prev_url_subscriber, authentication_requests = authentication_requests, next_url_user=next_url_user, prev_url_user = prev_url_user, 
-    update_product = update_product, update_blog = update_blog, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, subtab = subtab,  num_of_subscribers = num_of_subscribers,
-    prev_url_media = prev_url_media, next_url_media = next_url_media, media=media, page = page)
+    d = {'message': 'Hello you '}
+    return json_response(time='asdasdsjakhd', value=12)
   else:
     abort(403)
+
+    # return render_template('admin.html', users=users, blogs = blogs, events=events, subscribers=subscribers, orders=orders, tab=tab, contacts=contacts, 
+    # read_orders= read_orders, read_queries=read_queries, next_url_events=next_url_events, prev_url_events = prev_url_events, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
+    # next_url_subscriber = next_url_subscriber, prev_url_subscriber = prev_url_subscriber, authentication_requests = authentication_requests, next_url_user=next_url_user, prev_url_user = prev_url_user, 
+    # update_product = update_product, update_blog = update_blog, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, subtab = subtab,  num_of_subscribers = num_of_subscribers,
+    # prev_url_media = prev_url_media, next_url_media = next_url_media, media=media, page = page)
+    
+
+@app.route('/test')
+def test():
+  print(current_user.is_authenticated)
+  if current_user.is_authenticated:
+    
+    return json_response(time='Logged in', value=12)
+  else:
+    return json_response(time='not logged', value=12)
 
 
 

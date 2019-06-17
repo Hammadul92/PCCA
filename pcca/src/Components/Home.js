@@ -7,6 +7,10 @@ import './App.css';
 
 
 class Home extends React.Component{
+    state = {
+        loggedin: false,
+        token: null
+    }
 
     render(){
         return (

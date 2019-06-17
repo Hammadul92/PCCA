@@ -5,6 +5,8 @@ import datetime
 from sqlalchemy import CheckConstraint
 from .views import same_as
 
+from passlib.hash import pbkdf2_sha256 as sha256
+
 
 
 class User(db.Model):
@@ -37,6 +39,16 @@ class User(db.Model):
 		self.card_last4 = None
 		self.card_exp_year = None
 		self.card_brand = None
+    
+
+	@staticmethod
+	def generate_hash(password):
+		return sha256.hash(password)
+
+	@staticmethod
+	def verify_hash(password,hash):
+		return sha256.verify(password,hash)
+
 
 		
 
@@ -44,6 +56,7 @@ class User(db.Model):
 		self.pwdhash = generate_password_hash(password)
 
 	def check_password(self, password):
+		print(self.pwdhash)
 		return check_password_hash(self.pwdhash, password)
 
 	def is_authenticated(self):
@@ -63,6 +76,31 @@ class User(db.Model):
 	#"""Return the email address to satisfy Flask-Login's requirements."""
 	#"""Requires use of Python 3"""
 		return str(self.userID)
+
+	@classmethod
+	def return_all(cls):
+		def to_json(x):
+			return {
+            'username': x.email,
+            'password': x.pwdhash
+        }
+		return {'users': list(map(lambda x: to_json(x), User.query.all()))}
+
+######TOKEN FOR ACCESS HANDLING##########################
+
+class RevokedTokenModel(db.Model):
+    __tablename__ = 'revoked_tokens'
+    id = db.Column(db.Integer, primary_key = True)
+    jti = db.Column(db.String(120))
+    
+    def add(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    @classmethod
+    def is_jti_blacklisted(cls, jti):
+		query = cls.query.filter_by(jti = jti).first()
+		return bool(query)
 
 #####################################################################################################
 

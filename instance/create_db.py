@@ -8,6 +8,7 @@ if os.path.abspath(os.curdir) not in sys.path:
 
 with app.app_context():
 	db.drop_all()
+	print('execurted')
 	db.create_all()
 	#Initializing db with admin
 	admin = User(email='info@pcca.com', password='paklah92', role='admin')
