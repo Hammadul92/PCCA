@@ -1,20 +1,12 @@
 {% extends 'admin_layout.html' %}
 {%block body%}
 
-
-
- 
-
-
-
-
     {% if tab =='users' %} 
 
 
                 <div class="table-container">
                   <section class="row">
-                     <div class="col-md-8"></div>
-                     <div class="col-md-4">
+                     <div class="col-md-3">
                          <form action="/admin/users" method="POST">
                                 <div class="input-group form-group">
                                     <input type="text" name="name" class="form-control" placeholder="Search By Name">
@@ -141,133 +133,20 @@
 
     {% endif %}
 
-    {% if tab == 'coupons' %}
-
-        <div class="table-container">
-          <div class="row">
-             <div class="col-md-8"><h1>Coupons</h1></div>
-             <div class="col-md-4">
-                 <form action="/add_coupon" method="post">
-                      <div class="input-group form-group">
-                            <input type="text" name="coupon_name" class="form-control" placeholder="Coupon Name" required>
-                            <div class="input-group-btn"><button type="submit" class="btn btn-primary"> Add <i class="fa fa-plus-circle"></i></button></div>
-                      </div>                     
-                  </form>
-             </div>
-          </div>
-          
-          <table class="table table-striped">
-              <tr>
-                   <th> <i class="fa fa-trash"></i> </th>
-                   <th> Name </th>
-                   <th> Status </th>
-                   <th> Usage </th>
-                   <th> Discount </th>
-                   <th> Application </th>
-                   <th> Date </th>
-              </tr>
-
-              <form action="/update_coupons" method="post">
-                    {% for coupon in coupons %}
-                       
-                       <tr>
-                         <td> 
-                           <div class="checkbox">                                   
-                                <input type="checkbox" id="{{coupon.coupon_ID}}" name="delete{{coupon.coupon_ID}}">
-                                <label for="{{coupon.coupon_ID}}"></label>
-                            </div>
-                        </td>
-                         <td><b>{{coupon.coupon_name}}</b></td>
-                         <td>
-                            <div class="checkbox"> 
-                              {% if coupon.active %}                                                                 
-                                  <input type="checkbox" id="active{{coupon.coupon_ID}}" name="active{{coupon.coupon_ID}}" checked>                                  
-                              {% else %}
-                                  <input type="checkbox" id="active{{coupon.coupon_ID}}" name="active{{coupon.coupon_ID}}">
-                              {%endif%}
-                                  <label for="active{{coupon.coupon_ID}}">&nbsp;Active </label>
-                             </div>
-
-                         </td>
-                         <td>
-                           {{coupon.usage}}
-                         </td>
-                         <td>
-                           <section class="box-style3">
-                            <label> Subtotal Discount </label>
-                            <input type="number" min="0" max="100" name="{{coupon.coupon_ID}}discount_percent" value="{{coupon.discount_percent}}" class="form-control form-group">  
-                            <label> Shipping Discount </label>
-                            <input type="number" min="0" max="100" name="{{coupon.coupon_ID}}shipping_discount_percent" value="{{coupon.shipping_discount_percent}}" class="form-control form-group"></td>
-                          </section>
-                         </td>
-
-                         <td>
-                          <section class="box-style3">
-                               <div class="checkbox">
-                                 {% if coupon.all_products %}
-                                    <input type="checkbox" id="all_products{{coupon.coupon_ID}}" name="all_products{{coupon.coupon_ID}}" checked> 
-                                 {% else %}
-                                    <input type="checkbox" id="all_products{{coupon.coupon_ID}}" name="all_products{{coupon.coupon_ID}}"> 
-                                 {% endif %}
-                                    <label for="all_products{{coupon.coupon_ID}}"> &nbsp;Apply to all Products</label>
-                               </div>
-                               <hr/>
-
-                               <div class="input-group">
-                                   <div class="input-group-btn"><button class="btn btn-primary" disabled>Associated Brands</button></div>
-                                   {% if coupon.all_products %}
-                                    <select  class="form-control" onchange="add_brand('{{coupon.coupon_ID}}', this)" disabled>
-                                   {% else %}
-                                    <select class="form-control" onchange="add_brand('{{coupon.coupon_ID}}', this)">
-                                   {% endif %}
-                                           <option value=""> -- Select Brand -- </option>
-                                      {% for category in categories %}
-                                           <option value="{{category.category_name}}"> {{category.category_name}} </option>
-                                      {% endfor %}
-                                   </select> 
-                               </div>
-
-                                
-                              
-
-                                {% if coupon.associated_brands %}                    
-                                  {% for brand in coupon.associated_brands.split(',') %}
-                                     <div class="selected-tags"> <a href="/remove_brand/{{coupon.coupon_ID}}/{{brand}}"><i class="fa fa-times"></i></a> {{brand}} </div>
-                                  {% endfor %}
-                                {% endif %}
-                          </section>
-
-                               
-                                
-                         </td>
-                         <td> PUBLISHED <br/> {{coupon.date}} </td>
-                       </tr>
-                    {% endfor %}
-                    <tr>
-                      <th></th>
-                      <th></th><th></th><th></th><th></th><th></th><th><button type="submit" class="btn btn-primary"> Update <i class="fa fa-check-circle"></i></button></th>
-                    </tr>
-               </form>
-          </table>
-        </div>
-        
-
-        
-    {% endif %}
-
+    
 
      
     <!-- Product tab !-->
-    {% if tab =='product' %}
+    {% if tab =='events' %}
       
           
               <div class="table-container">
                   <section class="row">
                      <div class="col-md-9"></div>
                      <div class="col-md-3">
-                         <form action="/add_product" method="post">
+                         <form action="/add_event" method="post">
                              <div class="input-group form-group">
-                                <input type="text" name="name" class="form-control" placeholder="Product Name">
+                                <input type="text" name="name" class="form-control" placeholder="Event Name">
                                 <div class="input-group-btn"><button class="btn btn-primary"> Add </button></div>
                              </div>
                           </form>
@@ -275,31 +154,25 @@
                   </section>
                   <table class="table">
                     <tr>
-                      <th> <i class="fas fa-file-image" style="font-size: 18px;"></i> </th>
-                      <th> Product ID</th>
+                      <th></th>
+                      <th> Event ID</th>
                       <th> Name </th>
-                      <th> Discount </th>
                       <th> Status </th>
-                      <th> Stock </th>
-                      <th> Price </th>
-                      <th> Category </th>
-                      <th> Subcategory </th>
+                      <th> Inventory </th>
+                      <th> Price (cad - $) </th>
                       <th> Taxable </th>
                       <th> </th>
                     </tr>
-                    {% for product in _products %}
+                    {% for event in events.items %}
                        <tr>
-                         <td> <img src="{{product[7]}}" class="img-responsive" height="50" width="50"> </td>
-                         <td>{{product[0]}}</td>
-                         <td> <a href="/update_product_form/{{product[0]}}"> <b>{{product[1]}}</b></a></td>
-                         <td> <b style="color: red;">{{product[2]}} % </b></td>
-                         <td> {% if product[8] %} <b style="color: red;"> Disabled </b> {% else%} <b style="color: green;"> Active </b> {% endif %} </td>
-                         <td> {% if product[3] == True %}  <b style="color:green;"> In stock </b> {% else %} <b style="color: red;"> Out of stock </b>{% endif %}</td>
-                         <td> $ {{product[4]}} CAD </td>
-                         <td> {{product[5]}} </td>
-                         <td> {{product[6]}} </td>
-                         <td> {% if product[9]%} <i class="fa fa-check" style="color: green;"></i>{%else%} <i class="fa fa-times red"></i>{% endif %}</td>
-                         <td> <a onclick="userprompt('/delete_product/{{product[0]}}')" class="red"> <i class="fa fa-trash"></i></a> </td>
+                         <td><img src="{{event.mainimage}}"> </td>
+                         <td>{{event.event_ID}}</td>
+                         <td> <a href="/admin/update_event/{{event.event_ID}}"><b>{{event.name}}</b></a> </td>
+                         <td>{% if event.disable %} <b class="red"> Disabled </b> {% else %} <b style="color: darkgreen;"> Active </b> {%endif %}</td>
+                         <td>{{event.inventory}} </td>
+                         <td>{{event.price}} </td>
+                         <td>{% if event.taxable %} <i class="fa fa-check" style="color: darkgreen"></i> {% else %} <i class="fa fa-times red"></i> {% endif %} </td>
+                         <td> <a onclick="userprompt('/delete_event/{{event.event_ID}}')"> <img src="https://www.naturallysplendid.com/static/media/delete.png" style="width:20px;"> </a></td>
                        </tr>
                     {% endfor %}
                    

@@ -156,20 +156,23 @@ class Events(db.Model):
     __tablename__ = 'events'
     #__searchable__ = ['topic_Name']
     event_ID  = db.Column(db.Integer,    primary_key = True) 
-    disable = db.Column(db.Boolean, nullable = True, default = True)
     name = db.Column(db.String(4000), nullable = False, unique = True)
-    desc = db.Column(db.String(10000), nullable = False)  
-    price = db.Column(db.Integer, default = None)
+    date = db.Column(db.String, nullable = False)
+    disable = db.Column(db.Boolean, nullable = True, default = True)
+    desc = db.Column(db.String(10000), nullable = True, default = None)  
+    price = db.Column(db.Integer, default = 0)
     inventory = db.Column(db.Integer, default = 0)
     mainimage = db.Column(db.String,     nullable=True, default=None)
-    taxable = db.Column(db.Boolean, nullable = True, default = True)
-    def __init__(self, name):
-    	self.disable = True
+    taxable = db.Column(db.Boolean, nullable = True, default = False)
+    def __init__(self, name, date):
         self.name = name
-        self.desc = desc
-        self.price=None
-        self.inventory = None
+        self.date = date
+        self.disable = True
+        self.desc = None
+        self.price = 0
+        self.inventory = 0
         self.mainimage = None
+        self.taxable = False
 
 
 
