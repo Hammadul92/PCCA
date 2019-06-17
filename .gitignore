@@ -4,6 +4,8 @@ __pycache__/
 *$py.class
 *.pyc
 
+instance/*.pyc
+
 # C extensions
 *.so
 
@@ -22,9 +24,9 @@ sdist/
 var/
 wheels/
 *.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+Quiz_app/config.pyc 
+
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
