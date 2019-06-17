@@ -3,9 +3,8 @@
 <!doctype html>
 <!--[if IE 9]> <html class="no-js ie9 fixed-layout" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!-->
-<html class="no-js " lang="en"> <!--<![endif]-->
+<html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-
     <!-- Basic -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,99 +23,99 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/admin.css')}}">
 
-
 </head>
 <body>
 
-
-    <div class="container">
-        <section class="col-md-6 col-md-offset-3" style="margin-top: 80px;">
-		    <div class="box-style3">  
-
-
-		         {% with messages = get_flashed_messages(with_categories=true)%}
-			      {% if messages %}
-			        {% for category, message in messages %}
-			           <div class="col-md-12"><div class="{{ category }} w3-animate-zoom">{{ message }}</div></div>
-			        {% endfor %}
-			      {% endif %}
-			     {% endwith %}
+	<div class="text-center" style="padding: 40px;">
+		 <img src="https://www.naturallysplendid.com/static/media/dd6391e7-8560-41d1-97f8-67afba6a33e7_200x200.png" style="display: inline-block;">
+	</div>
 
 
-			        <form action="/login" method="post" role="form" id="login">
-                      <h4><b>Login</b></h4>
-		              <hr/>
-					  {{ form.hidden_tag()}}
-                      {{ form.csrf_token }}
-                      
-                      {% if form.email.errors %}
-					        {% for error in form.email.errors %}
-					           <div class="alert alert-danger alert-dismissable">
-					             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-					             <strong>Alert!</strong> {{ error }}
-					           </div>
-					        {% endfor %}
-					  {% endif %}
-					  <div class="form-group">
-					     <label class="form-label" for="email"> Email </label>
-					     {{ form.email(id="email", class_="form-control")}}
-					  </div>
+    <div style="background: #4172c1; padding: 40px;">
+	    <div class="container">
+	        <section class="col-md-6 col-md-offset-3">
+	        	
+			    <div class="box-style2" style="padding-top: 40px; padding-bottom: 40px;">  
+			         {% with messages = get_flashed_messages(with_categories=true)%}
+				      {% if messages %}
+				        {% for category, message in messages %}
+				           <div class="{{ category }} w3-animate-zoom">{{ message }}</div>
+				        {% endfor %}
+				      {% endif %}
+				     {% endwith %}
 
 
-					  {% if form.password.errors %}
-					        {% for error in form.password.errors %}
-					           <div class="alert alert-danger alert-dismissable">
-					             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-					             <strong>Alert!</strong> {{ error }}
-					           </div>
-					        {% endfor %}
-					   {% endif %}
-					  <div class="form-group">
-					  	 <label class="form-label" for="password"> Password </label>
-					     {{ form.password(id="password", class_="form-control")}}
-					  </div>
-					  <div class="form-group text-center">
-					        {{form.submit(class_="btn btn-primary")}}
-					  </div>
-					  <div class="form-group text-center">
-						    <a  onclick="showme('recover'); showme('login')" > Forgot your password? </a>     
-					  </div>
-				     </form>
+				        <form action="/login" method="post" role="form" id="login">
 
-				     <form action="/reset" method="post" role="form" autocomplete="off" style="display: none;" id="recover" class="contactform">
-				      <h4><b> Recover Password </b></h4>
-				      <hr/>
-				      <p> We will send you an email to reset your password. </p>
-				    
-					  {{ form3.hidden_tag()}}
-					  {{ form3.csrf_token }}
-					  
-					  {% if form3.email.errors %}
-					        {% for error in form.email.errors %}
-					           <div class="alert alert-danger alert-dismissable">
-					             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-					             <strong>Alert!</strong> {{ error }}
-					           </div>
-					        {% endfor %}
-					   {% endif %}
-					  <div class="form-group">
-					  	 <label class="form-label" for="recover_email"> Email </label>
-					     {{ form3.email(id="recover_email", class_="form-control")}}
-					  </div>
-					  <div class="form-group text-center">
-					       {{form3.submit(class_="btn btn-primary")}}
-					  </div>
-				     </form>
-		    </div>
-		</section>
+						  {{ form.hidden_tag()}}
+	                      {{ form.csrf_token }}
+	                      
+	                      {% if form.email.errors %}
+						        {% for error in form.email.errors %}
+						           <div class="alert alert-danger alert-dismissable">
+						             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+						             <strong>Alert!</strong> {{ error }}
+						           </div>
+						        {% endfor %}
+						  {% endif %}
+						  <div class="form-group">
+						     <label class="form-label" for="email"> Email </label>
+						     {{ form.email(id="email", class_="form-control")}}
+						  </div>
+
+
+						  {% if form.password.errors %}
+						        {% for error in form.password.errors %}
+						           <div class="alert alert-danger alert-dismissable">
+						             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+						             <strong>Alert!</strong> {{ error }}
+						           </div>
+						        {% endfor %}
+						   {% endif %}
+						  <div class="form-group">
+						  	 <label class="form-label" for="password"> Password </label>
+						     {{ form.password(id="password", class_="form-control")}}
+						  </div>
+						  <div class="form-group text-center">
+						        {{form.submit(class_="btn btn-primary")}}
+						  </div>
+					     </form>
+
+					     <form action="/reset" method="post" role="form" autocomplete="off" style="display: none;" id="recover" class="contactform">
+					      <p> We will send you an email to reset your password. </p>
+					    
+						  {{ form3.hidden_tag()}}
+						  {{ form3.csrf_token }}
+						  
+						  {% if form3.email.errors %}
+						        {% for error in form.email.errors %}
+						           <div class="alert alert-danger alert-dismissable">
+						             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+						             <strong>Alert!</strong> {{ error }}
+						           </div>
+						        {% endfor %}
+						   {% endif %}
+						  <div class="form-group">
+						  	 <label class="form-label" for="recover_email"> Email </label>
+						     {{ form3.email(id="recover_email", class_="form-control")}}
+						  </div>
+						  <div class="form-group text-center">
+						       {{form3.submit(class_="btn btn-primary")}}
+						  </div>
+					     </form>
+			    </div>
+			</section>
+    	</div>
     </div>
+    
+    <div class="pull-right" style="padding: 15px;">
+			<a  onclick="showme('recover'); showme('login')" style="cursor: pointer;"> Forgot your password? </a>     
+	</div>
 
-</body>
-
- <script type="text/javascript" src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
- <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
- <script src="{{url_for('static',filename='js/ajax.js')}}"></script>
- <script src="{{url_for('static',filename='js/app.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+	<script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+	<script src="{{url_for('static',filename='js/ajax.js')}}"></script>
+	<script src="{{url_for('static',filename='js/app.js')}}"></script>
 
 
 </body>

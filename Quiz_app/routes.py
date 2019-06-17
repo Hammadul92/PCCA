@@ -1,6 +1,6 @@
 from . import app
 from .views import get_month_name, date_now, month_now, year_now, day_now, allowed_file, decrease_inventory, inventory_remaining, variational_inventory, generate_email, year_month_day, get_month_from_date, calc_days_gap
-from flask import render_template, request, session, redirect, url_for, flash, g,json,jsonify,abort, Response
+from flask import render_template, request, session, redirect, url_for, flash, g, json, jsonify, abort, Response
 from .models import Media, User, Blogs, Events, Cart, Joinmail, Invoices, Sales, Contact
 from . import db
 from sqlalchemy import exc, func, cast, DATE, or_
@@ -10,7 +10,6 @@ from itsdangerous import URLSafeTimedSerializer
 from .forms import LoginForm,  Password_EmailForm, ContactForm, PasswordResetForm
 from pdfs import create_pdf
 from werkzeug import secure_filename
-from currency_converter import CurrencyConverter
 from config import Config
 import stripe
 import requests
@@ -24,10 +23,6 @@ import time
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-
-@app.route('/sitemap')
-def sitemap():
-  return render_template('sitemap.xml')
 
 
 
@@ -107,6 +102,13 @@ def signup():
   return redirect(url_for('login'))
 
 
+@app.route('/')
+def home():
+  if current_user.is_authenticated:
+     if current_user.role == 'admin':
+        return redirect(url_for('admin', tab = 'users'))
+  else:
+    return redirect(url_for('login'))
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -217,13 +219,6 @@ def delete_users():
           
 
 
-@app.route('/home')
-@login_required
-def home():
-    if current_user.role == 'admin':
-        return redirect(url_for('admin', tab = 'users'))
-    else:
-        return redirect(url_for('index'))  
 
 
 
@@ -275,42 +270,7 @@ def import_subscribers(page):
               subscriber = Joinmail(email)
               db.session.add(subscriber)
        db.session.commit()
-    return redirect(url_for('admin', tab = 'subscribers', page = page))
-
-@app.route('/import_stores/<int:page>', methods=['POST'])   
-@login_required
-def import_stores(page):
-  if current_user.role == 'admin':
-    if request.method == 'POST':
-       file = request.files.get('file', False)
-       df = pandas.read_csv(file)
-       for index, row in df.iterrows():
-           find_store = Stores.query.filter_by(store_name = row["Store Name"]).first()
-           if not find_store:
-              new_store = Stores(row["Store Name"])
-              db.session.add(new_store)
-              
-              if 'Address' in row:
-                 new_store.address = row["Address"]
-              if 'City' in row:
-                 new_store.city = row["City"]
-              if 'State' in row:
-                 new_store.province = row["State"] 
-              if 'Contact' in row:
-                 new_store.contact_name = row["Contact"]
-              if "Phone" in row:
-                 new_store.contact_number = row["Phone"]
-              if "Latitude" in df:
-                 new_store.latitude = row["Latitude"]
-              if "Longitude" in df:
-                 new_store.longitude = row["Longitude"]
-              db.session.commit()
-    return redirect(url_for('admin', tab = 'stores', page = page))
-  else:
-    abort(403)
-       
-
-        
+    return redirect(url_for('admin', tab = 'subscribers', page = page))        
       
 
 
@@ -650,144 +610,65 @@ def charge():
 
 
 
-@app.route('/delete_product/<int:product_id>')
+@app.route('/delete_event/<int:event_ID>')
 @login_required
-def delete_product(product_id):
+def delete_event(event_ID):
    if current_user.role == 'admin':       
-       Products.query.filter_by(product_ID = product_id).delete()
+       Events.query.filter_by(event_ID = event_ID).delete()
        db.session.commit()
-       return redirect(url_for('admin', tab='product'))
+       return redirect(url_for('admin', tab='events'))
    else:
        abort(403)
 
 
-@app.route('/add_product', methods=['POST'])
+@app.route('/add_event', methods=['POST'])
 @login_required
 def add_product():
   if current_user.role == 'admin':
     form = request.form
     if request.method == 'POST':
-      new_product = Products(form['name'], ' ')
-      new_product.inventory = ''
-      new_product.product_weight = ''
-      new_product.product_shipping_weight = ''
-      new_product.product_price = ''
-      new_product.L = ''
-      new_product.W = ''
-      new_product.H = ''
-      db.session.add(new_product)
+      new_event = Events(form['name'], date_now())
+      db.session.add(new_event)
       db.session.commit()
-      return redirect(url_for('admin', tab='product'))
+      return redirect(url_for('admin', tab='events'))
   else:
     abort(403)
 
 
-@app.route('/update_product_form/<int:productid>', methods=['GET', 'POST'])
+@app.route('/update_event/<int:event_ID>', methods=['GET', 'POST'])
 @login_required
-def update_product_form(productid):
-  form = request.form
-  if request.method== 'POST':
-    try:
-      product=Products.query.filter_by(product_ID=productid).first()
-      product.product_name = form['name']
-      product.product_order = form['order']
-      product.meta_description = form['meta_description']
-      product.product_desc = form['description']
-      
-      if form['parent_category'] !=  '':
-         product.category = form['parent_category']
-         if form['sub_category'] != '':
-            product.subcategory = form['sub_category']
+def update_event(event_ID):
+  if current_user.role == 'admin':
+    form = request.form
+    if request.method== 'POST':
+        try:
+          event = Events.query.filter_by(event_ID = event_ID).first()
+          event.name = form['name']
+          event.desc = form['description']
+          event.price = form['price']
+          event.inventory = form['inventory']
+        
 
+          if len(form.getlist('disable'))==1:
+               event.disable = True
+          else:
+               event.disable = False
 
-      weight = ""
-      shipping_weight = ""
-      price = ""
-      inventory = ""
-      L = ""
-      W = ""
-      H = ""
-      for i in range(1,6):
-        if form["weight_"+str(i)] != "" and form["shipping_weight_"+str(i)] !=""  and form["price_"+str(i)] != "" and form["inventory_" + str(i)] != "" and form['L_'+str(i)]!="" and form['W_'+str(i)] != ""  and form['H_'+str(i)] != '':
-           
-           if i==1:
-              weight = weight + str(form['weight_' + str(i)])
-              shipping_weight = shipping_weight + str(form['shipping_weight_' + str(i)])
-              price = price + str(form['price_' + str(i)])
-              inventory = inventory + str(form['inventory_'+str(i)])
-              L = L + str(form['L_'+str(i)])
-              W = W + str(form['W_'+str(i)])
-              H = H + str(form['H_'+str(i)])
-           else:
-              weight = weight + "," + str(form['weight_' + str(i)])
-              shipping_weight = shipping_weight + ',' + str(form['shipping_weight_' + str(i)])
-              price = price + "," + str(form['price_' + str(i)])
-              inventory = inventory + "," + str(form['inventory_'+str(i)])
-              L = L + "," + str(form['L_'+str(i)])
-              W = W + "," + str(form['W_'+str(i)])
-              H = H + "," + str(form['H_'+str(i)])
-       
-      if weight != "":
-         product.product_weight = weight
-      if shipping_weight != "":
-         product.product_shipping_weight = shipping_weight
-      if inventory != "":
-         product.inventory = inventory
-      if price != "":
-         product.product_price = price
-      if L != "":
-         product.L = L
-      if W != "":
-         product.W = W
-      if H != '':
-         product.H = H
-    
-
-      if len(form.getlist('disable'))==1:
-           product.disable = True
-      else:
-           product.disable = False
-
-      if len(form.getlist('taxable'))==1:
-           product.taxable = True
-      else:
-           product.taxable = False
-
-      if len(form.getlist('bogo'))==1:
-           product.bogo = True
-           product.discount = 0
-      else:
-           product.bogo = False
-           product.discount = form["discount"]
-      product.mainimage = form['mainimage']
-      product.galleryimage1 = form['galleryimage1']
-      product.galleryimage2 = form['galleryimage2']
-      product.nutritiontable = form['nutritiontable']
-      
-      Cart.query.filter_by(product_ID = productid).delete()
-      db.session.commit()
-
-    except exc.IntegrityError:
-        db.session.rollback()
-        flash("Product was not updated due to some internal causes")
-  return redirect(url_for('admin', tab='update_product', update_ID = productid))
-
-
-
-@app.route('/add_coupon', methods=['POST'])
-@login_required
-def add_coupon():
-   if current_user.role == 'admin':
-      if request.method == 'POST':
-         coupon = Coupons(request.form['coupon_name'])
-         coupon.date = date_now()
-         db.session.add(coupon)
-         db.session.commit()
-         return redirect(url_for('admin', tab = 'coupons'))
-   else:
-      abort(403)
-
-
+          if len(form.getlist('taxable'))==1:
+              event.taxable = True
+          else:
+              event.taxable = False
+          
+          event.mainimage = form['mainimage']
+              
+          Cart.query.filter_by(event_ID = event_ID).delete()
+          db.session.commit()
+        except exc.IntegrityError:
+            db.session.rollback()
+            flash("Event was not updated due to some internal causes")
+    return redirect(url_for('admin', tab='update_event', update_ID = event_ID))
+  else:
+    abort(403)
 
 
 
@@ -878,7 +759,7 @@ def admin(tab, subtab="edit",  update_ID = 1):
     associated_brands = []
     associated_products = []
     
-    update_product = Events.query.filter_by(event_ID = update_ID).first()   
+    update_event = Events.query.filter_by(event_ID = update_ID).first()   
     update_blog = Blogs.query.filter_by(blog_ID = update_ID).first()
 
     
@@ -926,7 +807,7 @@ def admin(tab, subtab="edit",  update_ID = 1):
     return render_template('admin.html', users=users, blogs = blogs, events=events, subscribers=subscribers, orders=orders, tab=tab, contacts=contacts, 
     read_orders= read_orders, read_queries=read_queries, next_url_events=next_url_events, prev_url_events = prev_url_events, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
     next_url_subscriber = next_url_subscriber, prev_url_subscriber = prev_url_subscriber, authentication_requests = authentication_requests, next_url_user=next_url_user, prev_url_user = prev_url_user, 
-    update_product = update_product, update_blog = update_blog, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, subtab = subtab,  num_of_subscribers = num_of_subscribers,
+    update_event = update_event, update_blog = update_blog, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, subtab = subtab,  num_of_subscribers = num_of_subscribers,
     prev_url_media = prev_url_media, next_url_media = next_url_media, media=media, page = page)
   else:
     abort(403)
