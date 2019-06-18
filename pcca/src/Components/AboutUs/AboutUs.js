@@ -8,9 +8,7 @@ class AboutUs extends React.Component{
 	render (){
 		return (
 				<Auxilary>
-                        <h1 className= {classes.h1}> About Us</h1>
-
-	
+                        <h1 className={classes.h1}> About Us</h1>
 
 	            </Auxilary>
 			);

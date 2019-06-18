@@ -1,72 +1,29 @@
 import React from 'react';
-import Auxilary from '../../hoc/Auxilary/Auxilary';
-import './Gallery.module.css';
-
+import gallery_api from './api/gallery_api';
+import ImageList from './imageList';
 
 class Gallery extends React.Component{
-    
-    render(){
-        
-          
-        return(
+  state = {images: []}
 
-        
-        <Auxilary>
+  onSearchSubmit = async (term) => {
+      const response = await gallery_api.get('/gallery', {
+        params : {query: term},       
+      });
 
-            <div className="container gallery-container">
-                <h1 className="page-description text-center">Photo Gallery</h1>
+      this.setState({images : response.data.results});
+  }
 
-                <div className="tz-gallery">
+  render(){
+    return (
+      <div className="tz-gallery">
+        <div className="row">
+           <ImageList images={this.state.images} />
+        </div>
+      </div>
+    );
+  }
+  
+}
 
-                    <div className="row">
-
-                            <div className="col-sm-6 col-md-4">
-                                <a className="lightbox" href="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg">
-                                    <img src="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg" alt="Park"/>
-                                </a>
-                            </div>
-
-
-                            <div className="col-sm-6 col-md-4">
-                                <a className="lightbox" href="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg">
-                                    <img src="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg" alt="Park"/>
-                                </a>
-                            </div>
-                            
-                            <div className="col-sm-6 col-md-4">
-                                <a className="lightbox" href="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg">
-                                    <img src="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg" alt="Park"/>
-                                </a>
-                            </div>
-
-                            
-                            <div className="col-sm-6 col-md-4">
-                                <a className="lightbox" href="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg">
-                                    <img src="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg" alt="Park"/>
-                                </a>
-                            </div>
-                            
-                            <div className="col-sm-6 col-md-4">
-                                <a className="lightbox" href="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg">
-                                    <img src="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg" alt="Park"/>
-                                </a>
-                            </div>
-                            
-                            <div className="col-sm-6 col-md-4">
-                                <a className="lightbox" href="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg">
-                                    <img src="https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg" alt="Park"/>
-                                </a>
-                            </div>                      
-                            
-                    </div>
-
-                </div>
-
-            </div>
-        </Auxilary>
-
-
-            )};
-        }
 
 export default Gallery;

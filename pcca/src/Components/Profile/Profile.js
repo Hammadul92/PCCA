@@ -1,8 +1,4 @@
 import React from 'react';
-
-import axios from 'axios';
-
-
 const profile = (props) => {
     var sign = null;
     if(props.name){

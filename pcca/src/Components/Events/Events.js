@@ -129,7 +129,7 @@ class Events extends React.Component{
 						<div className="widget-container widget-about">
 							<a href="post.html"><img src="https://shawglobalnews.files.wordpress.com/2018/08/img-2941-e1533664467170.jpg?quality=70&strip=all&w=720&h=379&crop=1" alt=""/></a>
 							
-								<table className="table table-dark" styles = {'text-align: centre'}>
+								<table className="table table-dark" styles={'text-align: centre'}>
 									<thead>
 										<tr>
 										
