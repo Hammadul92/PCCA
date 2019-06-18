@@ -101,10 +101,6 @@ login_manager.login_message_category = "info"
 def load_user(userID):
     return User.query.filter(User.userID == int(userID)).first()
 
-#@app.route("/")
-#def check():
-#    return "check"
-
 
 
 from . import routes
@@ -116,7 +112,5 @@ api.add_resource(resources.UserLogin, '/userlogin')
 api.add_resource(resources.UserLogoutAccess, '/logout/access')
 api.add_resource(resources.UserLogoutRefresh, '/logout/refresh')
 api.add_resource(resources.TokenRefresh, '/token/refresh')
-api.add_resource(resources.AllUsers, '/users')
 api.add_resource(resources.SecretResource, '/secret')
-
-
+api.add_resource(resources.GalleryImages, '/gallery')

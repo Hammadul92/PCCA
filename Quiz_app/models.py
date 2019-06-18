@@ -5,8 +5,6 @@ import datetime
 from sqlalchemy import CheckConstraint
 from .views import same_as
 
-from passlib.hash import pbkdf2_sha256 as sha256
-
 
 
 class User(db.Model):
@@ -39,24 +37,13 @@ class User(db.Model):
 		self.card_last4 = None
 		self.card_exp_year = None
 		self.card_brand = None
-    
-
-	@staticmethod
-	def generate_hash(password):
-		return sha256.hash(password)
-
-	@staticmethod
-	def verify_hash(password,hash):
-		return sha256.verify(password,hash)
-
-
+   
 		
 
 	def set_password(self, password):
 		self.pwdhash = generate_password_hash(password)
 
 	def check_password(self, password):
-		print(self.pwdhash)
 		return check_password_hash(self.pwdhash, password)
 
 	def is_authenticated(self):
@@ -77,14 +64,6 @@ class User(db.Model):
 	#"""Requires use of Python 3"""
 		return str(self.userID)
 
-	@classmethod
-	def return_all(cls):
-		def to_json(x):
-			return {
-            'username': x.email,
-            'password': x.pwdhash
-        }
-		return {'users': list(map(lambda x: to_json(x), User.query.all()))}
 
 ######TOKEN FOR ACCESS HANDLING##########################
 
@@ -119,8 +98,12 @@ class Media(db.Model):
 	def __init__(self, url):
 		self.url = url
 
-
-
+class Gallery(db.Model):
+	__tablename__ = 'gallery'
+	gallery_ID = db.Column(db.Integer,    primary_key = True)
+	img_url = db.Column(db.String, nullable = False)
+	def __init__(self, img_url):
+		self.img_url = img_url
 
 
 class Blogs(db.Model):

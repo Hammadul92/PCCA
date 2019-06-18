@@ -3,7 +3,7 @@
 #####run this file run.py######
 ###############################
 from Quiz_app import app as application
-from instance import create_db 
+#from instance import create_db 
 
 
 if __name__ == '__main__':

@@ -28,7 +28,6 @@ a{
     color:rgb(2, 107, 17);
     text-align:center;
     font-weight:600;
-    background:rgb(2, 107, 17,0.1);
     padding: 15px;
     margin-bottom: 2px; 
 }
@@ -37,7 +36,6 @@ a{
     color:rgb(247, 98, 98);
     text-align:center;
     font-weight:600;
-    background:rgb(247, 98, 98, 0.1);
     padding: 15px;
     margin-bottom: 2px;
 }
@@ -46,7 +44,6 @@ a{
      color:rgb(232, 177, 0);
     text-align:center;
     font-weight:600;
-    background-color:rgb(232, 177, 0, 0.1);
     padding: 15px;
     margin-bottom: 2px;
 }

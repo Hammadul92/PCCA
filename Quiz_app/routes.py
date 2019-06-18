@@ -1,7 +1,7 @@
 from . import app
 from .views import get_month_name, date_now, month_now, year_now, day_now, allowed_file, decrease_inventory, inventory_remaining, variational_inventory, generate_email, year_month_day, get_month_from_date, calc_days_gap
 from flask import render_template, request, session, redirect, url_for, flash, g, json, jsonify, abort, Response
-from .models import Media, User, Blogs, Events, Cart, Joinmail, Invoices, Sales, Contact
+from .models import Media, User, Blogs, Events, Cart, Joinmail, Invoices, Sales, Contact, Gallery
 from . import db
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask_login import login_required, login_user, logout_user, current_user
@@ -44,6 +44,30 @@ def subscribe():
 
 
 
+@app.route('/add_galleryimage', methods=["POST"])
+@login_required
+def add_galleryimage():
+  if current_user.role == 'admin':
+     form = request.form
+     if request.method == 'POST':
+        pic = Gallery(form['img_url'])
+        db.session.add(pic)
+        db.session.commit()
+     return redirect(url_for('admin', tab = 'gallery'))
+  else:
+     abort(403)
+
+@app.route('/delete_galleryimage/<int:gallery_ID>')
+@login_required
+def  delete_galleryimage(gallery_ID):
+  if current_user.role == 'admin':
+     Gallery.query.filter_by(gallery_ID = gallery_ID).delete()
+     db.session.commit()
+     return redirect(url_for('admin', tab = "gallery"))
+  else:
+     abort(403)
+
+
 
 
 @app.route('/contact', methods=['POST', 'GET'])
@@ -80,26 +104,6 @@ def delete_all_queries():
 
 
 
-@app.route('/signup', methods = ['POST', 'GET'])
-def signup():
-  form = SignupForm(request.form)
-  if request.method == 'POST':
-    if form.validate_on_submit():
-      try:
-        user = User.query.filter_by(email=form.email_signup.data).first()
-        if user is None:
-           new_user = User(form.email_signup.data, form.password_signup.data)
-           new_user.registered_on_app = date_now()
-           db.session.add(new_user)
-           db.session.commit()
-           flash('Thank You for creating an account with NSE!', 'success')
-        else:
-           flash('Account with similar email id already exists!', 'info')
-      except Exception as e:
-        db.session.rollback()
-        app.logger.error('%s' %e)
-        flash('Error: %s' % e, 'danger')
-  return redirect(url_for('login'))
 
 
 @app.route('/')
@@ -755,6 +759,12 @@ def admin(tab, subtab="edit",  update_ID = 1):
     prev_url_media = url_for('admin', tab=tab, page=media.prev_num) \
       if media.has_prev else None
 
+    gallery = Gallery.query.order_by(Gallery.gallery_ID.desc()).paginate(page, 32, False)
+    next_url_gallery = url_for('admin', tab=tab, page=gallery.next_num) \
+      if media.has_next else None
+    prev_url_gallery = url_for('admin', tab=tab, page=gallery.prev_num) \
+      if media.has_prev else None
+
 
     associated_brands = []
     associated_products = []
@@ -803,8 +813,8 @@ def admin(tab, subtab="edit",  update_ID = 1):
     prev_url_orders = url_for('admin', tab=tab, page=orders.prev_num) \
       if orders.has_prev else None
     
-    return render_template('admin.html', users=users, blogs = blogs, events=events, subscribers=subscribers, orders=orders, tab=tab, contacts=contacts, 
-    read_orders= read_orders, read_queries=read_queries, next_url_events=next_url_events, prev_url_events = prev_url_events, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
+    return render_template('admin.html', users=users, blogs = blogs, events=events, subscribers=subscribers, orders=orders, tab=tab, contacts=contacts, gallery = gallery, next_url_gallery = next_url_gallery, 
+    prev_url_gallery=prev_url_gallery,  read_orders= read_orders, read_queries=read_queries, next_url_events=next_url_events, prev_url_events = prev_url_events, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
     next_url_subscriber = next_url_subscriber, prev_url_subscriber = prev_url_subscriber, authentication_requests = authentication_requests, next_url_user=next_url_user, prev_url_user = prev_url_user, 
     update_event = update_event, update_blog = update_blog, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, subtab = subtab,  num_of_subscribers = num_of_subscribers,
     prev_url_media = prev_url_media, next_url_media = next_url_media, media=media, page = page)

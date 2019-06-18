@@ -33,7 +33,9 @@
 <div class="nav nav-pills nav-stacked col-md-1 col-sm-2 admin_navbar">
   
 
-  {% if tab =='media' %}<li class ="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/media"><img src="https://www.naturallysplendid.com/static/media/photo-camera.png"> <span> Media </span> </a></li>
+  {% if tab =='media' %}<li class ="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/media"><img src="https://www.naturallysplendid.com/static/media/gall.png"> <span> Media </span> </a></li>
+
+  {% if tab =='gallery' %}<li class ="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/gallery"><img src="https://www.naturallysplendid.com/static/media/photo-camera.png"> <span> Gallery </span> </a></li>
 
   {% if tab =='users'%}<li class="active admin"> {% else %}<li class="admin"> {% endif %}<a href="/read_users"> <img src="https://www.naturallysplendid.com/static/media/networking.png"> <span>Users</span> {% if authentication_requests >=1 %}<span class="badge">{{authentication_requests}}</span>{% endif %}</a></li>
 
@@ -121,6 +123,43 @@
 
 {% endif %}
 
+
+
+
+{% if tab == "gallery" %}
+   <div class="row">
+      
+       <div class="col-md-9">
+         <div class="box-style3">
+           <div class="row">
+              {% for pic in gallery.items %}
+                 <div class="col-md-2 text-center" style="margin-bottom: 30px;">
+                   <img src="{{pic.img_url}}" class="img-responsive">
+                   <a href="/delete_galleryimage/{{pic.gallery_ID}}" class="btn btn-danger form-control"> Delete </a>
+                 </div>
+              {% endfor %}
+           </div>
+           <div class="text-center">
+              {% if prev_url_gallery %} <a href="{{ prev_url_gallery}}" style="margin-right:5px;" class="btn paginate-btn"><i class="fa fa-arrow-left"></i></a> {% endif %}
+              {% if next_url_gallery %} <a href="{{ next_url_gallery }}" class="btn paginate-btn"> <i class="fa fa-arrow-right"></i> </a> {% endif %}
+           </div>
+         </div>
+       </div>
+       
+       <div class="col-md-3">
+         <div class="box-style3">
+          <form action="/add_galleryimage" method="post">
+           <div class="input-group">
+              <input type="text" name="img_url" class="form-control" placeholder="Image url">
+              <div class="input-group-btn"><button class="btn btn-primary"> Add</button></div>
+           </div> 
+          </form>  
+         </div>
+       </div>
+   </div>
+  
+
+{% endif %}
 
  
 

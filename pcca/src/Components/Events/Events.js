@@ -29,13 +29,9 @@ class Events extends React.Component{
 
 
 			}
-		  })
-        .then(response=>{
-
-			//console.log(response.data.data[n].timings);
+		  }).then(response=>{
 			this.setState({prayerTimes: response.data.data[n].timings});
-            //this.setState({ingredients: response.data});
-		}).catch(error=>{this.setState({error:true})});
+		  }).catch(error=>{this.setState({error:true})});
 
 
 

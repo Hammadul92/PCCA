@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from .models import Media, User, RevokedTokenModel
+from .models import Media, User, RevokedTokenModel, Gallery
 from .views import get_month_name, date_now
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask import request, session, redirect, url_for, flash, g,json,jsonify,abort, Response
@@ -20,19 +20,13 @@ parser.add_argument('password', help = 'This field cannot be blank', required = 
 class UserRegistration(Resource):
  def post(self):
         data = parser.parse_args()
-        print(data['username'])
         if (User.query.filter_by(email=data['username']).first()):
             return {'message': 'User {} already exists'. format(data['username'])}
-        new_user = User(
-            email = data['username'],
-            password = data['password']
-            
-        )
+        
+        new_user = User(email = data['username'], password = data['password'])
         new_user.registered_on_app = date_now()
 
         db.session.add(new_user)
-       
-        #print('Session Committed', new_user.email)
         try:
             db.session.commit()
             access_token = create_access_token(identity = data['username'])
@@ -99,18 +93,11 @@ class TokenRefresh(Resource):
         return {'message': 'Token refresh'}
       
       
-class AllUsers(Resource):
-    def get(self):
-        return User.return_all()
-
-    def delete(self): 
-        return {'message': 'Delete all users'}
       
 #FOR SECURE ROUTES ADD @JWT REQUIRED Pretty much like login required
 class SecretResource(Resource):
     @jwt_required
     def get(self):
-        print(get_jwt_identity())
         active_user = get_jwt_identity()
         return {
             'answer': 42
@@ -118,6 +105,14 @@ class SecretResource(Resource):
 
 
 
+
+class GalleryImages(Resource):
+    def get(self):
+        gallery = Gallery.query.order_by(Gallery.gallery_ID.desc()).all()
+        response = {'images' : []}
+        for pic in gallery:
+            response['images'].append({'gallery_ID': pic.gallery_ID, 'img_url': pic.img_url})      
+        return response
 
 
 

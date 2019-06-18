@@ -1,24 +1,30 @@
 import React from 'react';
-import gallery_api from './api/gallery_api';
 import ImageList from './imageList';
+import axios from 'axios'
 
 class Gallery extends React.Component{
-  state = {images: []}
+  state = {
+    images: [],
+    error: false
+  }
 
-  onSearchSubmit = async (term) => {
-      const response = await gallery_api.get('/gallery', {
-        params : {query: term},       
-      });
+  componentWillMount(){
+      
+      axios.get('http://localhost:5000/gallery').then(response=>{
+      this.setState({images: response.data.images});
+      }).catch(error=>{this.setState({error:true})});
 
-      this.setState({images : response.data.results});
   }
 
   render(){
     return (
-      <div className="tz-gallery">
-        <div className="row">
-           <ImageList images={this.state.images} />
-        </div>
+      <div className="container gallery-container">
+          <h1 className="page-description text-center">Photo Gallery</h1>
+          <div className="tz-gallery">
+            <div className="row">
+               <ImageList images={this.state.images} />
+            </div>
+          </div>
       </div>
     );
   }
