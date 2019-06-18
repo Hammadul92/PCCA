@@ -1,9 +1,10 @@
 from flask_restful import Resource, reqparse
-from .models import Media, User
+from .models import Media, User, RevokedTokenModel
 from .views import get_month_name, date_now
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask import request, session, redirect, url_for, flash, g,json,jsonify,abort, Response
 from . import db
+
 
 
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
@@ -69,13 +70,28 @@ class UserLogin(Resource):
 
       
 class UserLogoutAccess(Resource):
+    @jwt_required
     def post(self):
-        return {'message': 'User logout'}
-      
-      
+        jti = get_raw_jwt()['jti']
+        try:
+            revoked_token = RevokedTokenModel(jti = jti)
+            revoked_token.add()
+            return {'message': 'Access token has been revoked'}
+        except:
+            return {'message': 'Something went wrong'}, 500
+
+
+
 class UserLogoutRefresh(Resource):
+    @jwt_refresh_token_required
     def post(self):
-        return {'message': 'User logout'}
+        jti = get_raw_jwt()['jti']
+        try:
+            revoked_token = RevokedTokenModel(jti = jti)
+            revoked_token.add()
+            return {'message': 'Refresh token has been revoked'}
+        except:
+            return {'message': 'Something went wrong'}, 500
       
       
 class TokenRefresh(Resource):
@@ -95,10 +111,14 @@ class SecretResource(Resource):
     @jwt_required
     def get(self):
         print(get_jwt_identity())
-        current_user = get_jwt_identity()
+        active_user = get_jwt_identity()
         return {
             'answer': 42
         }
+
+
+
+
 
 
 

@@ -5,12 +5,22 @@ import News from './News/News';
 import Events from './Events/Events';
 import './App.css';
 
+import axios from 'axios';
 
 class Home extends React.Component{
     state = {
         loggedin: false,
         token: null
     }
+
+
+    ComponentWillMount(){
+        //CREATEING TOKEN//
+        console.log('HOME')
+
+    }
+
+
 
     render(){
         return (
