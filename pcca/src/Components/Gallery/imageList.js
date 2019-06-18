@@ -7,7 +7,7 @@ const ImageList = (props) => {
      return <ImageCard key={image.gallery_ID} image={image} />;
    });
    
-   return <div className="tz-gallery"><div className="row"> {images} </div></div>;
+   return <div className="row"> {images} </div>;
 };
 
 export default ImageList;

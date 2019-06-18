@@ -10,6 +10,7 @@ body {
 	font-family: "Raleway", Sans-serif;
 	-webkit-font-smoothing: antialiased;
 }
+
 h1,
 h2,
 h3,
@@ -29,6 +30,7 @@ p {
 	line-height: 24px;
 	color: #000;
 }
+
 img {
 	max-width: 100%;
 	height: auto;
@@ -49,6 +51,7 @@ a, a:hover, a:focus, a:active, a.active {
 }
 section {
 	padding-bottom: 60px;
+	padding-top: 100px;
 }
 section:last-child {
 	padding-bottom: 0px;

@@ -19,12 +19,8 @@ class Gallery extends React.Component{
   render(){
     return (
       <div className="container gallery-container">
-          <h1 className="page-description text-center">Photo Gallery</h1>
-          <div className="tz-gallery">
-            <div className="row">
-               <ImageList images={this.state.images} />
-            </div>
-          </div>
+          <h1 className="text-center">Photo Gallery</h1>
+          <ImageList images={this.state.images} />
       </div>
     );
   }
