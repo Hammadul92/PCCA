@@ -24,8 +24,10 @@ class User(db.Model):
 	card_last4 = db.Column(db.String, nullable = True, default = None)
 	card_exp_year = db.Column(db.String, nullable = True, default = None)
 	card_brand = db.Column(db.String, nullable = True, default = None)
+	optin_news = db.Column(db.Boolean, nullable = True, default = True )
+	optin_death = db.Column(db.Boolean, nullable = True, default = True )
 
-	def __init__(self, email, password, role='user'):
+	def __init__(self, email, password, phone , role='user'):
 		self.email = email.lower().strip()
 		self.set_password(password)
 		self.authenticated = False
@@ -37,6 +39,8 @@ class User(db.Model):
 		self.card_last4 = None
 		self.card_exp_year = None
 		self.card_brand = None
+		self.phone = phone
+
    
 		
 

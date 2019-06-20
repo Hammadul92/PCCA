@@ -13,26 +13,32 @@ from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_r
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('username', help = 'This field cannot be blank', required = True)
-parser.add_argument('password', help = 'This field cannot be blank', required = True)
+parser.add_argument('email', help = 'Email Field cannot be blank', required = True)
+parser.add_argument('password', help = 'Password be blank', required = True)
+
+reg = reqparse.RequestParser()
+reg.add_argument('email', help = 'email Field can not be blank', required = True)
+reg.add_argument('password', help = 'Password Field can not be blank', required = True)
+reg.add_argument('phone', help = 'Phone number Field can not be blank', required = True)
 
 
+#Only these threee fields for User should be okay.
 class UserRegistration(Resource):
  def post(self):
-        data = parser.parse_args()
-        if (User.query.filter_by(email=data['username']).first()):
-            return {'message': 'User {} already exists'. format(data['username'])}
+        data = reg.parse_args()
+        if (User.query.filter_by(email=data['email']).first()):
+            return {'message': 'User {} already exists'. format(data['email'])}
         
-        new_user = User(email = data['username'], password = data['password'])
+        new_user = User(email = data['email'], password = data['password'], phone = data['phone'])
         new_user.registered_on_app = date_now()
 
         db.session.add(new_user)
         try:
             db.session.commit()
-            access_token = create_access_token(identity = data['username'])
-            refresh_token = create_refresh_token(identity = data['username'])
+            access_token = create_access_token(identity = data['email'])
+            refresh_token = create_refresh_token(identity = data['email'])
             return {
-                'message': 'User {} was created'.format( data['username']),
+                'message': 'User {} was created'.format( data['email']),
                 'access_token': access_token,
                 'refresh_token': refresh_token
             }
@@ -44,15 +50,15 @@ class UserRegistration(Resource):
 class UserLogin(Resource):
     def post(self):
         data = parser.parse_args()
-        current_user = User.query.filter_by(email=data['username']).first()
+        current_user = User.query.filter_by(email=data['email']).first()
         #print(current_user.check_password(data['password']))
 
         if not current_user:
-            return {'message': 'User {} doesn\'t exist'.format(data['username'])}
+            return {'message': 'User {} doesn\'t exist'.format(data['email'])}
         
         if current_user.check_password(data['password']):
-            access_token = create_access_token(identity = data['username'])
-            refresh_token = create_refresh_token(identity = data['username'])
+            access_token = create_access_token(identity = data['email'])
+            refresh_token = create_refresh_token(identity = data['email'])
             return {
                 'message': 'Logged in as {}'.format(current_user.email),
                 'access_token': access_token,

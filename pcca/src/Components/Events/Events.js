@@ -2,7 +2,7 @@ import './Events.module.css';
 import React from 'react';
 import Auxilary from '../../hoc/Auxilary/Auxilary';
 import axios from 'axios';
-import Profile from '../Profile/Profile';
+
 //https://aladhan.com/play/Vancouver/Canada
 
 
@@ -11,8 +11,7 @@ class Events extends React.Component{
 
     state = {
         prayerTimes : null,
-		error: false,
-		token: null
+		error: false
     }
 
     componentWillMount(){
@@ -35,39 +34,6 @@ class Events extends React.Component{
 
 
 
-		 //ACCESS A PRIVATE ROUTE
-		   
-		  var test2 = {
-			"async": true,
-			"crossDomain": true,
-			"url": "http://localhost:5000/userlogin",
-			"method": "POST",
-			"headers": {
-			  "Content-Type": "application/json",
-			  "Accept": "*/*",
-			  "Cache-Control": "no-cache",
-			  "Host": "localhost:5000",
-			  "accept-encoding": "gzip, deflate",
-			  "Connection": "keep-alive",
-			  "cache-control": "no-cache"
-			},
-			"processData": false,
-			"data": "{\n    \"username\": \"info@pcca.com\",\n    \"password\": \"paklah92\"\n}"
-	
-		  }
-
- 
-		   axios(test2)
-		   .then(response => {
-			 console.log(response.data.access_token);
-			 if (response.data.access_token){
-				this.setState({token: response.data.access_token});
-			 }
-			 
-		   })
-		   .catch(error=> {
-			 console.log(error);
-		   });
 
 		   
 
@@ -109,7 +75,6 @@ class Events extends React.Component{
 
 		}
 
-		console.log(this.state.token);
 		
 
 
@@ -167,7 +132,6 @@ class Events extends React.Component{
 										</div>
 									</div>
 								</article>
-								<Profile name={this.state.token}/>
 								
 							</div>
 							
