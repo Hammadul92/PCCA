@@ -16,9 +16,11 @@ class Gallery extends React.Component{
 
   }
 
+  
+
   render(){
     return (
-      <div className="container gallery-container">
+      <div className="container">
           <h1 className="text-center">Photo Gallery</h1>
           <ImageList images={this.state.images} />
       </div>
