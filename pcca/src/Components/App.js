@@ -81,7 +81,7 @@ class App extends React.Component{
        return (
 
        	<Auxilary>
-	       	 <NavBar loggedin = {this.state.loggedin}/>
+	       	 <NavBar loggedin={this.state.loggedin}/>
 		
 				<Switch>
 								

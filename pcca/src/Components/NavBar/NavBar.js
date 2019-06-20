@@ -9,17 +9,15 @@ class NavBar extends React.Component{
 	render (){
 		if (this.props.loggedin){
             //Get user data prop
-            console.log('NavloggedIn');
             var user = <li><NavLink to="/profile" activeStyle={{fontWeight: "bold", color: "White"}}>Profile</NavLink></li>;
 
         }
         else{
-			console.log('Nav not logged in');
             var user = (
 				<Auxilary> 
-			<li><NavLink to="/login" activeStyle={{fontWeight: "bold", color: "White"}}>Login</NavLink></li>
-			<li><NavLink to="/Signup" activeStyle={{fontWeight: "bold", color: "White"}}>SignUp</NavLink></li>
-			</Auxilary>
+			      <li><NavLink to="/login" activeStyle={{fontWeight: "bold", color: "White"}}>Login</NavLink></li>
+			      <li><NavLink to="/Signup" activeStyle={{fontWeight: "bold", color: "White"}}>SignUp</NavLink></li>
+			    </Auxilary>
 		     );
 
         }
