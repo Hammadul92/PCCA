@@ -1,11 +1,28 @@
 import './NavBar.module.css';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
+import Auxilary from '../../hoc/Auxilary/Auxilary';
 
 
 class NavBar extends React.Component{
 
 	render (){
+		if (this.props.loggedin){
+            //Get user data prop
+            console.log('NavloggedIn');
+            var user = <li><NavLink to="/profile" activeStyle={{fontWeight: "bold", color: "White"}}>Profile</NavLink></li>;
+
+        }
+        else{
+			console.log('Nav not logged in');
+            var user = (
+				<Auxilary> 
+			<li><NavLink to="/login" activeStyle={{fontWeight: "bold", color: "White"}}>Login</NavLink></li>
+			<li><NavLink to="/Signup" activeStyle={{fontWeight: "bold", color: "White"}}>SignUp</NavLink></li>
+			</Auxilary>
+		     );
+
+        }
 		return (
 				<nav className="navbar navbar-inverse navbar-fixed-top">
 					<div className="container">
@@ -26,13 +43,14 @@ class NavBar extends React.Component{
 								<li><NavLink to="/gallery" activeStyle={{fontWeight: "bold", color: "White"}}>Gallery</NavLink></li>
 								<li><NavLink to="/about" activeStyle={{fontWeight: "bold", color: "White"}}>About Us</NavLink></li>
 								<li><NavLink to="/contact" activeStyle={{fontWeight: "bold", color: "White"}}>Contact</NavLink></li>
+								
 
 							</ul>
 
 							<ul className="nav navbar-nav navbar-right">
+							{user}
 								<li><a href="#"><i className="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i className="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i className="fa fa-instagram"></i></a></li>
+
 
 							</ul>
 

@@ -10,7 +10,7 @@ with app.app_context():
 	db.drop_all()
 	db.create_all()
 	#Initializing db with admin
-	admin = User(email='info@pcca.com', password='paklah92', role='admin')
+	admin = User(email='info@pcca.com', password='paklah92', role='admin', phone='545454546')
 	admin.read = True
 	db.session.add(admin)
 	db.session.commit()

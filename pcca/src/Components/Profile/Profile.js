@@ -1,4 +1,5 @@
 import React from 'react';
+import classes from './Profile.module.css';
 const profile = (props) => {
     var sign = null;
     if(props.name){
@@ -10,7 +11,8 @@ const profile = (props) => {
 
     return(
         <div>
-        <p>{sign}</p>
+             <h1 className={classes.h1}> Profile</h1>
+             <p>{sign}</p>
         </div>
 
     );
