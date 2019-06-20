@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './Profile.module.css';
+
 const profile = (props) => {
     var sign = null;
     if(props.name){

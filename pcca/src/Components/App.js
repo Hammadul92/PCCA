@@ -20,56 +20,16 @@ import axios from 'axios';
 
 //import unsplash from '../api/unsplash';
 //import ImageList from './imageList';
+import { connect } from 'react-redux';
 
 
 
 class App extends React.Component{
-	state = {
-		loggedin: false,
-		token: null,
-		message: null
-	}
 	
 	
-	componentWillMount(){
-		//CREATEING TOKEN//
 	
-		 //ACCESS A PRIVATE ROUTE
-		   
-		 var test2 = {
-			"async": true,
-			"crossDomain": true,
-			"url": "http://localhost:5000/userlogin",
-			"method": "POST",
-			"headers": {
-			  "Content-Type": "application/json",
-			  "Accept": "*/*",
-			  "Cache-Control": "no-cache",
-			  "Host": "localhost:5000",
-			  "accept-encoding": "gzip, deflate",
-			  "Connection": "keep-alive",
-			  "cache-control": "no-cache"
-			},
-			"processData": false,
-			"data": "{\n    \"email\": \"info@pcca.com\",\n    \"password\": \"1paklah92\"\n}"
-	
-		  };
-		   axios(test2)
-		   .then(response => {
-			 console.log(response.data.access_token);
-			 if (response.data.access_token){
-				this.setState({token: response.data.access_token, loggedin: true , message: response.data.message});
-				console.log('STATE',this.state.loggedin);
-			 }
-			 else{
-				console.log('STATE logged in',this.state.loggedin);
-				this.setState({token: null, loggedin: false , message: response.data.message});
-			 }
-			 
-		   })
-		   .catch(error=> {
-			 console.log(error);
-		   });
+	componentWillMount(){	
+		console.log('AppJS Mounted');
 	
 	
 	}
@@ -81,7 +41,7 @@ class App extends React.Component{
        return (
 
        	<Auxilary>
-	       	 <NavBar loggedin={this.state.loggedin}/>
+	       	 <NavBar loggedin={this.props.test}/>
 		
 				<Switch>
 								
@@ -90,9 +50,9 @@ class App extends React.Component{
 					<Route path='/about' exact component={AboutUs}/>
 					<Route path='/contact' exact component={Contact}/>
 					<Route path='/gallery' exact component={Gallery}/>
-					<Route path='/' exact component={Home}/>
 					<Route path='/profile' exact component={Profile}/>
 					<Route path='/login' exact component={Login}/>
+					<Route path='/' exact component={Home}/>
 
 					
 	
@@ -107,4 +67,14 @@ class App extends React.Component{
 	
 }
 
-export default App; 
+
+const mapStateToProps = state => {
+	console.log(state);
+	return{
+  
+	    test: state.loggedin
+	    
+	}
+  };
+
+export default connect(mapStateToProps)(App); 

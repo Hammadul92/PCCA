@@ -1,11 +1,14 @@
 
 import Auxilary from '../../hoc/Auxilary/Auxilary';
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './NavEvents.module.css';
 
-class NavEvents extends React.Component{
+class NavEvents extends Component{
+	
 
 	render (){
+
+
 		return (
 				<Auxilary>
                         <h1 className={classes.h1}> EVENTS AND TICKETS</h1>
@@ -14,4 +17,6 @@ class NavEvents extends React.Component{
 	}
 }
 
-export default NavEvents;
+
+
+export default (NavEvents);
