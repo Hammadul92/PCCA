@@ -45,6 +45,7 @@ class Login extends React.Component{
 			//console.log(response.data.access_token);
 			if (response.data.access_token){
 			   this.setState({res: response.data.access_token, user: response.data.user , message: response.data.message});
+			   
 			   //()=>this.loggedIn(response.data.access_token);
 			   //console.log('Response has token ',response.data.user);
 			}
@@ -67,9 +68,9 @@ class Login extends React.Component{
 			var tok = {token: this.state.res , user: this.state.user }
             this.props.loggedIn(tok);
 		}
-		else{
+
 			var msg= (<p>{this.state.message} </p>);
-		}
+		
 		return (
 				<Auxilary>
                         <h1> Login</h1>

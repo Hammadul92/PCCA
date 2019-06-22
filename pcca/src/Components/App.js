@@ -8,6 +8,7 @@ import Donations from './Donations/Donations';
 import Contact from './Contact/Contact';
 import AboutUs from './AboutUs/AboutUs';
 import Profile from './Profile/Profile';
+import Signup from './Signup/Signup'
 
 import Home from './Home';
 
@@ -52,6 +53,7 @@ class App extends React.Component{
 					<Route path='/gallery' exact component={Gallery}/>
 					<Route path='/profile' exact component={Profile}/>
 					<Route path='/login' exact component={Login}/>
+					<Route path='/signup' exact component={Signup}/>
 					<Route path='/' exact component={Home}/>
 
 					

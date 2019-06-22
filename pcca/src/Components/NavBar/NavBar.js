@@ -17,7 +17,7 @@ class NavBar extends React.Component{
 			user = (
 				<Auxilary> 
 			      <li><NavLink to="/profile" activeStyle={{fontWeight: "bold", color: "White"}}>Profile</NavLink></li>
-				  <li><a href="/" onClick={this.props.loggedOut}> Log Out</a></li>
+				  <li><a href="/" onClick={this.props.loggedOut}> Log Out </a></li>
 			    </Auxilary>
 		     );
 
@@ -26,7 +26,7 @@ class NavBar extends React.Component{
              user = (
 				<Auxilary> 
 			      <li><NavLink to="/login" activeStyle={{fontWeight: "bold", color: "White"}}>Login</NavLink></li>
-			      <li><NavLink to="/Signup" activeStyle={{fontWeight: "bold", color: "White"}}>SignUp</NavLink></li>
+			      <li><NavLink to="/signup" activeStyle={{fontWeight: "bold", color: "White"}}>SignUp</NavLink></li>
 			    </Auxilary>
 		     );
 
