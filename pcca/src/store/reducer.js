@@ -3,16 +3,19 @@ import * as actionTypes from './actions';
 const initialState = {
     loggedin: false,
     token: null,
-    message: null
+    message: null,
+    user: null
 
 };
 
 const reducer = (state = initialState,action) => {
     switch(action.type){
         case actionTypes.LOGGED_IN:
+
             return {
                 loggedin: true,
-                token: action.token,
+                token: action.payload.token,
+                user: action.payload.user
                 //message: [action.message]
 
 
@@ -22,7 +25,8 @@ const reducer = (state = initialState,action) => {
             return {
                 loggedin: false,
                 token: null,
-                message: null
+                message: null,
+                user: null
 
             };
         default:

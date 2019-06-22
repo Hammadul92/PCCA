@@ -7,7 +7,7 @@ import * as actionTypes from '../../store/actions';
 import axios from 'axios';
 
 class Login extends React.Component{
-    state = {res: null}
+    state = {res: null, user: null}
 
 	componentWillMount(){
 		//CREATEING TOKEN//
@@ -36,17 +36,17 @@ class Login extends React.Component{
 		   .then(response => {
 			 //console.log(response.data.access_token);
 			 if (response.data.access_token){
-                this.setState({res: response.data.access_token});
+                this.setState({res: response.data.access_token, user: response.data.user});
                 //()=>this.loggedIn(response.data.access_token);
-				console.log('Response has token ');
+				//console.log('Response has token ',response.data.user);
 			 }
 			 else{
-				console.log('STATE logged in');
+				//console.log('STATE logged in');
 			 }
 			 
 		   })
 		   .catch(error=> {
-			 console.log(error);
+			 //console.log(error);
 		   });
 	
 	
@@ -54,9 +54,10 @@ class Login extends React.Component{
 
 
 	render (){
-        console.log('Dispatch',this.state.res)
+        //console.log('Dispatch',this.state.res)
         if (this.state.res){
-            this.props.loggedIn(this.state.res);
+			var tok = {token: this.state.res , user: this.state.user }
+            this.props.loggedIn(tok);
         }
 		return (
 				<Auxilary>
@@ -70,9 +71,9 @@ class Login extends React.Component{
 
 
 const mapDispatchToProps = dispatch =>{  
-    console.log('Dispatch',dispatch)
+   // console.log('Dispatch',dispatch)
     return{
-        loggedIn: (tok) => dispatch({type: actionTypes.LOGGED_IN, token: tok})
+        loggedIn: (tok) => dispatch({type: actionTypes.LOGGED_IN, payload:tok})
     
     }
 

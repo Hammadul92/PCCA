@@ -61,6 +61,7 @@ class UserLogin(Resource):
             refresh_token = create_refresh_token(identity = data['email'])
             return {
                 'message': 'Logged in as {}'.format(current_user.email),
+                'user': current_user.email,
                 'access_token': access_token,
                 'refresh_token': refresh_token
                 }
