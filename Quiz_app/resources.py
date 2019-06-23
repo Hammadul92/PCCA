@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from .models import Media, User, RevokedTokenModel, Gallery
+from .models import Media, User, RevokedTokenModel, Gallery, Blogs
 from .views import get_month_name, date_now
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask import request, session, redirect, url_for, flash, g,json,jsonify,abort, Response
@@ -122,6 +122,15 @@ class GalleryImages(Resource):
 
 
 
+class BlogPosts(Resource):
+    def get(self):
+        blogs = Blogs.query.order_by(Blogs.blog_ID.desc()).paginate(1,3,False)
+        response = {'blogs' : []}
+        for blog in blogs.items:
+            response['blogs'].append({'blog_ID': blog.blog_ID, 'img_url': blog.img_url, 
+                'blog_topic': blog.blog_topic, 'blog_desc': blog.blog_desc, 
+                'category': blog.category, 'date': blog.date, 'visits': blog.visits})      
+        return response
 
 
 
