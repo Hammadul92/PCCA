@@ -114,4 +114,8 @@ api.add_resource(resources.UserLogoutRefresh, '/logout/refresh')
 api.add_resource(resources.TokenRefresh, '/token/refresh')
 api.add_resource(resources.SecretResource, '/secret')
 api.add_resource(resources.GalleryImages, '/gallery')
+
 api.add_resource(resources.BlogPosts, '/blogs')
+
+api.add_resource(resources.EventsResource, '/events')
+

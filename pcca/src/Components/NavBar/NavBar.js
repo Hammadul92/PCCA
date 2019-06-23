@@ -3,20 +3,30 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import Auxilary from '../../hoc/Auxilary/Auxilary';
 
+import {connect} from 'react-redux';
+import * as actionTypes from '../../store/actions';
 
 class NavBar extends React.Component{
 
+
 	render (){
+		
+		var user = null;
 		if (this.props.loggedin){
             //Get user data prop
-            var user = <li><NavLink to="/profile" activeStyle={{fontWeight: "bold", color: "White"}}>Profile</NavLink></li>;
+			user = (
+				<Auxilary> 
+			      <li><NavLink to="/profile" activeStyle={{fontWeight: "bold", color: "White"}}>Profile</NavLink></li>
+				  <li><a href="/" onClick={this.props.loggedOut}> Log Out </a></li>
+			    </Auxilary>
+		     );
 
         }
         else{
-            var user = (
+             user = (
 				<Auxilary> 
 			      <li><NavLink to="/login" activeStyle={{fontWeight: "bold", color: "White"}}>Login</NavLink></li>
-			      <li><NavLink to="/Signup" activeStyle={{fontWeight: "bold", color: "White"}}>SignUp</NavLink></li>
+			      <li><NavLink to="/signup" activeStyle={{fontWeight: "bold", color: "White"}}>SignUp</NavLink></li>
 			    </Auxilary>
 		     );
 
@@ -65,4 +75,14 @@ class NavBar extends React.Component{
 	}
 }
 
-export default NavBar;
+const mapDispatchToProps = dispatch =>{  
+    console.log('DispatchLogged out')
+    return{
+        loggedOut: () => dispatch({type: actionTypes.LOGGED_OUT})
+    
+    }
+
+};
+
+
+export default connect(null,mapDispatchToProps)(NavBar);

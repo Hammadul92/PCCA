@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from .models import Media, User, RevokedTokenModel, Gallery, Blogs
+from .models import Media, User, RevokedTokenModel, Gallery, Events, Blogs
 from .views import get_month_name, date_now
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask import request, session, redirect, url_for, flash, g,json,jsonify,abort, Response
@@ -11,10 +11,6 @@ from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_r
 
 
 
-
-parser = reqparse.RequestParser()
-parser.add_argument('email', help = 'Email Field cannot be blank', required = True)
-parser.add_argument('password', help = 'Password be blank', required = True)
 
 reg = reqparse.RequestParser()
 reg.add_argument('email', help = 'email Field can not be blank', required = True)
@@ -47,6 +43,12 @@ class UserRegistration(Resource):
             return {'message': 'Something went wrong'}, 500
 
 
+
+
+parser = reqparse.RequestParser()
+parser.add_argument('email', help = 'Email Field cannot be blank', required = True)
+parser.add_argument('password', help = 'Password be blank', required = True)
+
 class UserLogin(Resource):
     def post(self):
         data = parser.parse_args()
@@ -61,11 +63,45 @@ class UserLogin(Resource):
             refresh_token = create_refresh_token(identity = data['email'])
             return {
                 'message': 'Logged in as {}'.format(current_user.email),
+                'user': current_user.email,
                 'access_token': access_token,
                 'refresh_token': refresh_token
                 }
         else:
             return {'message': 'Wrong credentials'}
+
+
+        # self.name = name
+        # self.date = date
+        # self.disable = True
+        # self.desc = None
+        # self.price = 0
+        # self.inventory = 0
+        # self.mainimage = None
+        # self.taxable = False
+
+
+class EventsResource(Resource):
+    def get(self):    
+        events = Events.query.all()
+
+        if (events):
+            eventlist = []
+            for data in events:
+                eventlist.append({
+                    'key': data.event_ID,
+                    'name': data.name,
+                    'date': data.date,
+                    'disable': data.disable,
+                    'desc': data.desc, 
+                    'price':data.price, 
+                    'inventory': data.inventory,
+                    'mainimage': data.mainimage,
+                    'taxable': data.taxable
+                     })
+            return jsonify(eventlist)
+        else:
+            return {'message': 'No Events Coming Up'}
 
 
       
