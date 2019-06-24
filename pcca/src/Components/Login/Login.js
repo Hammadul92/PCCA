@@ -1,5 +1,4 @@
 import React from 'react';
-import './Login.module.css';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import axios from 'axios';

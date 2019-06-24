@@ -1,6 +1,4 @@
 import React from 'react';
-import classes from './Profile.module.css';
-
 import { connect } from 'react-redux';
 
 class Profile extends React.Component{
@@ -11,7 +9,7 @@ class Profile extends React.Component{
         if(this.props.state.loggedin){
             return(
                 <div className="container">
-                     <h1 className="text-center"> My Profile </h1>
+                     <h1 className="text-center margin-top"> My Profile </h1>
                      <div className="LoginForm row">
                         <div className="col-md-6 col-md-offset-3">
                            <div className="row">
