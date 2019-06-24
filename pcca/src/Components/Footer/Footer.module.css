@@ -14,7 +14,7 @@ footer .footer-socials {
 footer .footer-socials a {
 	display: inline-block;
 	margin-right: 5px;
-	background-color: #626165;
+	background-color: #55c862; 
 	color: #fff;
 	/* padding: 20px; */
 	font-size: 20px;
@@ -28,7 +28,7 @@ footer .footer-socials a {
 	transition: all 0.2s ease-out;
 }
 footer .footer-socials a:hover {
-	background-color: #dddddd;
+	background-color: #01680c;
 }
 footer .footer-bottom {
 	padding: 10px 0 40px;

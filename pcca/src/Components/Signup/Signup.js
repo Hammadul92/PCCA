@@ -1,5 +1,5 @@
 
-import Auxilary from '../../hoc/Auxilary/Auxilary';
+import './Signup.module.css'
 import React from 'react';
 import axios from 'axios';
 
@@ -7,9 +7,6 @@ import axios from 'axios';
 
 class Signup extends React.Component{
     state = {res: null,  email: null , password: null, phone:null, message: null}
-
-
-
 
 	SignupDataHandler = () => {
 		const data = {
@@ -38,7 +35,6 @@ class Signup extends React.Component{
 	
           };
           
-          console.log(test.url);
 
 		  axios(test)
 		  .then(response => {
@@ -73,26 +69,27 @@ class Signup extends React.Component{
 			var msg= (<p>{this.state.message} </p>);
 		
 		return (
-				<Auxilary>
-                        <h1> Registeration</h1>
+				<div className="container">
+                        <h1 className="text-center"> Register </h1>
 						{msg}
-
-						<div className='signupform'>
-							<lable>USERNAME</lable>
+						<div className='LoginForm row'>
+						   <div className="col-md-6 col-md-offset-3 form-group">
+							<label>Email</label>
 							<input type='email' required aria-describedby="emailHelp" value={this.state.email} onChange={(event)=>this.setState({email: event.target.value})}/>
-							<lable>Password</lable>
+						   </div>
+						   <div className="col-md-6 col-md-offset-3 form-group">	
+							<label>Password</label>
 							<input type='password' required value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})}/>
-                            <lable>Phone Number</lable>
+						   </div>
+						   <div className="col-md-6 col-md-offset-3 form-group">
+                            <label>Phone Number</label>
 							<input type='tel' required value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})}/>
-							
+						   </div>
+						   <div className="col-md-6 col-md-offset-3 form-group">
 							<button  className="btn btn-primary" onClick={this.SignupDataHandler}>Register</button>
+						   </div>
 						</div>
-
-
-
-
-
-	            </Auxilary>
+                </div>
 			);
 	}
 }

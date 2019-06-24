@@ -16,7 +16,6 @@ class Gallery extends React.Component{
 
   }
 
-  
 
   render(){
     return (

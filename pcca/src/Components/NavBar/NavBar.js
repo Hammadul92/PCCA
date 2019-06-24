@@ -2,7 +2,6 @@ import './NavBar.module.css';
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import Auxilary from '../../hoc/Auxilary/Auxilary';
-
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
@@ -26,7 +25,7 @@ class NavBar extends React.Component{
              user = (
 				<Auxilary> 
 			      <li><NavLink to="/login" activeStyle={{fontWeight: "bold", color: "White"}}>Login</NavLink></li>
-			      <li><NavLink to="/signup" activeStyle={{fontWeight: "bold", color: "White"}}>SignUp</NavLink></li>
+			      <li><NavLink to="/signup" activeStyle={{fontWeight: "bold", color: "White"}}>Register</NavLink></li>
 			    </Auxilary>
 		     );
 
@@ -55,12 +54,7 @@ class NavBar extends React.Component{
 
 							</ul>
 
-							<ul className="nav navbar-nav navbar-right">
-							{user}
-								<li><a href="#"><i className="fa fa-facebook"></i></a></li>
-
-
-							</ul>
+							<ul className="nav navbar-nav navbar-right">{user}</ul>
 
 						</div>
 

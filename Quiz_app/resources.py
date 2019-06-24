@@ -81,27 +81,7 @@ class UserLogin(Resource):
         # self.taxable = False
 
 
-class EventsResource(Resource):
-    def get(self):    
-        events = Events.query.all()
 
-        if (events):
-            eventlist = []
-            for data in events:
-                eventlist.append({
-                    'key': data.event_ID,
-                    'name': data.name,
-                    'date': data.date,
-                    'disable': data.disable,
-                    'desc': data.desc, 
-                    'price':data.price, 
-                    'inventory': data.inventory,
-                    'mainimage': data.mainimage,
-                    'taxable': data.taxable
-                     })
-            return jsonify(eventlist)
-        else:
-            return {'message': 'No Events Coming Up'}
 
 
       
@@ -168,5 +148,22 @@ class BlogPosts(Resource):
                 'category': blog.category, 'date': blog.date, 'visits': blog.visits})      
         return response
 
-
+class EventsResource(Resource):
+    def get(self):    
+        events = Events.query.all()
+        response = {'events': []}
+        for data in events:
+            response['events'].append({
+                    'key': data.event_ID,
+                    'name': data.name,
+                    'date': data.date,
+                    'disable': data.disable,
+                    'desc': data.desc, 
+                    'price':data.price, 
+                    'inventory': data.inventory,
+                    'mainimage': data.mainimage,
+                    'taxable': data.taxable
+            })
+        return response
+        
 
