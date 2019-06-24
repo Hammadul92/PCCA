@@ -13,12 +13,9 @@ class Events extends React.Component{
         prayerTimes : null,
 		error: false
     }
-
     componentWillMount(){
 		var d = new Date();
-		var n = d.getDate();
-	
-
+		var n = d.getDate();	
 		axios.get('http://api.aladhan.com/v1/calendarByCity', {
 			params: {
 			  city: 'Vancouver',
@@ -30,29 +27,14 @@ class Events extends React.Component{
 			}
 		  }).then(response=>{
 			this.setState({prayerTimes: response.data.data[n].timings});
-		  }).catch(error=>{this.setState({error:true})});
-
-
-
-
-		   
-
+		  }).catch(error=>{this.setState({error:true})});		   
 	
 	};
-
-	
-	
-
-
-
 
 	render (){
 		
 		if (this.state.prayerTimes){
 			const prayer = {...this.state.prayerTimes};
-			
-			//console.log(Object.entries(prayer));
-
 			const pray = [];
 			for(let key in prayer){
 				pray.push({
@@ -88,20 +70,18 @@ class Events extends React.Component{
 					<div className="sidebar-widget">
 						<h3 className="sidebar-title">BC Prayer Times</h3>
 						<div className="widget-container widget-about">
-							<a href="post.html"><img src="https://shawglobalnews.files.wordpress.com/2018/08/img-2941-e1533664467170.jpg?quality=70&strip=all&w=720&h=379&crop=1" alt=""/></a>
-							
-								<table className="table table-dark" styles={'text-align: centre'}>
+							<a href="post.html"><img src="https://shawglobalnews.files.wordpress.com/2018/08/img-2941-e1533664467170.jpg?quality=70&strip=all&w=720&h=379&crop=1" alt=""/></a>						
+     						<table className="table table-striped">
 									<thead>
 										<tr>
-										
-										<th scope="col">Prayer</th>
-										<th scope="col">Timing</th>
+										   <th scope="col">Prayer</th>
+										   <th scope="col">Timing</th>
 										</tr>
 									</thead>
 									<tbody>
 										{ingOutput}
 									</tbody>
-									</table>
+							</table>
 									
 							</div>
 					</div>

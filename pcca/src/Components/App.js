@@ -16,24 +16,11 @@ import Login from './Login/Login';
 
 import './App.css';
 import {Route,Switch} from 'react-router-dom';
-
-import axios from 'axios';
-
-//import unsplash from '../api/unsplash';
-//import ImageList from './imageList';
 import { connect } from 'react-redux';
 
 
 
 class App extends React.Component{
-	
-	
-	
-	componentWillMount(){	
-		console.log('AppJS Mounted');
-	
-	
-	}
 
 	
 	
@@ -42,9 +29,9 @@ class App extends React.Component{
        return (
 
        	<Auxilary>
-	       	 <NavBar loggedin={this.props.test}/>
-		
-				<Switch>
+	       	 
+	       	 <NavBar loggedin={this.props.loggedin} user={this.props.user} />
+		     <Switch>
 								
 					<Route path='/events' exact component={NavEvents}/>
 					<Route path='/donations' exact component={Donations}/>
@@ -55,14 +42,9 @@ class App extends React.Component{
 					<Route path='/login' exact component={Login}/>
 					<Route path='/signup' exact component={Signup}/>
 					<Route path='/' exact component={Home}/>
+             </Switch>	
+             <Footer />
 
-					
-	
-
-				</Switch>	
-
-
-	         <Footer />
          </Auxilary>
        );
 	}
@@ -71,11 +53,9 @@ class App extends React.Component{
 
 
 const mapStateToProps = state => {
-	console.log(state);
-	return{
-  
-	    test: state.loggedin
-	    
+	return{ 
+	    loggedin: state.loggedin, 
+	    user: state.user   
 	}
   };
 

@@ -53,35 +53,21 @@ class UserLogin(Resource):
     def post(self):
         data = parser.parse_args()
         current_user = User.query.filter_by(email=data['email']).first()
-        #print(current_user.check_password(data['password']))
-
         if not current_user:
-            return {'message': 'User {} doesn\'t exist'.format(data['email'])}
-        
+            return {'message': 'User {} doesn\'t exist'.format(data['email'])}      
         if current_user.check_password(data['password']):
             access_token = create_access_token(identity = data['email'])
             refresh_token = create_refresh_token(identity = data['email'])
             return {
                 'message': 'Logged in as {}'.format(current_user.email),
-                'user': current_user.email,
+                'email': current_user.email,
+                'first_name': current_user.firstname,
+                'last_name' : current_user.lastname,
                 'access_token': access_token,
                 'refresh_token': refresh_token
                 }
         else:
             return {'message': 'Wrong credentials'}
-
-
-        # self.name = name
-        # self.date = date
-        # self.disable = True
-        # self.desc = None
-        # self.price = 0
-        # self.inventory = 0
-        # self.mainimage = None
-        # self.taxable = False
-
-
-
 
 
       

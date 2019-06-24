@@ -1,5 +1,3 @@
-
-import Auxilary from '../../hoc/Auxilary/Auxilary';
 import React from 'react';
 import './Login.module.css';
 import {connect} from 'react-redux';
@@ -9,17 +7,19 @@ import axios from 'axios';
  
 
 class Login extends React.Component{
-    state = {res: null, user: null, username: null , password: null, message: null}
-
-
-
+    state = {
+    	res: null, 
+    	user: "", 
+    	username: "", 
+    	password: "", 
+    	message: null
+    }
 
 	loginDataHandler = () => {
 		const data = {
 			email: this.state.username,
 			password: this.state.password
 		};
-		console.log(data);
 
 		var login = {
 			"async": true,
@@ -40,21 +40,13 @@ class Login extends React.Component{
 	
 		  };
 
-		  axios(login)
-		  .then(response => {
-			//console.log(response.data.access_token);
+		  axios(login).then(response => {
 			if (response.data.access_token){
-			   this.setState({res: response.data.access_token, user: response.data.user , message: response.data.message});
-			   
-			   //()=>this.loggedIn(response.data.access_token);
-			   //console.log('Response has token ',response.data.user);
-			}
-			else{
+			   this.setState({res: response.data.access_token, user: response.data.email, message: response.data.message});
+			}else{
 				this.setState({ message: response.data.message});
 			}
-			
-		  })
-		  .catch(error=> {
+		  }).catch(error=> {
 			//console.log(error);
 		  });
 
@@ -63,20 +55,19 @@ class Login extends React.Component{
 
 
 	render (){
-        //console.log('Dispatch',this.state.res)
+
         if (this.state.res){
-			var tok = {token: this.state.res , user: this.state.user }
+			var tok = {token: this.state.res, user: this.state.user }
             this.props.loggedIn(tok);
 		}
 
-			var msg= (<p>{this.state.message} </p>);
+		var msg = <div className="msg"> {this.state.message} </div>;
 		
 		return (
                 <div className="container">
 
                         <h1 className="text-center">Login</h1>
 						{msg}
-
 						<div className='LoginForm row'>
 						    <div className="col-md-6 col-md-offset-3 form-group">
 								<label>Email</label>

@@ -15,8 +15,8 @@ class NavBar extends React.Component{
             //Get user data prop
 			user = (
 				<Auxilary> 
-			      <li><NavLink to="/profile" activeStyle={{fontWeight: "bold", color: "White"}}>Profile</NavLink></li>
-				  <li><a href="/" onClick={this.props.loggedOut}> Log Out </a></li>
+			      <li><NavLink to="/profile" activeStyle={{fontWeight: "bold", color: "White"}}> <i className="fa fa-user"></i> {this.props.user} </NavLink></li>
+				  <li><a href="/login" onClick={this.props.loggedOut}> Log Out </a></li>
 			    </Auxilary>
 		     );
 
@@ -70,7 +70,6 @@ class NavBar extends React.Component{
 }
 
 const mapDispatchToProps = dispatch =>{  
-    console.log('DispatchLogged out')
     return{
         loggedOut: () => dispatch({type: actionTypes.LOGGED_OUT})
     
