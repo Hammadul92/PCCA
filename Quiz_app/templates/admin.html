@@ -165,7 +165,7 @@
                     </tr>
                     {% for event in events.items %}
                        <tr>
-                         <td><img src="{{event.mainimage}}"> </td>
+                         <td><img src="{{event.mainimage}}" style="width:80px;"> </td>
                          <td>{{event.event_ID}}</td>
                          <td> <a href="/admin/update_event/{{event.event_ID}}"><b>{{event.name}}</b></a> </td>
                          <td>{% if event.disable %} <b class="red"> Disabled </b> {% else %} <b style="color: darkgreen;"> Active </b> {%endif %}</td>

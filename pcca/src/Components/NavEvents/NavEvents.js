@@ -64,7 +64,36 @@ class NavEvents extends Component{
 		if (this.state.events){
 			evs = this.state.events.map(event =>{
 				return (
-				<p style={{textAlign:'center'}} key={event.event_ID}>{event.name} {event.name} {event.disable} {event.desc} {event.price}</p>);
+					
+						<div className="event" key={event.event_ID}>
+						  <div className="row">
+						    <div className="col-md-4 col-sm-6 col-xs-12">
+						       <div className="img-container"><img src={event.mainimage} alt={event.event_ID} /></div>
+						    </div>
+						    <div className="col-md-8 col-sm-6 col-xs-12">
+						        <div className="clearfix">
+						            <h2>{event.name}</h2>
+							        <span className="pull-right">{event.date}</span>
+								</div>
+								
+							    <p>{event.desc}</p>
+							    <hr/>
+							    
+							    <div className="row">
+							        <div className="col-md-3 pull-right">
+							            <span className="price">$ {event.price} CAD</span>
+									    <div className="input-group">
+										    <input type="number" value="1" min="1" max="10" className="form-control" />
+										    <div className="input-group-btn"><a className="btn" href="#"> Add to cart </a></div>
+										</div>
+									</div>
+							    </div>
+							    
+							</div>
+						  </div>
+						</div>
+				    
+				);
 			});
 
 		}
@@ -74,8 +103,10 @@ class NavEvents extends Component{
 
 		return (
 				<Auxilary>
+				    <div className="container">
                         <h1 className={classes.h1}> EVENTS AND TICKETS</h1>
 						{evs}
+				    </div>
 						
 	            </Auxilary>
 			);
