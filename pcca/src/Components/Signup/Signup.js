@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import * as actionTypes from '../../store/actions';
+import {connect} from 'react-redux';
+
 
 class Signup extends React.Component{
     state = {res: null,  email: null , password: null, phone:null, message: null}
@@ -59,10 +62,26 @@ class Signup extends React.Component{
 
 }
 
+SuccessfullSignUp=()=>{
+	if (this.state.res) {
+	
+	    this.props.history.push({
+		pathname: '/login',
+		search: '?query=redirect-from-signup',
+		params: { msg: 'You have Signed Up. Please Login' }
+	  })
+	}
+}
+
 
 
 	render (){
 			var msg= (<p>{this.state.message} </p>);
+			if (this.state.res){
+				this.props.signedUp(this.state.message);
+			}
+			
+			this.SuccessfullSignUp();
 		
 		return (
 				<div className="container">
@@ -90,8 +109,15 @@ class Signup extends React.Component{
 	}
 }
 
+const mapDispatchToProps = dispatch =>{  
+    return{
+        signedUp: (msg) => dispatch({type: actionTypes.SIGNED_UP, message:msg})
+    
+    }
+
+};
 
 
 
 
-export default (Signup);
+export default connect(null,mapDispatchToProps)(Signup);

@@ -26,6 +26,14 @@ const reducer = (state = initialState, action) => {
                 user: null
 
             };
+        case actionTypes.SIGNED_UP:
+            console.log(action);
+            return {
+                message: action.message
+    
+                };
+
+            
         default:
             return state;
     }
