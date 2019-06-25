@@ -5,7 +5,16 @@ import {connect} from 'react-redux';
 
 
 class Signup extends React.Component{
-    state = {res: null,  email: '' , password: '', phone:0, message: ''}
+    state = {
+      res: null, 
+      firstname: '',
+      lastname: '',
+      email: '', 
+      password: '',
+      confirm_password: '', 
+      phone:'', 
+      message: ''
+    }
 
 	SignupDataHandler = (event) => {
 
@@ -16,7 +25,7 @@ class Signup extends React.Component{
             phone: this.state.phone
 		};
 
-		var test = {
+		var Resgistration = {
 			"async": true,
 			"crossDomain": true,
 			"url": "http://localhost:5000/registration",
@@ -36,9 +45,7 @@ class Signup extends React.Component{
           };
           
 
-		  axios(test)
-		  .then(response => {
-			console.log(response.data.message);
+		  axios(Resgistration).then(response => {
 			if (response.data.access_token){
 			   this.setState({res: response.data.access_token , message: response.data.message});
 			}
@@ -46,8 +53,7 @@ class Signup extends React.Component{
 				this.setState({ message: response.data.message});
 			}
 			
-		  })
-		  .catch(error=> {
+		  }).catch(error=> {
 			//console.log(error);
 		  });
 
@@ -79,20 +85,37 @@ class Signup extends React.Component{
                         <h1 className="text-center"> Register </h1>
 						{msg}
 						<form className='LoginForm row' onSubmit={(event) => this.SignupDataHandler(event)}>
-						   <div className="col-md-6 col-md-offset-3 form-group">
-							<label>Email</label>
-							<input type='email' required aria-describedby="emailHelp" value={this.state.email} onChange={(event)=>this.setState({email: event.target.value})} required />
-						   </div>
-						   <div className="col-md-6 col-md-offset-3 form-group">	
-							<label>Password</label>
-							<input type='password' required value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})} required />
-						   </div>
-						   <div className="col-md-6 col-md-offset-3 form-group">
-                            <label>Phone Number</label>
-							<input type='tel' required value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required />
-						   </div>
-						   <div className="col-md-6 col-md-offset-3 form-group">
-							<button  type="submit" className="btn">Register</button>
+						   <div class="col-md-8 col-md-offset-2">
+                           		<div class="row">
+								   <div className="col-md-6 form-group">
+									<label> First Name *</label>
+									<input type='text' required  value={this.state.firstname} onChange={(event)=>this.setState({firstname: event.target.value})} required />
+								   </div>
+								   <div className="col-md-6 form-group">
+									<label> Last Name *</label>
+									<input type='text' required  value={this.state.lastname} onChange={(event)=>this.setState({lastname: event.target.value})} required />
+								   </div>
+
+								   <div className="col-md-12 form-group">
+									<label>Email *</label>
+									<input type='email' required aria-describedby="emailHelp" value={this.state.email} onChange={(event)=>this.setState({email: event.target.value})} required />
+								   </div>
+								   <div className="col-md-6 form-group">	
+									<label>Password *</label>
+									<input type='password' required value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})} required />
+								   </div>
+								   <div className="col-md-6 form-group">	
+									<label>Confirm Password *</label>
+									<input type='password' required value={this.state.confirm_password} onChange={(event)=>this.setState({confirm_password: event.target.value})} required />
+								   </div>
+								   <div className="col-md-12 form-group">
+		                            <label>Phone Number *</label>
+									<input type='tel' required value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required />
+								   </div>
+								   <div className="col-md-12 form-group">
+									<button  type="submit" className="btn">Register</button>
+								   </div>
+								</div>
 						   </div>
 						</form>
                 </div>
