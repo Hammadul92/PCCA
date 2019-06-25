@@ -74,7 +74,7 @@ section:last-child {
 
 
 
-.LoginForm input{
+.LoginForm input, .LoginForm textarea{
 	border: 1px solid #ddd; 
 	font-size: 18px;
 	height: 50px;
@@ -83,7 +83,7 @@ section:last-child {
 	border-radius: 5px;
 }
 
-.LoginForm input:focus{
+.LoginForm input:focus, .LoginForm textarea:focus{
 	box-shadow: none;
 	border: 1px solid #222;
 }

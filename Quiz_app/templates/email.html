@@ -1,0 +1,53 @@
+
+{% if type == 'contact_message'%}
+
+
+    <h3><b>Client/Other Queries</b></h3>
+    <hr/>
+    <strong> From: </strong> {{contact.name}} <br>
+    <strong> Email:  </strong> {{contact.email}} <br/>
+    <hr/>
+    <strong> Message: </strong> {{contact.message |safe }} 
+
+
+
+{% endif %}
+
+{% if type == 'contact_confirmation' %}
+
+   <p>Thank you for contacting Naturally Splendid! You email has been received and our team will do our best to have someone get back to you within 24 hours. If you request is time sensitive, please feel free to reach to us directly via phone at 1 888 692 0902 during business hours (8AM-4PM PST).</p>
+   <p>Thanks for choosing Naturally Splendid and our trusted Brands!</p>
+   <p> Warmly, <br/>
+     The Naturally Splendid Team 
+   </p>
+
+{% endif %}
+
+
+{%if type=='reset_password' %}
+
+      <h3><b>New Password Request</b></h3>
+      <p>
+        Hello {{ user }}, <br/>
+        Please click on the link below to reset your NSE account password: <br/>
+        <a href="{{ password_reset_url }}">{{ password_reset_url }}</a><br/>     
+        Regards, <br/>
+        Team NSE
+     </p>
+
+
+{% endif %}
+
+{%if type=='confirm_order'%}
+   
+   <h3><b>Naturally Splendid New Order</b></h3>
+    <div>
+        Hello {{user.firstname}}, <br/><br>
+        Please find attached a new Naturally Splendid order ready to be processed. <br/><br/>
+        Regards, <br/>
+        Team NSE
+        
+    </div>
+{% endif %}
+
+

@@ -5,7 +5,7 @@ from .models import Media, User, Blogs, Events, Cart, Joinmail, Invoices, Sales,
 from . import db
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask_login import login_required, login_user, logout_user, current_user
-from .email import password_reset_email, send_invoice, send_contact_message, send_status_email, contact_confirmation_email
+from .email import password_reset_email, send_invoice, send_contact_message, contact_confirmation_email
 from itsdangerous import URLSafeTimedSerializer
 from .forms import LoginForm,  Password_EmailForm, ContactForm, PasswordResetForm
 from pdfs import create_pdf
@@ -70,20 +70,7 @@ def  delete_galleryimage(gallery_ID):
 
 
 
-@app.route('/contact', methods=['POST', 'GET'])
-def contact():
-   form = ContactForm(request.form)
-   if request.method == 'POST':
-        if form.validate_on_submit():
-           question = Contact(form.name.data, form.email.data, form.message.data , date=date_now())
-           question.contact_type = 'Contact'
-           db.session.add(question)
-           db.session.commit()
-           admin = User.query.filter_by(role = 'admin').first()
-           send_contact_message(question, admin)
-           contact_confirmation_email(form.email.data)
-           flash(" Thank you for contacting us we will get back to you soon!! ", "success")
-   return render_template('contact.html', form=form)
+
 
 
 

@@ -1,13 +1,31 @@
 from flask_restful import Resource, reqparse
-from .models import Media, User, RevokedTokenModel, Gallery, Events, Blogs
+from .models import Media, User, RevokedTokenModel, Gallery, Events, Blogs, Contact
+from .email import  send_contact_message, contact_confirmation_email
 from .views import get_month_name, date_now
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask import request, session, redirect, url_for, flash, g,json,jsonify,abort, Response
 from . import db
-
-
-
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+
+
+
+
+contact_arguments = reqparse.RequestParser()
+contact_arguments.add_argument('email', help = 'Email Field can not be blank', required = True)
+contact_arguments.add_argument('name', help = 'Name Field can not be blank', required = True)
+contact_arguments.add_argument('message', help = 'Message Field can not be blank', required = True)
+
+class ContactForm(Resource):
+    def post(self):
+        data = contact_arguments.parse_args()
+        question = Contact(str(data['name']), str(data['email']), str(data['message']), date_now())
+        db.session.add(question)
+        db.session.commit()
+        admin = User.query.filter_by(role = 'admin').first()
+        send_contact_message(question, admin)
+        contact_confirmation_email(data['email'])
+        return {'msg': 'Thank you for contacting us we will get back to you soon!! '}
+
 
 
 
@@ -48,7 +66,6 @@ class UserRegistration(Resource):
 parser = reqparse.RequestParser()
 parser.add_argument('email', help = 'Email Field cannot be blank', required = True)
 parser.add_argument('password', help = 'Password be blank', required = True)
-
 class UserLogin(Resource):
     def post(self):
         data = parser.parse_args()
@@ -110,6 +127,8 @@ class SecretResource(Resource):
         return {
             'answer': 42
         }
+
+
 
 
 

@@ -29,9 +29,6 @@ def send_invoice(sale, user):
     mail.send(msg)
 
 
-def send_status_email(user, order_number, tracking_number):
-    html = render_template('email.html', user = user, order_number = order_number, tracking_number = tracking_number, type="status") 
-    send_email('Naturally Splendid Order Status Changed', user.email, html)
 ################################################################################################################################################################################################
     
 
