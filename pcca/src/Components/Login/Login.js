@@ -7,12 +7,12 @@ import axios from 'axios';
 
 class Login extends React.Component{
     state = {
-    	res: null, 
+    	res: '', 
     	user: "", 
     	username: "", 
     	password: "", 
-    	message: null
-    }
+    	message: ''
+	}
 
 	loginDataHandler = () => {
 		const data = {
@@ -51,16 +51,30 @@ class Login extends React.Component{
 
 	}
 
+	SuccessfullLogin=()=>{
+		if (this.props.loggedIn) {
+			this.props.history.push("/");
+		  }
+
+	}
 
 
 	render (){
 
         if (this.state.res){
-			var tok = {token: this.state.res, user: this.state.user }
-            this.props.loggedIn(tok);
-		}
+			var tok = {token: this.state.res, user: this.state.user , message: this.state.message}
+			this.props.loggedIn(tok);
+			this.SuccessfullLogin();
 
-		var msg = <div className="msg"> {this.state.message} </div>;
+		}
+		
+		var msg = <div className="msg"> {this.state.message}</div> ;
+		if (this.props.pmsg.message){
+			msg = <div className="msg">Congratulations! {this.props.pmsg.message}</div>
+		}
+		
+
+		
 		
 		return (
                 <div className="container">
@@ -88,6 +102,12 @@ class Login extends React.Component{
 }
 
 
+const mapStateToProps = state => {
+	return{ 
+		pmsg: state   
+	}
+  };
+
 
 const mapDispatchToProps = dispatch =>{  
     return{
@@ -96,5 +116,8 @@ const mapDispatchToProps = dispatch =>{
     }
 
 };
+
+
+
  
-export default connect(null,mapDispatchToProps)(Login);
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

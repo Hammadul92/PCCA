@@ -10,21 +10,7 @@ from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_r
 
 
 
-contact_arguments = reqparse.RequestParser()
-contact_arguments.add_argument('email', help = 'Email Field can not be blank', required = True)
-contact_arguments.add_argument('name', help = 'Name Field can not be blank', required = True)
-contact_arguments.add_argument('message', help = 'Message Field can not be blank', required = True)
 
-class ContactForm(Resource):
-    def post(self):
-        data = contact_arguments.parse_args()
-        question = Contact(str(data['name']), str(data['email']), str(data['message']), date_now())
-        db.session.add(question)
-        db.session.commit()
-        admin = User.query.filter_by(role = 'admin').first()
-        send_contact_message(question, admin)
-        contact_confirmation_email(data['email'])
-        return {'msg': 'Thank you for contacting us we will get back to you soon!! '}
 
 
 
@@ -172,3 +158,18 @@ class EventsResource(Resource):
         return response
         
 
+contact_arguments = reqparse.RequestParser()
+contact_arguments.add_argument('email', help = 'Email Field can not be blank', required = True)
+contact_arguments.add_argument('name', help = 'Name Field can not be blank', required = True)
+contact_arguments.add_argument('message', help = 'Message Field can not be blank', required = True)
+
+class ContactForm(Resource):
+    def post(self):
+        data = contact_arguments.parse_args()
+        question = Contact(str(data['name']), str(data['email']), str(data['message']), date_now())
+        db.session.add(question)
+        db.session.commit()
+        admin = User.query.filter_by(role = 'admin').first()
+        send_contact_message(question, admin)
+        contact_confirmation_email(data['email'])
+        return {'msg': 'Thank you for contacting us we will get back to you soon!! '}
