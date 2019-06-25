@@ -7,14 +7,15 @@ import {connect} from 'react-redux';
 class Signup extends React.Component{
     state = {res: null,  email: '' , password: '', phone:0, message: ''}
 
-	SignupDataHandler = () => {
+	SignupDataHandler = (event) => {
+
+		event.preventDefault();
 		const data = {
 			email: this.state.email,
             password: this.state.password,
             phone: this.state.phone
 		};
-		console.log(data);
-        if (data.email && data.password && data.phone){
+
 		var test = {
 			"async": true,
 			"crossDomain": true,
@@ -40,9 +41,6 @@ class Signup extends React.Component{
 			console.log(response.data.message);
 			if (response.data.access_token){
 			   this.setState({res: response.data.access_token , message: response.data.message});
-			   
-			   //()=>this.loggedIn(response.data.access_token);
-			   //console.log('Response has token ',response.data.user);
 			}
 			else{
 				this.setState({ message: response.data.message});
@@ -54,31 +52,25 @@ class Signup extends React.Component{
 		  });
 
     }
-    else {
-        this.setState({message: 'Please Fill all the fields'});
-    }
-    
 
 
-}
-
-SuccessfullSignUp=()=>{
-	if (this.state.res) {
-	
-	    this.props.history.push({
-		pathname: '/login',
-		search: '?query=redirect-from-signup',
-		params: { msg: 'You have Signed Up. Please Login' }
-	  })
+	SuccessfullSignUp=()=>{
+		if (this.state.res) {
+		   this.props.history.push({
+			  pathname: '/login',
+			  search: '?query=redirect-from-signup',
+			  params: { msg: 'You have Signed Up. Please Login' }
+		   })
+		 }
 	}
-}
 
 
 
 	render (){
 			var msg= (<div className="msg"> {this.state.message}</div>);
 			if (this.state.res){
-				this.props.signedUp(this.state.message);}
+				this.props.signedUp(this.state.message);
+			}
 			
 			this.SuccessfullSignUp();
 		
@@ -86,23 +78,23 @@ SuccessfullSignUp=()=>{
 				<div className="container">
                         <h1 className="text-center"> Register </h1>
 						{msg}
-						<div className='LoginForm row'>
+						<form className='LoginForm row' onSubmit={(event) => this.SignupDataHandler(event)}>
 						   <div className="col-md-6 col-md-offset-3 form-group">
 							<label>Email</label>
-							<input type='email' required aria-describedby="emailHelp" value={this.state.email} onChange={(event)=>this.setState({email: event.target.value})}/>
+							<input type='email' required aria-describedby="emailHelp" value={this.state.email} onChange={(event)=>this.setState({email: event.target.value})} required />
 						   </div>
 						   <div className="col-md-6 col-md-offset-3 form-group">	
 							<label>Password</label>
-							<input type='password' required value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})}/>
+							<input type='password' required value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})} required />
 						   </div>
 						   <div className="col-md-6 col-md-offset-3 form-group">
                             <label>Phone Number</label>
-							<input type='tel' required value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})}/>
+							<input type='tel' required value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required />
 						   </div>
 						   <div className="col-md-6 col-md-offset-3 form-group">
-							<button  className="btn btn-primary" onClick={this.SignupDataHandler}>Register</button>
+							<button  type="submit" className="btn">Register</button>
 						   </div>
-						</div>
+						</form>
                 </div>
 			);
 	}

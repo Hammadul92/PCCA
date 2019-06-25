@@ -8,7 +8,7 @@ class Contact extends React.Component{
     	name: '',
     	email: '',
     	message: '',
-    	response_msg: ''
+    	response_msg: 'Testing this'
     }
 
 	contactDataHandler = () => {
@@ -46,9 +46,12 @@ class Contact extends React.Component{
 	}
 
 	render (){
+		
+        var response_msg = <div className="msg"> {this.state.response_msg}</div>;
+
 		return(
 				<div className="container">
-				     <div className="msg">{this.state.response_msg}</div>
+				     {response_msg}
                      <h1 className="text-center"> Contact Us</h1>	
                      <div className="row LoginForm">
                         <div className="form-group col-md-6 col-md-offset-3">

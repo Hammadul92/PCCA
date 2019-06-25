@@ -7,14 +7,15 @@ import axios from 'axios';
 
 class Login extends React.Component{
     state = {
-    	res: '', 
+    	res: "", 
     	user: "", 
     	username: "", 
     	password: "", 
-    	message: ''
+    	message: ""
 	}
 
-	loginDataHandler = () => {
+	loginDataHandler = (event) => {
+        event.preventDefault();
 		const data = {
 			email: this.state.username,
 			password: this.state.password
@@ -81,19 +82,19 @@ class Login extends React.Component{
 
                         <h1 className="text-center">Login</h1>
 						{msg}
-						<div className='LoginForm row'>
+						<form className='LoginForm row' onSubmit={(event) => this.loginDataHandler(event)} >
 						    <div className="col-md-6 col-md-offset-3 form-group">
 								<label>Email</label>
-								<input type='email'  value={this.state.username} onChange={(event)=>this.setState({username: event.target.value})}/>
+								<input type='email'  value={this.state.username} onChange={(event)=>this.setState({username: event.target.value})} required />
 							</div>
 							<div className="col-md-6 col-md-offset-3 form-group">
 								<label>Password</label>
-								<input type='password' value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})}/>	
+								<input type='password' value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})} required />	
 						    </div>						
 							<div className="col-md-6 col-md-offset-3 form-group text-center">
-							   <button  className="btn" onClick={this.loginDataHandler}> Login </button>
+							   <button  className="btn" type="submit"> Login </button>
 							</div>
-						</div>
+						</form>
 
                 </div>
 
