@@ -7,11 +7,11 @@ import axios from 'axios';
 
 class Login extends React.Component{
     state = {
-    	res: null, 
+    	res: '', 
     	user: "", 
     	username: "", 
     	password: "", 
-    	message: null
+    	message: ''
 	}
 
 	loginDataHandler = () => {
@@ -68,17 +68,10 @@ class Login extends React.Component{
 
 		}
 		
-		console.log('recievedprops',this.props.pmsg.message);
-		//this.CheckFlashMsg();
 		var msg = <div className="msg"> {this.state.message}</div> ;
 		if (this.props.pmsg.message){
 			msg = <div className="msg">Congratulations! {this.props.pmsg.message}</div>
-
 		}
-		
-		
-
-
 		
 
 		

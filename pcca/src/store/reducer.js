@@ -12,6 +12,7 @@ const reducer = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.LOGGED_IN:
             return {
+                ...state,
                 loggedin: true,
                 token: action.payload.token,
                 user: action.payload.user
@@ -20,6 +21,7 @@ const reducer = (state = initialState, action) => {
 
         case actionTypes.LOGGED_OUT:
             return {
+                ...state,
                 loggedin: false,
                 token: null,
                 message: null,
@@ -27,8 +29,8 @@ const reducer = (state = initialState, action) => {
 
             };
         case actionTypes.SIGNED_UP:
-            console.log(action);
-            return {
+            return{
+                ...state,
                 message: action.message
     
                 };

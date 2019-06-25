@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 
 
 class Signup extends React.Component{
-    state = {res: null,  email: null , password: null, phone:null, message: null}
+    state = {res: null,  email: '' , password: '', phone:0, message: ''}
 
 	SignupDataHandler = () => {
 		const data = {
@@ -76,10 +76,9 @@ SuccessfullSignUp=()=>{
 
 
 	render (){
-			var msg= (<p>{this.state.message} </p>);
+			var msg= (<div className="msg"> {this.state.message}</div>);
 			if (this.state.res){
-				this.props.signedUp(this.state.message);
-			}
+				this.props.signedUp(this.state.message);}
 			
 			this.SuccessfullSignUp();
 		
@@ -110,6 +109,7 @@ SuccessfullSignUp=()=>{
 }
 
 const mapDispatchToProps = dispatch =>{  
+
     return{
         signedUp: (msg) => dispatch({type: actionTypes.SIGNED_UP, message:msg})
     

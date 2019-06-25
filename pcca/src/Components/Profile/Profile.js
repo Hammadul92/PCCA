@@ -5,7 +5,7 @@ class Profile extends React.Component{
 
     render(){
         
-        var sign = null;
+      
         if(this.props.state.loggedin){
             return(
                 <div className="container">
