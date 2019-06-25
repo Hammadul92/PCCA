@@ -4,7 +4,8 @@ const initialState = {
     loggedin: false,
     token: null,
     message: null,
-    user: null
+    user: null,
+    tickets: []
 
 };
 
@@ -34,7 +35,13 @@ const reducer = (state = initialState, action) => {
                 message: action.message
     
                 };
-
+        case actionTypes.ADD_CART:
+                return{
+                    ...state,
+                    tickets: state.tickets.concat(action.newItem)
+        
+                    };
+    
             
         default:
             return state;
