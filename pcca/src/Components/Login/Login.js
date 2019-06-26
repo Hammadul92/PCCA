@@ -11,7 +11,6 @@ class Login extends React.Component{
     	user: "", 
     	username: "", 
     	password: "", 
-    	message: ""
 	}
 
 	loginDataHandler = (event) => {
@@ -42,39 +41,24 @@ class Login extends React.Component{
 
 		  axios(login).then(response => {
 			if (response.data.access_token){
-			   this.setState({res: response.data.access_token, user: response.data.email, message: response.data.message});
-			}else{
-				this.setState({ message: response.data.message});
+			   var tok = {token: response.data.access_token, user: response.data.email, firstname: response.data.firstname, lastname: response.data.lastname, phone: response.data.phone };
+		       this.props.loggedIn(tok);
+			   this.props.history.push("/");		   
+
 			}
+			this.props.flash(response.data.message);
+
 		  }).catch(error=> {
 			//console.log(error);
 		  });
 
 	}
 
-	SuccessfullLogin=()=>{
-		if (this.props.loggedIn) {
-			this.props.history.push("/");
-		  }
-
-	}
-
-
 	render (){
 
-        if (this.state.res){
-			var tok = {token: this.state.res, user: this.state.user , message: this.state.message}
-			this.props.loggedIn(tok);
-			this.SuccessfullLogin();
 
-		}
-		
-		var msg = <div className="msg"> {this.state.message}</div> ;
-		if (this.props.pmsg.message){
-			msg = <div className="msg">Congratulations! {this.props.pmsg.message}</div>
-		}
-		
-
+		var msg = <div className="msg"> {this.props.msg.message} </div>;
+	
 		
 		
 		return (
@@ -105,14 +89,15 @@ class Login extends React.Component{
 
 const mapStateToProps = state => {
 	return{ 
-		pmsg: state   
+		msg: state   
 	}
   };
 
 
 const mapDispatchToProps = dispatch =>{  
     return{
-        loggedIn: (tok) => dispatch({type: actionTypes.LOGGED_IN, payload:tok})
+        loggedIn: (tok) => dispatch({type: actionTypes.LOGGED_IN, payload:tok}),
+        flash: (msg) => dispatch({type: actionTypes.FLASH_MESSAGE, message:msg})
     
     }
 

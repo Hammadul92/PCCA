@@ -11,7 +11,6 @@ class Signup extends React.Component{
       lastname: '',
       email: '', 
       password: '',
-      confirm_password: '', 
       phone:'', 
       message: ''
     }
@@ -22,7 +21,9 @@ class Signup extends React.Component{
 		const data = {
 			email: this.state.email,
             password: this.state.password,
-            phone: this.state.phone
+            phone: this.state.phone,
+            firstname: this.state.firstname,
+            lastname: this.state.lastname
 		};
 
 		var Resgistration = {
@@ -61,11 +62,13 @@ class Signup extends React.Component{
 
 
 	SuccessfullSignUp=()=>{
+
 		if (this.state.res) {
+		   this.props.flash(this.state.message);
 		   this.props.history.push({
 			  pathname: '/login',
 			  search: '?query=redirect-from-signup',
-			  params: { msg: 'You have Signed Up. Please Login' }
+			  params: { msg: 'You have Signed Up Successfully. Please Login' }
 		   })
 		 }
 	}
@@ -74,9 +77,6 @@ class Signup extends React.Component{
 
 	render (){
 			var msg= (<div className="msg"> {this.state.message}</div>);
-			if (this.state.res){
-				this.props.signedUp(this.state.message);
-			}
 			
 			this.SuccessfullSignUp();
 		
@@ -85,8 +85,8 @@ class Signup extends React.Component{
                         <h1 className="text-center"> Register </h1>
 						{msg}
 						<form className='LoginForm row' onSubmit={(event) => this.SignupDataHandler(event)}>
-						   <div class="col-md-8 col-md-offset-2">
-                           		<div class="row">
+						   <div className="col-md-8 col-md-offset-2">
+                           		<div className="row">
 								   <div className="col-md-6 form-group">
 									<label> First Name *</label>
 									<input type='text' required  value={this.state.firstname} onChange={(event)=>this.setState({firstname: event.target.value})} required />
@@ -96,17 +96,13 @@ class Signup extends React.Component{
 									<input type='text' required  value={this.state.lastname} onChange={(event)=>this.setState({lastname: event.target.value})} required />
 								   </div>
 
-								   <div className="col-md-12 form-group">
+								   <div className="col-md-6 form-group">
 									<label>Email *</label>
 									<input type='email' required aria-describedby="emailHelp" value={this.state.email} onChange={(event)=>this.setState({email: event.target.value})} required />
 								   </div>
 								   <div className="col-md-6 form-group">	
 									<label>Password *</label>
 									<input type='password' required value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})} required />
-								   </div>
-								   <div className="col-md-6 form-group">	
-									<label>Confirm Password *</label>
-									<input type='password' required value={this.state.confirm_password} onChange={(event)=>this.setState({confirm_password: event.target.value})} required />
 								   </div>
 								   <div className="col-md-12 form-group">
 		                            <label>Phone Number *</label>
@@ -126,7 +122,7 @@ class Signup extends React.Component{
 const mapDispatchToProps = dispatch =>{  
 
     return{
-        signedUp: (msg) => dispatch({type: actionTypes.SIGNED_UP, message:msg})
+        flash: (msg) => dispatch({type: actionTypes.FLASH_MESSAGE, message:msg})
     
     }
 

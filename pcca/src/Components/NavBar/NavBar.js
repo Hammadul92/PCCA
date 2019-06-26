@@ -11,12 +11,12 @@ class NavBar extends React.Component{
 	render (){
 		
 		var user = null;
-		if (this.props.loggedin){
-            //Get user data prop
+		console.log(this.props.state.loggedin)
+		if (this.props.state.loggedin){         
 			user = (
 				<Auxilary> 
-			      <li><NavLink to="/profile" activeStyle={{fontWeight: "bold", color: "White"}}> <i className="fa fa-user"></i> {this.props.user} </NavLink></li>
-				  <li><a href="/login" onClick={this.props.loggedOut}> Log Out </a></li>
+			      <li><NavLink to="/profile" activeStyle={{fontWeight: "bold", color: "White"}}> <i className="fa fa-user"></i> {this.props.state.firstname} </NavLink></li>
+				  <li><NavLink to="/login" onClick={this.props.loggedOut}> Log Out </NavLink></li>
 			    </Auxilary>
 		     );
 
@@ -69,6 +69,12 @@ class NavBar extends React.Component{
 	}
 }
 
+const mapStateToProps = state => {
+	return{ 
+		state: state   
+	}
+};
+
 const mapDispatchToProps = dispatch =>{  
     return{
         loggedOut: () => dispatch({type: actionTypes.LOGGED_OUT})
@@ -78,4 +84,6 @@ const mapDispatchToProps = dispatch =>{
 };
 
 
-export default connect(null,mapDispatchToProps)(NavBar);
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(NavBar);

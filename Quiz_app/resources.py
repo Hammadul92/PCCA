@@ -17,27 +17,29 @@ from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_r
 
 
 reg = reqparse.RequestParser()
-reg.add_argument('email', help = 'email Field can not be blank', required = True)
-reg.add_argument('password', help = 'Password Field can not be blank', required = True)
-reg.add_argument('phone', help = 'Phone number Field can not be blank', required = True)
-
+reg.add_argument('firstname', required = True)
+reg.add_argument('lastname', required = True)
+reg.add_argument('email', required = True)
+reg.add_argument('password', required = True)
+reg.add_argument('phone', required = True)
 
 #Only these threee fields for User should be okay.
 class UserRegistration(Resource):
  def post(self):
-        data = reg.parse_args()
-        if (User.query.filter_by(email=data['email']).first()):
-            return {'message': 'User {} already exists'. format(data['email'])}
-        
-        new_user = User(email = data['email'], password = data['password'], phone = data['phone'])
-        new_user.registered_on_app = date_now()
-
-        db.session.add(new_user)
         try:
+            data = reg.parse_args()
+            if (User.query.filter_by(email=data['email']).first()):
+                return {'message': 'User {} already exists'. format(data['email'])}
+
+            new_user = User(email = data['email'], password = data['password'], phone = data['phone'])
+            new_user.registered_on_app = date_now()
+            new_user.firstname = data['firstname']
+            new_user.lastname = data['lastname']
+            db.session.add(new_user)
             db.session.commit()
             access_token = create_access_token(identity = data['email'])
             refresh_token = create_refresh_token(identity = data['email'])
-            return {
+            return{
                 'message': 'User {} was created'.format( data['email']),
                 'access_token': access_token,
                 'refresh_token': refresh_token
@@ -64,10 +66,11 @@ class UserLogin(Resource):
             return {
                 'message': 'Logged in as {}'.format(current_user.email),
                 'email': current_user.email,
-                'first_name': current_user.firstname,
-                'last_name' : current_user.lastname,
+                'firstname': current_user.firstname,
+                'lastname' : current_user.lastname,
                 'access_token': access_token,
-                'refresh_token': refresh_token
+                'refresh_token': refresh_token,
+                'phone': current_user.phone
                 }
         else:
             return {'message': 'Wrong credentials'}

@@ -91,10 +91,18 @@ section:last-child {
 .LoginForm .btn{
 	height: 50px;
 	width: 100%;
+	margin-top: 20px; 
+
+}
+
+.btn{
 	background: linear-gradient(45deg, #01680c 1%, #55c862 100%);
 	color: #fff;
-	margin-top: 20px; 
-	transition: 0.45s ease-out;
+	margin-right: 5px;
+}
+
+.btn:hover{
+	color: #fff;
 }
 
 
@@ -118,3 +126,7 @@ section:last-child {
 .margin-top{
 	margin-top: 80px;
 }
+
+.margin-bottom{
+	margin-bottom: 80px;
+} 

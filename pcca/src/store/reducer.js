@@ -5,6 +5,9 @@ const initialState = {
     token: null,
     message: null,
     user: null,
+    phone: null,
+    firstname: null,
+    lastname: null,
     tickets: []
 
 };
@@ -16,8 +19,10 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loggedin: true,
                 token: action.payload.token,
-                user: action.payload.user
-    
+                user: action.payload.user,
+                firstname: action.payload.firstname,
+                lastname: action.payload.lastname,
+                phone: action.payload.phone
             };
 
         case actionTypes.LOGGED_OUT:
@@ -26,10 +31,13 @@ const reducer = (state = initialState, action) => {
                 loggedin: false,
                 token: null,
                 message: null,
-                user: null
+                user: null,
+                firstname: null,
+                lastname: null,
+                phone: null,
 
             };
-        case actionTypes.SIGNED_UP:
+        case actionTypes.FLASH_MESSAGE:
             return{
                 ...state,
                 message: action.message
