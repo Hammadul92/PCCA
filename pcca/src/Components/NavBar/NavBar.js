@@ -11,7 +11,6 @@ class NavBar extends React.Component{
 	render (){
 		
 		var user = null;
-		console.log(this.props.state.loggedin)
 		if (this.props.state.loggedin){         
 			user = (
 				<Auxilary> 

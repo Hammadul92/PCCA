@@ -1,14 +1,15 @@
 
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions';
 
 class Contact extends React.Component{
 
 	state = {
     	name: '',
     	email: '',
-    	message: '',
-    	response_msg: 'Testing this'
+    	message: ''
     }
 
 	contactDataHandler = () => {
@@ -38,7 +39,8 @@ class Contact extends React.Component{
 		  };
 
 		  axios(contact).then(response => {
-			 this.setState({ response_msg: response.data.msg});
+			 this.props.flash(response.data.msg);
+			 console.log(this.props.state.message)
           }).catch(error=> {
 			
 		  });
@@ -47,12 +49,12 @@ class Contact extends React.Component{
 
 	render (){
 		
-        var response_msg = <div className="msg"> {this.state.response_msg}</div>;
+        var msg = <div className="msg"> {this.props.state.message}</div>;
 
 		return(
 				<div className="container">
-				     {response_msg}
                      <h1 className="text-center"> Contact Us</h1>	
+                     {msg}
                      <div className="row LoginForm">
                         <div className="form-group col-md-6 col-md-offset-3">
                             <label> Name </label>
@@ -75,4 +77,21 @@ class Contact extends React.Component{
 	}
 }
 
-export default Contact;
+
+const mapStateToProps = state => {
+	return{ 
+		state: state   
+	}
+  };
+
+const mapDispatchToProps = dispatch =>{  
+
+    return{
+        flash: (msg) => dispatch({type: actionTypes.FLASH_MESSAGE, message:msg})
+    
+    }
+
+};
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Contact);
