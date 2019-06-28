@@ -64,6 +64,7 @@ class UserLogin(Resource):
             access_token = create_access_token(identity = data['email'])
             refresh_token = create_refresh_token(identity = data['email'])
             return {
+                'userID': current_user.userID,
                 'message': 'Logged in as {}'.format(current_user.email),
                 'email': current_user.email,
                 'firstname': current_user.firstname,
@@ -186,5 +187,5 @@ update_profile_arguments.add_argument('phone', required = True)
 class updateProfileForm(Resource):
     @jwt_required
     def post(self):
-        jti = get_raw_jwt()['jti']
+        data = update_profile_arguments.parse_args()
         return {'msg': 'Your profile was updated successfully!'}

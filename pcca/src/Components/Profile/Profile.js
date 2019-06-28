@@ -15,6 +15,7 @@ class Profile extends React.Component{
   updateFormHandler = (event) => {
     event.preventDefault();
     const data = {
+      userID: this.props.state.userID,
       email: this.state.user,
       firstname: this.state.firstname,
       lastname: this.state.lastname,

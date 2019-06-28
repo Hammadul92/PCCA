@@ -41,7 +41,7 @@ class Login extends React.Component{
 
 		  axios(login).then(response => {
 			if (response.data.access_token){
-			   var tok = {token: response.data.access_token, user: response.data.email, firstname: response.data.firstname, lastname: response.data.lastname, phone: response.data.phone };
+			   var tok = {userID: response.data.userID, token: response.data.access_token, user: response.data.email, firstname: response.data.firstname, lastname: response.data.lastname, phone: response.data.phone };
 		       this.props.loggedIn(tok);
 			   this.props.history.push("/");		   
 

@@ -1,6 +1,7 @@
 import * as actionTypes from './actions';
 
 const initialState = {
+    userID: null,
     loggedin: false,
     token: null,
     message: null,
@@ -17,6 +18,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOGGED_IN:
             return {
                 ...state,
+                userID: action.payload.userID,
                 loggedin: true,
                 token: action.payload.token,
                 user: action.payload.user,
@@ -28,6 +30,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOGGED_OUT:
             return {
                 ...state,
+                userID: null,
                 loggedin: false,
                 token: null,
                 message: null,
@@ -37,7 +40,7 @@ const reducer = (state = initialState, action) => {
                 phone: null,
 
             };
-            
+
         case actionTypes.FLASH_MESSAGE:
             return{
                 ...state,
