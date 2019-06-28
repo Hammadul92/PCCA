@@ -40,7 +40,9 @@ class NavEvents extends Component{
 		 });
 		console.log('CURRENT CART',cart);
 	}
-	
+	createMarkup=(a)=> {
+		return {__html: a};
+	  }
 
 	render (){
 
@@ -58,7 +60,8 @@ class NavEvents extends Component{
 						            <h2>{event.name}</h2>
 							        <span className="pull-right">{event.date}</span>
 								</div>
-							    <div dangerouslySetInnerHTML={{ __html: event.desc }}  />
+							    <div dangerouslySetInnerHTML={this.createMarkup(event.desc)} />
+								<div dangerouslySetInnerHTML={{ __html: event.desc }}  />
 							    
 							    <div className="row">
 							        <div className="col-md-3 pull-right">
