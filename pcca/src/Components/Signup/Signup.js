@@ -108,9 +108,11 @@ class Signup extends React.Component{
 		                            <label>Phone Number *</label>
 									<input type='tel' required value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required />
 								   </div>
-								   <div className="col-md-12 form-group">
+
+								   <div className="col-md-12 form-group ">
 									<button  type="submit" className="btn">Register</button>
 								   </div>
+
 								</div>
 						   </div>
 						</form>
