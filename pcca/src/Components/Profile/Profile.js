@@ -1,40 +1,87 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
+import axios from 'axios';
 
 class Profile extends React.Component{
 
+  state = {
+      user: this.props.state.user,
+      firstname: this.props.state.firstname,
+      lastname: this.props.state.lastname,
+      phone: this.props.state.phone,
+  }
+
+  updateFormHandler = (event) => {
+    event.preventDefault();
+    const data = {
+      email: this.state.user,
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      phone: this.state.phone
+    };
+
+    var request = {
+      "async": true,
+      "crossDomain": true,
+      "url": "http://localhost:5000/contact",
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "Cache-Control": "no-cache",
+        "Host": "localhost:5000",
+        "accept-encoding": "gzip, deflate",
+        "Connection": "keep-alive",
+        "cache-control": "no-cache"
+      },
+      "processData": false,
+      "data": data
+  
+      };
+
+      axios(request).then(response => {
+       this.props.flash(response.data.msg);
+          }).catch(error=> {
+      
+      });
+
+  }
+
     render(){
+
+        var msg = <div className="msg"> {this.props.state.message}</div>;
+
         if(this.props.state.loggedin){
             return(
-                
                     <div className="container">
                          <h1 className="text-center margin-top"> My Profile </h1>
-                         <div className="LoginForm row">
+                         {msg}
+                         <form className="LoginForm row" onSubmit={(event) => this.updateFormHandler(event)}>
                             <div className="col-md-6 col-md-offset-3">
                                <div className="row">
                                    <div className="col-md-6 form-group">
                                      <label> Email </label>
-                                     <input type="text" value={this.props.state.user} />
+                                     <input type="text" value={this.state.user} onChange={(event)=>this.setState({user: event.target.value})}/>
                                    </div>
                                    <div className="col-md-6 form-group">
                                      <label> Phone Number </label>
-                                     <input type="text" value={this.props.state.phone} />
+                                     <input type="text" value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} />
                                    </div>
                                    <div className="col-md-6 form-group">
                                      <label> First Name </label>
-                                     <input type="text" value={this.props.state.firstname} />
+                                     <input type="text" value={this.state.firstname} onChange={(event)=>this.setState({firstname: event.target.value})} />
                                    </div>
                                    <div className="col-md-6 form-group">
                                      <label> Last Name </label>
-                                     <input type="text" value={this.props.state.lastname} />
+                                     <input type="text" value={this.state.lastname} onChange={(event)=>this.setState({lastname: event.target.value})} />
                                    </div>
                                    <div className="col-md-12 form-group">
-                                     <button className="btn"> Update </button>
+                                     <button className="btn" type="submit"> Update </button>
                                    </div>
                                 </div>
                             </div>
-                         </div>
+                         </form>
                     </div>
             );
         }else{
@@ -60,9 +107,19 @@ const mapStateToProps = state => {
 	return{ 
 	    state: state	    
 	}
-  };
+};
+
+const mapDispatchToProps = dispatch =>{  
+
+    return{
+        flash: (msg) => dispatch({type: actionTypes.FLASH_MESSAGE, message:msg})
+    
+    }
+
+};
 
 
 
-export default connect(mapStateToProps)(Profile);
+
+export default connect(mapStateToProps,mapDispatchToProps)(Profile);
 

@@ -101,8 +101,9 @@ section:last-child {
 	margin-right: 5px;
 }
 
-.btn:hover{
+.btn:hover, .btn:focus{
 	color: #fff;
+	outline: none;
 }
 
 

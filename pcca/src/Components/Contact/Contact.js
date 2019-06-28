@@ -12,7 +12,8 @@ class Contact extends React.Component{
     	message: ''
     }
 
-	contactDataHandler = () => {
+	contactDataHandler = (event) => {
+		event.preventDefault();
 		const data = {
 			email: this.state.email,
 			message: this.state.message,
@@ -40,7 +41,6 @@ class Contact extends React.Component{
 
 		  axios(contact).then(response => {
 			 this.props.flash(response.data.msg);
-			 console.log(this.props.state.message)
           }).catch(error=> {
 			
 		  });
@@ -52,27 +52,27 @@ class Contact extends React.Component{
         var msg = <div className="msg"> {this.props.state.message}</div>;
 
 		return(
-				<div className="container">
+				<form className="container" onSubmit={(event) => this.contactDataHandler(event)}>
                      <h1 className="text-center"> Contact Us</h1>	
                      {msg}
                      <div className="row LoginForm">
                         <div className="form-group col-md-6 col-md-offset-3">
                             <label> Name </label>
-                        	<input type="text" value={this.state.name} onChange={(event)=>this.setState({name: event.target.value})} />
+                        	<input type="text" value={this.state.name} onChange={(event)=>this.setState({name: event.target.value})} required />
                         </div>
                         <div className="form-group col-md-6 col-md-offset-3">
                             <label>  Email </label>
-                        	<input type="email" value={this.state.email} onChange={(event)=>this.setState({email: event.target.value})} />
+                        	<input type="email" value={this.state.email} onChange={(event)=>this.setState({email: event.target.value})} required />
                         </div>
                         <div className="form-group col-md-6 col-md-offset-3">
                             <label>  Message </label>
-                        	<textarea style={{ height: 200 }} value={this.state.message} onChange={(event)=>this.setState({message: event.target.value})}></textarea>
+                        	<textarea style={{ height: 200 }} value={this.state.message} onChange={(event)=>this.setState({message: event.target.value})} required />
                         </div>
                         <div className="form-group col-md-6 col-md-offset-3">
-                           <button className="btn" onClick={this.contactDataHandler}> Contact </button>
+                           <button type="submit" className="btn"> Contact </button>
                         </div>
                      </div>
-	            </div>
+	            </form>
 			);
 	}
 }
