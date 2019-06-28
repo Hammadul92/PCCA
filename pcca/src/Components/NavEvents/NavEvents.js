@@ -49,7 +49,6 @@ class NavEvents extends Component{
 			const events = this.state.events.map(event =>{
 				return (
 					
-
 						<div className="event" key={event.key}>
 						  <div className="row">
 						    <div className="col-md-4 col-sm-6 col-xs-12">
@@ -60,9 +59,7 @@ class NavEvents extends Component{
 						            <h2>{event.name}</h2>
 							        <span className="pull-right">{event.date}</span>
 								</div>
-							    <div dangerouslySetInnerHTML={this.createMarkup(event.desc)} />
-								<div dangerouslySetInnerHTML={{ __html: event.desc }}  />
-							    
+								<p dangerouslySetInnerHTML={{ __html: event.desc }}  />						    
 							    <div className="row">
 							        <div className="col-md-3 pull-right">
 							            <span className="price">$ {event.price} CAD</span>
