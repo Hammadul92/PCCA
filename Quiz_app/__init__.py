@@ -117,4 +117,4 @@ api.add_resource(resources.GalleryImages, '/gallery')
 api.add_resource(resources.BlogPosts, '/blogs')
 api.add_resource(resources.ContactForm, '/contact')
 api.add_resource(resources.EventsResource, '/events')
-
+api.add_resource(resources.updateProfileForm, '/updateProfile')

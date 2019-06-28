@@ -18,7 +18,7 @@ class Profile extends React.Component{
       email: this.state.user,
       firstname: this.state.firstname,
       lastname: this.state.lastname,
-      phone: this.state.phone
+      phone: this.state.phone,
     };
 
     var request = {
@@ -33,7 +33,8 @@ class Profile extends React.Component{
         "Host": "localhost:5000",
         "accept-encoding": "gzip, deflate",
         "Connection": "keep-alive",
-        "cache-control": "no-cache"
+        "cache-control": "no-cache",
+        "Authorization": "Bearer " + this.props.state.token
       },
       "processData": false,
       "data": data
@@ -62,19 +63,19 @@ class Profile extends React.Component{
                                <div className="row">
                                    <div className="col-md-6 form-group">
                                      <label> Email </label>
-                                     <input type="text" value={this.state.user} onChange={(event)=>this.setState({user: event.target.value})}/>
+                                     <input type="text" value={this.state.user} onChange={(event)=>this.setState({user: event.target.value})} required/>
                                    </div>
                                    <div className="col-md-6 form-group">
                                      <label> Phone Number </label>
-                                     <input type="text" value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} />
+                                     <input type="text" value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required/>
                                    </div>
                                    <div className="col-md-6 form-group">
                                      <label> First Name </label>
-                                     <input type="text" value={this.state.firstname} onChange={(event)=>this.setState({firstname: event.target.value})} />
+                                     <input type="text" value={this.state.firstname} onChange={(event)=>this.setState({firstname: event.target.value})} required/>
                                    </div>
                                    <div className="col-md-6 form-group">
                                      <label> Last Name </label>
-                                     <input type="text" value={this.state.lastname} onChange={(event)=>this.setState({lastname: event.target.value})} />
+                                     <input type="text" value={this.state.lastname} onChange={(event)=>this.setState({lastname: event.target.value})} required/>
                                    </div>
                                    <div className="col-md-12 form-group">
                                      <button className="btn" type="submit"> Update </button>

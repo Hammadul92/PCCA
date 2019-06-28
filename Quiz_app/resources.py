@@ -162,9 +162,9 @@ class EventsResource(Resource):
         
 
 contact_arguments = reqparse.RequestParser()
-contact_arguments.add_argument('email', help = 'Email Field can not be blank', required = True)
-contact_arguments.add_argument('name', help = 'Name Field can not be blank', required = True)
-contact_arguments.add_argument('message', help = 'Message Field can not be blank', required = True)
+contact_arguments.add_argument('email', required = True)
+contact_arguments.add_argument('name',  required = True)
+contact_arguments.add_argument('message', required = True)
 
 class ContactForm(Resource):
     def post(self):
@@ -176,3 +176,15 @@ class ContactForm(Resource):
         send_contact_message(question, admin)
         contact_confirmation_email(data['email'])
         return {'msg': 'Thank you for contacting us we will get back to you soon!! '}
+
+
+update_profile_arguments = reqparse.RequestParser()
+update_profile_arguments.add_argument('email', required = True)
+update_profile_arguments.add_argument('firstname', required = True)
+update_profile_arguments.add_argument('lastname', required = True)
+update_profile_arguments.add_argument('phone', required = True)
+class updateProfileForm(Resource):
+    @jwt_required
+    def post(self):
+        jti = get_raw_jwt()['jti']
+        return {'msg': 'Your profile was updated successfully!'}

@@ -37,6 +37,7 @@ const reducer = (state = initialState, action) => {
                 phone: null,
 
             };
+            
         case actionTypes.FLASH_MESSAGE:
             return{
                 ...state,
