@@ -47,6 +47,17 @@ const reducer = (state = initialState, action) => {
                 message: action.message
     
                 };
+        case actionTypes.UPDATE_USER:
+                //console.log('RECIEVED DATA',action.payload);
+            return{
+                userID: action.payload.userID,
+                loggedin: true,
+                token: action.payload.token,
+                user: action.payload.email,
+                firstname: action.payload.firstname,
+                lastname: action.payload.lastname,
+                phone: action.payload.phone
+                };
         case actionTypes.ADD_CART:
                 return{
                     ...state,

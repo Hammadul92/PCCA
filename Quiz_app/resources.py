@@ -188,4 +188,18 @@ class updateProfileForm(Resource):
     @jwt_required
     def post(self):
         data = update_profile_arguments.parse_args()
-        return {'msg': 'Your profile was updated successfully!'}
+        if(data):
+            current_user = User.query.filter_by(email=data['email']).first()
+            current_user.email = data.email
+            current_user.firstname = data.firstname
+            current_user.lastname = data.lastname
+            current_user.phone = data.phone
+            db.session.commit()
+            return {'msg': 'Your profile was updated successfully!'}
+
+        else:
+            return {'msg': 'There seems to be a problem with the network. Please Try again later'}
+
+
+
+        

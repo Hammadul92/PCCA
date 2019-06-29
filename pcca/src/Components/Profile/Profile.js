@@ -7,9 +7,19 @@ class Profile extends React.Component{
 
   state = {
       user: this.props.state.user,
-      firstname: this.props.state.firstname,
-      lastname: this.props.state.lastname,
+      firstname: '',
+      lastname: '',
       phone: this.props.state.phone,
+  }
+
+  componentWillMount(){
+    //console.log(this.props.state);
+    if (this.props.state.firstname){
+      this.setState({firstname: this.props.state.firstname })
+    }
+    if(this.props.state.lastname){
+      this.setState({lastname: this.props.state.lastname })
+    }
   }
 
   updateFormHandler = (event) => {
@@ -20,7 +30,11 @@ class Profile extends React.Component{
       firstname: this.state.firstname,
       lastname: this.state.lastname,
       phone: this.state.phone,
+      token: this.props.state.token
     };
+
+    //console.log('SENT DATA',data);
+    
 
     var request = {
       "async": true,
@@ -44,6 +58,8 @@ class Profile extends React.Component{
 
       axios(request).then(response => {
        this.props.flash(response.data.msg);
+       this.props.updated(data);
+
           }).catch(error=> {
       
       });
@@ -53,6 +69,7 @@ class Profile extends React.Component{
     render(){
 
         var msg = <div className="msg"> {this.props.state.message}</div>;
+        
 
         if(this.props.state.loggedin){
             return(
@@ -114,7 +131,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch =>{  
 
     return{
-        flash: (msg) => dispatch({type: actionTypes.FLASH_MESSAGE, message:msg})
+        flash: (msg) => dispatch({type: actionTypes.FLASH_MESSAGE, message:msg}),
+        updated: (data) => dispatch({type: actionTypes.UPDATE_USER, payload: data})
     
     }
 
