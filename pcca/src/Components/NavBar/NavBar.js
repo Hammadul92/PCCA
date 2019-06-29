@@ -28,7 +28,14 @@ class NavBar extends React.Component{
 			    </Auxilary>
 		     );
 
-        }
+		}
+		
+		var cart = this.props.state.tickets;
+		var itemNum = cart.length;
+		if(itemNum){
+			 var checkout = <li><NavLink to="/checkout" > Cart {itemNum}  </NavLink></li>
+		}
+		console.log(cart, 'Cart Length',cart.length);
 		return (
 				<nav className="navbar navbar-inverse navbar-fixed-top">
 					<div className="container">
@@ -54,6 +61,7 @@ class NavBar extends React.Component{
 							</ul>
 
 							<ul className="nav navbar-nav navbar-right">{user}</ul>
+							<ul className="nav navbar-nav navbar-right">{checkout}</ul>
 
 						</div>
 

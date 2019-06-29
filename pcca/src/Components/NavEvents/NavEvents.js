@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './NavEvents.module.css';
 import axios from 'axios';
-//import {connect} from 'react-redux';
-//import * as actionTypes from '../../store/actions';
+import {connect} from 'react-redux';
+import * as actionTypes from '../../store/actions';
 
 
 class NavEvents extends Component{
@@ -30,15 +30,24 @@ class NavEvents extends Component{
 	// 'mainimage': data.mainimage,
 	// 'taxable': data.taxable
 	addToCart=(id)=>{
-		 //console.log(id.key, 'SELECTED EVENT',id.price);
-		 let cart = this.state.cart;
-		 let item = {key: id.key, quatity: this.state.quantity , price: id.price};
-		 cart.push(item);
-		 // assign a name of list to item list
-		 this.setState({
-			 cart: cart
+		//console.log('CURRENT CART',this.state.quantity);
+		 if (Number(this.state.quantity ) <= 0){
+			console.log('Add item Quantity');
+		 }
+		 else{
+
+			let cart = this.state.cart;
+			let item = {key: id.key, quatity: this.state.quantity , price: id.price};
+			cart.push(item);
+			this.props.addtoCart(item);
+			this.setState({
+				cart: cart,
+				quantity: 0
+
 		 });
-		console.log('CURRENT CART',cart);
+		    console.log('CURRENT CART',cart);
+			 
+		 }
 	}
 	createMarkup=(a)=> {
 		return {__html: a};
@@ -86,14 +95,15 @@ class NavEvents extends Component{
 
 
 
-// const mapDispatchToProps = dispatch =>{  
-//     return{
-//         addtoCart: (ticket) => dispatch({type: actionTypes.LOGGED_IN, newItem:ticket})
+const mapDispatchToProps = dispatch =>{  
+    return{
+        addtoCart: (ticket) => dispatch({type: actionTypes.ADD_CART, newItem:ticket})
     
-//     }
+	}
+};
 
 // }; connect(null,mapDispatchToProps)
 
 
 
-export default (NavEvents);
+export default connect(null,mapDispatchToProps)(NavEvents);

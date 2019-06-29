@@ -24,7 +24,8 @@ const reducer = (state = initialState, action) => {
                 user: action.payload.user,
                 firstname: action.payload.firstname,
                 lastname: action.payload.lastname,
-                phone: action.payload.phone
+                phone: action.payload.phone,
+                tickets: []
             };
 
         case actionTypes.LOGGED_OUT:
@@ -38,6 +39,7 @@ const reducer = (state = initialState, action) => {
                 firstname: null,
                 lastname: null,
                 phone: null,
+                tickets: []
 
             };
 
@@ -45,7 +47,6 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 message: action.message
-    
                 };
         case actionTypes.UPDATE_USER:
                 //console.log('RECIEVED DATA',action.payload);
@@ -59,12 +60,12 @@ const reducer = (state = initialState, action) => {
                 phone: action.payload.phone
                 };
         case actionTypes.ADD_CART:
+                console.log('Current Cart DATA',action.newItem, 'Current Cart Redux:', state.tickets);
                 return{
                     ...state,
                     tickets: state.tickets.concat(action.newItem)
         
                     };
-    
             
         default:
             return state;
