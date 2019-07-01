@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
 class Cart extends React.Component{
+	state = {
+		total: 0
+	}
 
 	contactDataHandler = (event) => {
 		event.preventDefault();
@@ -52,27 +55,39 @@ class Cart extends React.Component{
 
 		var items = null;
 		let msg = null;
+		let checkout = null;
+		let total = 0;
 		if(this.props.state.tickets.length === 0){
 			msg =  <p> You do not have any items in the cart!</p>
 		};
 
         if(this.props.state.tickets.length >0){
             //console.log(this.props.state.tickets, 'CART Checkout')
-
+			
             items = this.props.state.tickets.map((item,index) =>{
+				let subtotal = Number(item.price)*Number(item.quantity);
+				total = subtotal + total;
 				return (
-					<tr>
+					<tr key={index}>
                     <td>{index}</td>
                     <td>{item.title}</td>
                     <td>{item.quantity}</td>
                     <td>{item.price}</td>
+					<td>{subtotal}</td>
 					<td><div className="input-group-btn" ><a className="btn" onClick={() => this.removeItem(index)} > Remove</a></div></td>
 
 				    </tr>
 				);
 			});
 
-        }
+		}
+		if (total>0){
+			checkout = (<div className="col-md-6 col-md-offset-3 form-group text-center">
+							<button  className="btn" type="submit"> Proceed With Checkout Total ${total} </button>    
+						</div>   
+							);
+		}
+
         
 
 		return(
@@ -88,6 +103,7 @@ class Cart extends React.Component{
                         <th>Title</th>
                         <th>Quantity</th>
                         <th>Price</th>
+						<th>Sub-Total</th>
 						<th>Remove</th>
                         </tr>
                     </thead>
@@ -95,8 +111,8 @@ class Cart extends React.Component{
 							{items}
                         
                     </tbody>
-                    </table>
-                
+                    </table>   
+					{checkout} 
             </div>
 			);
 	}
