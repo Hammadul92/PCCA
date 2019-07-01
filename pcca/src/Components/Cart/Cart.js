@@ -5,45 +5,7 @@ import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
 class Cart extends React.Component{
-	state = {
-		total: 0
-	}
 
-	contactDataHandler = (event) => {
-		event.preventDefault();
-		const data = {
-			email: this.state.email,
-			message: this.state.message,
-			name: this.state.name
-		};
-
-		var contact = {
-			"async": true,
-			"crossDomain": true,
-			"url": "http://localhost:5000/contact",
-			"method": "POST",
-			"headers": {
-			  "Content-Type": "application/json",
-			  "Accept": "*/*",
-			  "Cache-Control": "no-cache",
-			  "Host": "localhost:5000",
-			  "accept-encoding": "gzip, deflate",
-			  "Connection": "keep-alive",
-			  "cache-control": "no-cache"
-			},
-			"processData": false,
-			"data": data
-	
-		  };
-
-		  axios(contact).then(response => {
-			 this.props.flash(response.data.msg);
-          }).catch(error=> {
-			
-		  });
-
-	}
-	
 	removeItem=(index)=>{
 		var arr = this.props.state.tickets;
 	    arr.splice(index, 1); 
