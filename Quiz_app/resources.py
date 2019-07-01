@@ -6,8 +6,7 @@ from sqlalchemy import exc, func, cast, DATE, or_
 from flask import request, session, redirect, url_for, flash, g,json,jsonify,abort, Response
 from . import db
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
-
-
+import stripe
 
 
 
@@ -202,4 +201,62 @@ class updateProfileForm(Resource):
 
 
 
-        
+banking_information_arguments = reqparse.RequestParser()
+banking_information_arguments.add_argument('email', required = True)
+banking_information_arguments.add_argument('password', required = False)
+banking_information_arguments.add_argument('phone', required = False)
+banking_information_arguments.add_argument('firstname', required = False)
+banking_information_arguments.add_argument('lastname', required = False)
+banking_information_arguments.add_argument('card_id', required = True)
+banking_information_arguments.add_argument('token_id', required = True)
+banking_information_arguments.add_argument('country', required = True)
+banking_information_arguments.add_argument('last4', required = True)
+banking_information_arguments.add_argument('exp_year', required = True)
+banking_information_arguments.add_argument('bran', required = True)
+
+class banking_information(Resource):
+   def post():
+      try:
+        data = banking_information_arguments.parse_args()
+        result = {'message':200}
+        customer = stripe.Customer.create(
+          email= data['email'],
+          source= data['token_id']
+        )
+        current_user.customer_ID = customer.id
+        current_user.card_country = data['country']
+        current_user.card_last4 = "XXXX-XXXX-XXXX-" + data['last4']
+        current_user.card_exp_year = data['exp_year']
+        current_user.card_brand = data['brand']
+        db.session.commit()
+      except stripe.error.InvalidRequestError as e:
+        body = e.json_body
+        err  = body.get('error', {})
+        db.session.rollback()
+        result['message'] = err.get('message')
+      except stripe.error.RateLimitError as e:
+        body = e.json_body
+        err  = body.get('error', {})
+        db.session.rollback()
+        result['message'] = err.get('message')
+      except stripe.error.AuthenticationError as e:
+        body = e.json_body
+        err  = body.get('error', {})
+        db.session.rollback()
+        result['message'] = err.get('message')
+      except stripe.error.APIConnectionError as e:
+        body = e.json_body
+        err  = body.get('error', {})
+        db.session.rollback()
+        result['message'] = err.get('message')
+      except stripe.error.StripeError as e:
+        body = e.json_body
+        err  = body.get('error', {})
+        db.session.rollback()
+        result['message'] = err.get('message')
+      except Exception as e:
+        result['message'] = 401
+        db.session.rollback()
+        result['message'] = e
+
+      return result

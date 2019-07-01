@@ -423,67 +423,7 @@ def update_blog_form(blogid):
   return redirect(url_for('admin', tab='update_blog', update_ID = blogid))
 
 
-@app.route('/banking_information', methods = ['POST'])
-@login_required
-def banking_information():
-   if request.method == 'POST':
-      try:
-        result = {'message':200}
-        card_id = request.json['card_id']
-        token_id = request.json['token_id']
-        country = request.json['country']
-        last4 = request.json['last4']
-        exp_year = request.json['exp_year']
-        brand = request.json['brand']
-        customer = stripe.Customer.create(
-          email= current_user.email,
-          source= token_id
-        )
 
-        current_user.customer_ID = customer.id
-        current_user.card_country = country
-        current_user.card_last4 = "XXXX-XXXX-XXXX-" + last4
-        current_user.card_exp_year = exp_year
-        current_user.card_brand = brand 
-        db.session.commit()
-      except stripe.error.InvalidRequestError as e:
-        result['message'] = 401
-        body = e.json_body
-        err  = body.get('error', {})
-        db.session.rollback()
-        flash('%s' % err.get('message'), 'danger')
-      except stripe.error.RateLimitError as e:
-        result['message'] = 401
-        body = e.json_body
-        err  = body.get('error', {})
-        db.session.rollback()
-        flash('%s' % err.get('message'), 'danger')
-      except stripe.error.AuthenticationError as e:
-        result['message'] = 401
-        body = e.json_body
-        err  = body.get('error', {})
-        db.session.rollback()
-        flash('%s' % err.get('message'), 'danger')
-      except stripe.error.APIConnectionError as e:
-        result['message'] = 401
-        body = e.json_body
-        err  = body.get('error', {})
-        db.session.rollback()
-        flash('%s' % err.get('message'), 'danger')
-      except stripe.error.StripeError as e:
-        result['message'] = 401
-        body = e.json_body
-        err  = body.get('error', {})
-        db.session.rollback()
-        flash('%s' % err.get('message'), 'danger')
-      except Exception as e:
-        result['message'] = 401
-        db.session.rollback()
-        flash('%s' % e, 'danger')
-
-      r = Response(response=json.dumps(result), status=200, mimetype="application/json")
-      r.headers["Content-Type"] = "text/json; charset = utf-8"
-      return r
 
 
 @app.route('/charge', methods=['POST'])
