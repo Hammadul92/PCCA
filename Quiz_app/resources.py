@@ -223,6 +223,11 @@ class banking_information(Resource):
           email= data['email'],
           source= data['token_id']
         )
+        current_user = User.query.filter_by(email = data['email']).first()
+        if not current_user:
+           current_user = User(email = data['email'], password = 'xyz123' , phone = data['phone'])
+           db.session.add(current_user)
+           db.session.commit()
         current_user.customer_ID = customer.id
         current_user.card_country = data['country']
         current_user.card_last4 = "XXXX-XXXX-XXXX-" + data['last4']
