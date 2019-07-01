@@ -225,7 +225,15 @@ class banking_information(Resource):
         )
         current_user = User.query.filter_by(email = data['email']).first()
         if not current_user:
-           current_user = User(email = data['email'], password = 'xyz123' , phone = data['phone'])
+           if data['password']  != '' and data['firstname'] != '' and data['lastname'] != '' and data['phone'] != '':
+              current_user = User( email = data['email'], password = data['password'], phone = data['phone'])
+              current_user.firstname = data['firstname']
+              current_user.lastname = data['lastname']
+           else:
+              current_user = User(email = data['email'], password = 'xyz123' , phone = 'N/A')
+              current_user.firstname = 'N/A'
+              current_user.lastname = 'N/A'
+
            db.session.add(current_user)
            db.session.commit()
         current_user.customer_ID = customer.id
