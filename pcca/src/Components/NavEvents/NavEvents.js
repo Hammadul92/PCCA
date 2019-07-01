@@ -37,7 +37,7 @@ class NavEvents extends Component{
 		 else{
 
 			let cart = this.state.cart;
-			let item = {key: id.key, quatity: this.state.quantity , price: id.price};
+			let item = {key: id.key, quantity: this.state.quantity , price: id.price, title: id.name};
 			cart.push(item);
 			this.props.addtoCart(item);
 			this.setState({

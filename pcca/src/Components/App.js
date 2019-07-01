@@ -9,7 +9,7 @@ import Contact from './Contact/Contact';
 import AboutUs from './AboutUs/AboutUs';
 import Profile from './Profile/Profile';
 import Signup from './Signup/Signup'
-
+import Cart from './Cart/Cart';
 import Home from './Home';
 
 import Login from './Login/Login';
@@ -41,7 +41,9 @@ class App extends React.Component{
 					<Route path='/profile' exact component={Profile}/>
 					<Route path='/login' exact component={Login}/>
 					<Route path='/signup' exact component={Signup}/>
+					<Route path='/checkout' exact component={Cart}/>
 					<Route path='/' exact component={Home}/>
+					
              </Switch>	
              <Footer />
 
