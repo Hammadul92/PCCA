@@ -8,7 +8,7 @@ class Footer extends React.Component{
 				<footer className="footer">
 
 					<div className="footer-socials">
-						<a href="#"><i className="fa fa-facebook"></i></a>
+						<a href="https://www.facebook.com/PCCA.BC/" target="_blank"><i className="fa fa-facebook"></i></a>
 					</div>
 
 					<div className="footer-bottom">

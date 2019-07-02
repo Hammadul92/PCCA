@@ -3,8 +3,12 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
+import CheckoutForm from './Checkout';
+import {Elements, StripeProvider} from 'react-stripe-elements';
+import './Checkout.css';
 
 class Cart extends React.Component{
+
 
 	removeItem=(index)=>{
 		var arr = this.props.state.tickets;
@@ -14,7 +18,6 @@ class Cart extends React.Component{
 	}
 
 	render (){
-
 		var items = null;
 		let msg = null;
 		let checkout = null;
@@ -54,6 +57,7 @@ class Cart extends React.Component{
 
 		return(
             <div className="container">
+
             
                 
                 <h1>Cart Items: </h1>
@@ -73,9 +77,22 @@ class Cart extends React.Component{
 							{items}
                         
                     </tbody>
-                    </table>   
 					{checkout} 
+                    </table>   
+					
+				
+				<div className='example2'>
+					<StripeProvider apiKey="pk_test_Pa8DU2oaTOmupt8sG3ckUxMF">
+							<Elements>
+								<CheckoutForm/>
+							</Elements>
+					</StripeProvider>
+				</div>
+			
+					
             </div>
+			
+			
 			);
 	}
 }
@@ -98,3 +115,5 @@ const mapDispatchToProps = dispatch =>{
 
 
 export default connect(mapStateToProps,mapDispatchToProps)(Cart);
+
+
