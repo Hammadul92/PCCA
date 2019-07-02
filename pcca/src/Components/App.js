@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 
 
 
+
 class App extends React.Component{
 
 	
@@ -29,6 +30,7 @@ class App extends React.Component{
        return (
 
        	<Auxilary>
+			   
 	       	 
 	       	 <NavBar loggedin={this.props.loggedin} user={this.props.user} />
 		     <Switch>

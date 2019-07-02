@@ -15,7 +15,8 @@ const BlogCard = (props) => {
 					       <span><i className="fa fa-clock-o"></i>{props.blog.date}</span>/
 					       <span><i className="fa fa-eye"></i>{props.blog.visits}</span>
 					</div>
-					<p>{props.blog.blog_desc}</p>
+					<p dangerouslySetInnerHTML={{ __html: props.blog.blog_desc }}  />		
+					
 					<div className="read-more"><a href="#">Continue Reading</a></div>
 				</div>
 		    </article>
