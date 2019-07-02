@@ -525,22 +525,12 @@ def admin(tab, subtab="edit",  update_ID = 1):
     
     users=[]
     for user in users_database.items:
-        cart_value = 0
-        cart_items = Cart.query.filter_by(user_ID = user.userID).all()
-        for item in cart_items:
-            product = Products.query.filter_by(product_ID = item.product_ID).first()
-            index = product.product_weight.split(',').index(item.product_size)
-            price = float(product.product_price.split(',')[index])
-            price = price * item.amount
-            price = round(price, 2);
-            cart_value += price
-        cart_value = round(cart_value,2)
         bank = False
         if user.customer_ID:
            bank = user.card_last4 + " (" + user.card_brand + ") Exp: " + user.card_exp_year 
         order_history = Sales.query.filter_by(user_ID = user.userID).all()
         number_of_orders = len(order_history)
-        users.append([user.userID, user.firstname, user.lastname, user.email,  user.phone,  user.registered_on_app, user.role, number_of_orders, bank, cart_value])
+        users.append([user.userID, user.firstname, user.lastname, user.email,  user.phone,  user.registered_on_app, user.role, number_of_orders, bank, 0])
 
     db.session.commit()
     authentication_requests = 0 
