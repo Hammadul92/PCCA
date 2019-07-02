@@ -164,18 +164,6 @@ class Events(db.Model):
 
 
 
-class Cart(db.Model):
-	__tablename__='cart'
-	cart_ID = db.Column(db.Integer, primary_key = True)
-	user_ID = db.Column(db.Integer, db.ForeignKey('users.userID',ondelete='CASCADE'))
-	event_ID =db.Column(db.Integer, db.ForeignKey('events.event_ID',ondelete='SET NULL'))
-	amount = db.Column(db.Integer)
-	def __init__(self, user_ID, event_ID, amount):
-		self.user_ID = user_ID
-		self.product_ID =product_ID
-		self.amount = amount
-
-
 
 class Sales(db.Model):
 	__tablename__ ='sales'

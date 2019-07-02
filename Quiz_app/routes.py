@@ -1,7 +1,7 @@
 from . import app
 from .views import get_month_name, date_now, month_now, year_now, day_now, allowed_file, decrease_inventory, inventory_remaining, variational_inventory, generate_email, year_month_day, get_month_from_date, calc_days_gap
 from flask import render_template, request, session, redirect, url_for, flash, g, json, jsonify, abort, Response
-from .models import Media, User, Blogs, Events, Cart, Joinmail, Invoices, Sales, Contact, Gallery
+from .models import Media, User, Blogs, Events, Joinmail, Invoices, Sales, Contact, Gallery
 from . import db
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask_login import login_required, login_user, logout_user, current_user
@@ -426,111 +426,7 @@ def update_blog_form(blogid):
 
 
 
-@app.route('/charge', methods=['POST'])
-@login_required
-def charge():
-  if request.method == 'POST': 
-      try:
-        c = CurrencyConverter()
-        subtotal = round(c.convert(float(request.json['subtotal']), current_user.currency, 'CAD'),2)
-        total =  round(c.convert(float(request.json['total']), current_user.currency, 'CAD'), 2)
-        shipping_rate = round(c.convert(float(request.json['shipping_rate']), current_user.currency, 'CAD'),2)
-        total_discount = round(c.convert(float(request.json['total_discount']), current_user.currency, 'CAD'),2)
-        gst = round(c.convert(float(request.json['gst']), current_user.currency, 'CAD'),2)
-        coupon_name = request.json['coupon_name']
-        special_instructions = request.json['special_instructions']
 
-        coupon = Coupons.query.filter_by(coupon_name = coupon_name).first()
-        if coupon:
-           coupon.usage += 1
-
-        cart_items = Cart.query.filter_by(user_ID = current_user.userID).all()
-        
-        sale = Sales(current_user.userID, current_user.firstname, current_user.lastname, current_user.email, round(total*0.01,2) , subtotal, date_now(), month_now(), year_now())
-        sale.shipping_charge = shipping_rate
-        db.session.add(sale)
-        db.session.commit()
-        if total > 50:
-          charge = stripe.Charge.create(
-              customer= current_user.customer_ID,
-              amount=int(total),
-              currency= "cad",
-              description ='NSE Charge - Order # ' + str(sale.sale_ID)
-             )
-          sale.charge_id = charge.id
-
-
-        db.session.commit()
-      
-
-        for item in cart_items:
-            product = Products.query.filter_by(product_ID = item.product_ID).first()
-            product.inventory = decrease_inventory(item, product) # return string of product inventory
-            index = product.product_weight.split(',').index(item.product_size)
-            invoice = Invoices(sale.sale_ID, product.product_ID, product.product_name +" - "+ item.product_size, product.category, float(product.product_price.split(',')[index]), item.amount)
-            db.session.add(invoice)
-
-        
-
-
-        invoices = Invoices.query.filter_by(sale_ID = sale.sale_ID).all()  
-        
-        create_pdf(render_template('invoice.html', total=round(total/100,2), special_instructions = special_instructions, coupon_name = coupon_name, total_discount = total_discount, invoices = invoices, gst=gst, subtotal=subtotal, invoice_number=sale.sale_ID, 
-          shipping_rate=shipping_rate, date=sale.date), "[" + str(sale.sale_ID) + "][invoice].pdf", app.config['INVOICE_FILES_DEST'])
-        
-        create_pdf(render_template('packing_slip.html', invoices = invoices, invoice_number=sale.sale_ID, date=sale.date), "[" + str(sale.sale_ID) + "][slip].pdf", app.config['PSLIPS_FILES_DEST'])
-        
-        
-        if sale.invoice != None:
-           os.remove(app.config['INVOICE_FILES_DEST'] + sale.invoice)
-        if sale.packing_slip != None:
-           os.remove(app.config['PSLIPS_FILES_DEST'] + sale.packing_slip)
-
-        sale.invoice = "[" + str(sale.sale_ID) + "][invoice].pdf" 
-        sale.packing_slip = "[" + str(sale.sale_ID) + "][slip].pdf"
-              
-
-        Cart.query.filter_by(user_ID = current_user.userID).delete()
-        db.session.commit()
-
-        admin = User.query.filter_by(role='admin').first()
-        #send_invoice(sale, admin)
-        send_invoice(sale, current_user)
-        
-        flash('Thank you for placing your order. We will notify you via email when your order has shipped (with you tracking number). You may check your order and delivery status through your account on our website. !', 'success')
-  
-      except stripe.error.InvalidRequestError as e:
-        body = e.json_body
-        err  = body.get('error', {})
-        db.session.rollback()
-        flash('%s' % err.get('message'), 'danger')
-      except stripe.error.RateLimitError as e:
-        body = e.json_body
-        err  = body.get('error', {})
-        db.session.rollback()
-        flash('%s' % err.get('message'), 'danger')
-      except stripe.error.AuthenticationError as e:
-        body = e.json_body
-        err  = body.get('error', {})
-        db.session.rollback()
-        flash('%s' % err.get('message'), 'danger')
-      except stripe.error.APIConnectionError as e:
-        body = e.json_body
-        err  = body.get('error', {})
-        db.session.rollback()
-        flash('%s' % err.get('message'), 'danger')
-      except stripe.error.StripeError as e:
-        body = e.json_body
-        err  = body.get('error', {})
-        db.session.rollback()
-        flash('%s' % err.get('message'), 'danger')
-      except Exception as e:
-        db.session.rollback()
-        flash('%s' % e, 'danger')
-
-      r = Response(response=json.dumps({'message':200}), status=200, mimetype="application/json")
-      r.headers["Content-Type"] = "text/json; charset = utf-8"
-      return r
 
 
 
@@ -592,7 +488,6 @@ def update_event(event_ID):
           
           event.mainimage = form['mainimage']
               
-          Cart.query.filter_by(event_ID = event_ID).delete()
           db.session.commit()
         except exc.IntegrityError:
             db.session.rollback()
