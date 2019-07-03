@@ -81,7 +81,14 @@ class Cart extends React.Component{
                     </table>   
 					{checkout} 
 					
-				
+					<StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+						<div className="example">
+						<h1>React Stripe Elements Example</h1>
+						<Elements>
+							<CheckoutForm />
+						</Elements>
+						</div>
+					</StripeProvider>
 
 			
 					
