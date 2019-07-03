@@ -45,7 +45,8 @@ class Cart extends React.Component{
 
 		}
 		if (total>0){
-			checkout=(<div className="form-group"><h2>Total: $ {total} cad </h2></div>);
+			checkout=(<div className="form-group"><Link to="/proceed"><button  className="btn"> Proceed With Checkout Total ${total} </button></Link></div>
+							 );
 		}
 
 		return(
