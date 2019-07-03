@@ -35,7 +35,6 @@ class NavBar extends React.Component{
 		if(itemNum){
 			 var checkout = <li><NavLink to="/checkout" > Cart {itemNum}  </NavLink></li>
 		}
-		console.log(cart, 'Cart Length',cart.length);
 		return (
 				<nav className="navbar navbar-inverse navbar-fixed-top">
 					<div className="container">

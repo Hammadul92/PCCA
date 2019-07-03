@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {CardElement, injectStripe} from 'react-stripe-elements';
+import * as actionTypes from '../../store/actions';
 import './Cart.module.css';
 
 class CheckoutForm extends Component {
@@ -26,7 +27,8 @@ class CheckoutForm extends Component {
     return (
 
         <div className="form-group">
-          <h4>Would you like to complete the purchase?</h4>       
+          <h4>Would you like to complete the purchase?</h4> 
+
           <div className="example2 form-group"><CardElement /></div>         
           <button className="btn" onClick={this.submit}> Complete Transaction </button>
         </div>
@@ -34,5 +36,22 @@ class CheckoutForm extends Component {
     );
   }
 }
+
+
+const mapStateToProps = state => {
+  return{ 
+      state: state      
+  }
+};
+
+const mapDispatchToProps = dispatch =>{  
+
+    return{
+        flash: (msg) => dispatch({type: actionTypes.FLASH_MESSAGE, message:msg}),
+        updated: (data) => dispatch({type: actionTypes.UPDATE_USER, payload: data})
+    
+    }
+
+};
 
 export default injectStripe(CheckoutForm);

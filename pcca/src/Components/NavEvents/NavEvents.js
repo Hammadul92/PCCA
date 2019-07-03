@@ -9,7 +9,7 @@ class NavEvents extends Component{
 
 	state = {
 		events: [],
-		quantity: 0,
+		quantity: 1,
 		error: false,
 		cart: []
 	}
@@ -22,32 +22,15 @@ class NavEvents extends Component{
 
     }
 
-	// 'date': data.date,
-	// 'disable': data.disable,
-	// 'desc': data.desc, 
-	// 'price':data.price, 
-	// 'inventory': data.inventory,
-	// 'mainimage': data.mainimage,
-	// 'taxable': data.taxable
-	addToCart=(id)=>{
-		//console.log('CURRENT CART',this.state.quantity);
-		 if (Number(this.state.quantity ) <= 0){
-			console.log('Add item Quantity');
-		 }
-		 else{
-
-			let cart = this.state.cart;
-			let item = {key: id.key, quantity: this.state.quantity , price: id.price, title: id.name};
-			cart.push(item);
-			this.props.addtoCart(item);
-			this.setState({
-				cart: cart,
-				quantity: 0
-
-		 });
-		    console.log('CURRENT CART',cart);
-			 
-		 }
+	addToCart=(event)=>{
+        let cart = this.state.cart;
+		let item = {key: event.key, quantity: this.state.quantity , price: event.price, title: event.name};
+		cart.push(item);
+		this.props.addtoCart(item);
+		this.setState({
+			cart: cart,
+			quantity: 0
+		});
 	}
 	createMarkup=(a)=> {
 		return {__html: a};
@@ -68,13 +51,13 @@ class NavEvents extends Component{
 						            <h2>{event.name}</h2>
 							        <span className="pull-right">{event.date}</span>
 								</div>
-								<p dangerouslySetInnerHTML={{ __html: event.desc }}  />						    
+								<div className="desc" dangerouslySetInnerHTML={{ __html: event.desc }}  />						    
 							    <div className="row">
 							        <div className="col-md-3 pull-right">
 							            <span className="price">$ {event.price} CAD</span>
 									    <div className="input-group">
-										    <input type="number" value={this.state.value} min="0" max="5" className="form-control" onChange={(event) => this.setState({quantity: event.target.value})}/>
-												<div className="input-group-btn" ><a className="btn" onClick={() => this.addToCart(event)} > Add to cart </a></div>
+										    <input type="number" value={this.state.quantity} min="0" max="5" className="form-control" onChange={(event) => this.setState({quantity: event.target.value})}/>
+											<div className="input-group-btn" ><a className="btn" onClick={() => this.addToCart(event)}> Add to cart </a></div>
 										</div>
 									</div>
 							    </div>
@@ -97,13 +80,10 @@ class NavEvents extends Component{
 
 const mapDispatchToProps = dispatch =>{  
     return{
-        addtoCart: (ticket) => dispatch({type: actionTypes.ADD_CART, newItem:ticket})
-    
+        addtoCart: (ticket) => dispatch({type: actionTypes.ADD_CART, newItem:ticket})    
 	}
 };
 
-// }; connect(null,mapDispatchToProps)
 
 
-
-export default connect(null,mapDispatchToProps)(NavEvents);
+export default connect(mapDispatchToProps)(NavEvents);

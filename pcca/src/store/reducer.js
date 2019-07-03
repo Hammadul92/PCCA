@@ -60,14 +60,12 @@ const reducer = (state = initialState, action) => {
                 phone: action.payload.phone
                 };
         case actionTypes.ADD_CART:
-                //console.log('Current Cart DATA',action.newItem, 'Current Cart Redux:', state.tickets);
                 return{
                     ...state,
                     tickets: state.tickets.concat(action.newItem)
         
                     };
         case actionTypes.REMOVE_CART:
-            console.log('Current Cart Redux:', action.payload);
             return{
                 ...state,
                 tickets: action.payload
