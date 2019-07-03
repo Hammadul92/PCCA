@@ -1,7 +1,16 @@
+.example{
+  display: inline-block;
+  width: 100%;
+  margin-top: 50px;
+  text-align: center;
+  
+  
+}
 .example2{
   display: inline-block;
-  width: 95%;
-  margin-top: 10px;
+  width: 100%;
+  margin-top: 50px;
+  text-align: center;
   
   
 }
@@ -246,3 +255,7 @@
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   }
   
+  .example h3{
+    text-align: center;
+    font-size: medium;
+  }

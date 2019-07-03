@@ -3,9 +3,8 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
-import CheckoutForm from './Checkout';
-import {Elements, StripeProvider} from 'react-stripe-elements';
 import './Checkout.css';
+import {Link} from 'react-router-dom';
 
 class Cart extends React.Component{
 
@@ -22,6 +21,10 @@ class Cart extends React.Component{
 		let msg = null;
 		let checkout = null;
 		let total = 0;
+		let summary = null;
+
+
+		
 		if(this.props.state.tickets.length === 0){
 			msg =  <p> You do not have any items in the cart!</p>
 		};
@@ -39,7 +42,7 @@ class Cart extends React.Component{
                     <td>{item.quantity}</td>
                     <td>{item.price}</td>
 					<td>{subtotal}</td>
-					<td><button type="button" class="btn-danger" onClick={() => this.removeItem(index)}> Remove</button></td>
+					<td><button type="button" className="btn-danger" onClick={() => this.removeItem(index)}> Remove</button></td>
 
 				    </tr>
 				);
@@ -48,9 +51,21 @@ class Cart extends React.Component{
 		}
 		if (total>0){
 			checkout = (<div className="col-md-6 col-md-offset-3 form-group text-center">
-							<button  className="btn" type="submit"> Proceed With Checkout Total ${total} </button>    
+							<Link to="/proceed"><button  className="btn"> Proceed With Checkout Total ${total} </button></Link> 
 						</div>   
 							);
+		    summary = (
+						<tr>
+							<td> </td>
+							<td> </td>
+							<td className="left">
+								<strong>Total</strong>
+							</td>
+							<td className="left">
+								<strong>{total}</strong>
+							</td>
+						</tr>);
+
 		}
 
         
@@ -75,20 +90,14 @@ class Cart extends React.Component{
                     </thead>
                     <tbody>
 							{items}
+							{summary}
                         
                     </tbody>
 					
                     </table>   
 					{checkout} 
 					
-					<StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
-						<div className="example">
-						<h1>React Stripe Elements Example</h1>
-						<Elements>
-							<CheckoutForm />
-						</Elements>
-						</div>
-					</StripeProvider>
+
 
 			
 					

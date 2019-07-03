@@ -23,6 +23,7 @@ class CheckoutForm extends Component {
   }
 
   render() {
+    console.log(this.props.name,this.props.email);
     return (
       <div className="example2">
         <p className='text-center'>Would you like to complete the purchase?</p>

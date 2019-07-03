@@ -11,7 +11,7 @@ import Profile from './Profile/Profile';
 import Signup from './Signup/Signup'
 import Cart from './Cart/Cart';
 import Home from './Home';
-
+import Proceed from './Cart/Proceed';
 import Login from './Login/Login';
 
 import './App.css';
@@ -43,7 +43,8 @@ class App extends React.Component{
 					<Route path='/profile' exact component={Profile}/>
 					<Route path='/login' exact component={Login}/>
 					<Route path='/signup' exact component={Signup}/>
-					<Route path='/checkout' exact component={Cart}/>
+					<Route path='/cart' exact component={Cart}/>
+					<Route path='/proceed' exact component={Proceed}/>
 					<Route path='/' exact component={Home}/>
 					
              </Switch>	

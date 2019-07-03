@@ -33,7 +33,7 @@ class NavBar extends React.Component{
 		var cart = this.props.state.tickets;
 		var itemNum = cart.length;
 		if(itemNum){
-			 var checkout = <li><NavLink to="/checkout" > Cart {itemNum}  </NavLink></li>
+			 var checkout = <li><NavLink to="/cart" > Cart {itemNum}  </NavLink></li>
 		}
 		console.log(cart, 'Cart Length',cart.length);
 		return (
