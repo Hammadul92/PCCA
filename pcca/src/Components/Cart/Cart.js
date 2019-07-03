@@ -12,7 +12,6 @@ class Cart extends React.Component{
 	removeItem=(index)=>{
 		var arr = this.props.state.tickets;
 	    arr.splice(index, 1); 
-		//console.log(arr, 'INDEX', index);
 		this.props.removed(arr);
 	}
  
@@ -30,72 +29,46 @@ class Cart extends React.Component{
 		};
 		console.log(this.props.state);
         if(this.props.state.tickets.length >0){
-            //console.log(this.props.state.tickets, 'CART Checkout')
 			
             items = this.props.state.tickets.map((item,index) =>{
 				let subtotal = Number(item.price)*Number(item.quantity);
 				total = subtotal + total;
 				return (
 					<tr key={index}>
-                    <td>{index}</td>
-                    <td>{item.title}</td>
-                    <td>{item.quantity}</td>
-                    <td>{item.price}</td>
-					<td>{subtotal}</td>
-					<td><button type="button" className="btn-danger" onClick={() => this.removeItem(index)}> Remove</button></td>
-
+	                    <td>{item.title} ( &times; {item.quantity})</td>
+	                    <td> $ {item.price} cad</td>
+						<td> $ {subtotal} cad</td>
+						<td><a className="btn-sm btn-danger" onClick={() => this.removeItem(index)}> Remove</a></td>
 				    </tr>
 				);
 			});
 
 		}
 		if (total>0){
-			checkout = (<div className="col-md-6 col-md-offset-3 form-group text-center">
-							<Link to="/proceed"><button  className="btn"> Proceed With Checkout Total ${total} </button></Link> 
-						</div>   
-							);
-		    summary = (
-						<tr>
-							<td> </td>
-							<td> </td>
-							<td className="left">
-								<strong>Total</strong>
-							</td>
-							<td className="left">
-								<strong>{total}</strong>
-							</td>
-						</tr>);
-
+			checkout=(<div className="form-group"><h2>Total: $ {total} cad </h2></div>);
 		}
 
-        
-
 		return(
-            <div className="container">
-
-            
+            <div className="container">         
                 
-                <h1>Cart Items: </h1>
+                <h1 className="text-center">Cart Items</h1>
 				{msg}
                 <table className="table">
                     <thead>
-                        <tr>
-                        <th></th>
-                        <th>Title</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-						<th>Sub-Total</th>
-						<th>Remove</th>
-                        </tr>
+                       <tr>
+                        <th>Event Name</th>
+                        <th> Ticket Price</th>
+						<th> Subtotal </th>
+						<th></th>
+                       </tr>
                     </thead>
                     <tbody>
-							{items}
-							{summary}
-                        
+							{items}                        
                     </tbody>
+
+			    </table>   
+				{checkout} 
 					
-                    </table>   
-					{checkout} 
 					
 
 
