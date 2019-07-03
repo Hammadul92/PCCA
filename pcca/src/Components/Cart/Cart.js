@@ -15,7 +15,7 @@ class Cart extends React.Component{
 	    arr.splice(index, 1); 
 		this.props.removed(arr);
 	}
-
+ 
 	render (){
 		var items = null;
 		let msg = null;
@@ -24,7 +24,7 @@ class Cart extends React.Component{
 		if(this.props.state.tickets.length === 0){
 			msg =  <p> You do not have any items in the cart!</p>
 		};
-
+		console.log(this.props.state);
         if(this.props.state.tickets.length >0){
 			
             items = this.props.state.tickets.map((item,index) =>{
@@ -62,16 +62,18 @@ class Cart extends React.Component{
                     <tbody>
 							{items}                        
                     </tbody>
-                 </table>   
-				
-				 {checkout} 
-				
-				<StripeProvider apiKey="pk_test_Pa8DU2oaTOmupt8sG3ckUxMF">
-					<Elements>
-						<CheckoutForm/>
-					</Elements>
-				</StripeProvider>
-			
+
+			    </table>   
+				{checkout} 
+					
+				<StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+					<div className="example">
+						<h1>React Stripe Elements Example</h1>
+						<Elements>
+							<CheckoutForm />
+						</Elements>
+					</div>
+				</StripeProvider>		
 					
             </div>
 			
