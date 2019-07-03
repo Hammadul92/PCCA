@@ -1,0 +1,19 @@
+
+.table th{
+  background: #eee;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.table tr{
+  border: 1px solid #ddd;
+}
+
+.example2{
+  padding: 15px;
+  box-shadow: 5px 5px 5px #ddd;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+

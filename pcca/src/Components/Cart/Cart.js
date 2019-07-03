@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import CheckoutForm from './Checkout';
 import {Elements, StripeProvider} from 'react-stripe-elements';
-import './Checkout.css';
+import './Cart.module.css';
 
 class Cart extends React.Component{
 
@@ -13,7 +13,6 @@ class Cart extends React.Component{
 	removeItem=(index)=>{
 		var arr = this.props.state.tickets;
 	    arr.splice(index, 1); 
-		console.log(arr, 'INDEX', index);
 		this.props.removed(arr);
 	}
 
@@ -27,67 +26,51 @@ class Cart extends React.Component{
 		};
 
         if(this.props.state.tickets.length >0){
-            //console.log(this.props.state.tickets, 'CART Checkout')
 			
             items = this.props.state.tickets.map((item,index) =>{
 				let subtotal = Number(item.price)*Number(item.quantity);
 				total = subtotal + total;
 				return (
 					<tr key={index}>
-                    <td>{index}</td>
-                    <td>{item.title}</td>
-                    <td>{item.quantity}</td>
-                    <td>{item.price}</td>
-					<td>{subtotal}</td>
-					<td><div className="input-group-btn" ><a className="btn" onClick={() => this.removeItem(index)} > Remove</a></div></td>
-
+	                    <td>{item.title} ( &times; {item.quantity})</td>
+	                    <td> $ {item.price} cad</td>
+						<td> $ {subtotal} cad</td>
+						<td><a className="btn-sm btn-danger" onClick={() => this.removeItem(index)}> Remove</a></td>
 				    </tr>
 				);
 			});
 
 		}
 		if (total>0){
-			checkout = (<div className="col-md-6 col-md-offset-3 form-group text-center">
-							<button  className="btn" type="submit"> Proceed With Checkout Total ${total} </button>    
-						</div>   
-							);
+			checkout=(<div className="form-group"><h2>Total: $ {total} cad </h2></div>);
 		}
 
-        
-
 		return(
-            <div className="container">
-
-            
+            <div className="container">         
                 
-                <h1>Cart Items: </h1>
+                <h1 className="text-center">Cart Items</h1>
 				{msg}
                 <table className="table">
                     <thead>
-                        <tr>
-                        <th></th>
-                        <th>Title</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-						<th>Sub-Total</th>
-						<th>Remove</th>
-                        </tr>
+                       <tr>
+                        <th>Event Name</th>
+                        <th> Ticket Price</th>
+						<th> Subtotal </th>
+						<th></th>
+                       </tr>
                     </thead>
                     <tbody>
-							{items}
-                        
+							{items}                        
                     </tbody>
-					{checkout} 
-                    </table>   
-					
+                 </table>   
 				
-				<div className='example2'>
-					<StripeProvider apiKey="pk_test_Pa8DU2oaTOmupt8sG3ckUxMF">
-							<Elements>
-								<CheckoutForm/>
-							</Elements>
-					</StripeProvider>
-				</div>
+				 {checkout} 
+				
+				<StripeProvider apiKey="pk_test_Pa8DU2oaTOmupt8sG3ckUxMF">
+					<Elements>
+						<CheckoutForm/>
+					</Elements>
+				</StripeProvider>
 			
 					
             </div>
