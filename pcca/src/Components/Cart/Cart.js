@@ -13,10 +13,10 @@ class Cart extends React.Component{
 	removeItem=(index)=>{
 		var arr = this.props.state.tickets;
 	    arr.splice(index, 1); 
-		console.log(arr, 'INDEX', index);
+		//console.log(arr, 'INDEX', index);
 		this.props.removed(arr);
 	}
-
+ 
 	render (){
 		var items = null;
 		let msg = null;
@@ -25,7 +25,7 @@ class Cart extends React.Component{
 		if(this.props.state.tickets.length === 0){
 			msg =  <p> You do not have any items in the cart!</p>
 		};
-
+		console.log(this.props.state);
         if(this.props.state.tickets.length >0){
             //console.log(this.props.state.tickets, 'CART Checkout')
 			
@@ -39,7 +39,7 @@ class Cart extends React.Component{
                     <td>{item.quantity}</td>
                     <td>{item.price}</td>
 					<td>{subtotal}</td>
-					<td><div className="input-group-btn" ><a className="btn" onClick={() => this.removeItem(index)} > Remove</a></div></td>
+					<td><button type="button" class="btn-danger" onClick={() => this.removeItem(index)}> Remove</button></td>
 
 				    </tr>
 				);
@@ -77,17 +77,12 @@ class Cart extends React.Component{
 							{items}
                         
                     </tbody>
-					{checkout} 
+					
                     </table>   
+					{checkout} 
 					
 				
-				<div className='example2'>
-					<StripeProvider apiKey="pk_test_Pa8DU2oaTOmupt8sG3ckUxMF">
-							<Elements>
-								<CheckoutForm/>
-							</Elements>
-					</StripeProvider>
-				</div>
+
 			
 					
             </div>

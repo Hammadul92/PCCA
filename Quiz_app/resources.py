@@ -233,7 +233,7 @@ class banking_information(Resource):
               current_user = User(email = data['email'], password = 'xyz123' , phone = 'N/A')
               current_user.firstname = 'N/A'
               current_user.lastname = 'N/A'
-
+ 
            db.session.add(current_user)
            db.session.commit()
         current_user.customer_ID = customer.id
