@@ -24,7 +24,7 @@ class CheckoutForm extends Component {
 
   render() {
     return (
-      
+
         <div className="form-group">
           <h4>Would you like to complete the purchase?</h4>       
           <div className="example2 form-group"><CardElement /></div>         
