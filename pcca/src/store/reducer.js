@@ -51,6 +51,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.UPDATE_USER:
                 //console.log('RECIEVED DATA',action.payload);
             return{
+                ...state,
                 userID: action.payload.userID,
                 loggedin: true,
                 token: action.payload.token,

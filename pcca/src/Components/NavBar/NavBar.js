@@ -9,7 +9,7 @@ class NavBar extends React.Component{
 
 
 	render (){
-		
+		console.log('NAVBAR',this.props.state);
 		var user = null;
 		if (this.props.state.loggedin){         
 			user = (
