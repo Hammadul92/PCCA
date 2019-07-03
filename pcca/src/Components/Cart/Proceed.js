@@ -49,7 +49,7 @@ class Proceed extends React.Component{
             <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
             <div className="example">
             <Elements>
-                <CheckoutForm name= {name} email={email} />
+                <CheckoutForm name= {name} email={email} total= {total} />
             </Elements>
             </div>
             </StripeProvider>
