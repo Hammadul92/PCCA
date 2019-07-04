@@ -15,13 +15,13 @@ class Profile extends React.Component{
 
   updateFormHandler = (event) => {
     event.preventDefault();
+    console.log(this.props.state.userID);
     const data = {
       userID: this.props.state.userID,
       email: this.state.user,
       firstname: this.state.firstname,
       lastname: this.state.lastname,
-      phone: this.state.phone,
-      token: this.props.state.token
+      phone: this.state.phone
     };
 
     
@@ -47,15 +47,10 @@ class Profile extends React.Component{
       };
 
       axios(request).then(response => {
-       this.props.flash(response.data.msg);
+       this.props.flash(response.data.message);
        this.props.updated(data);
-       
-
-          }).catch(error=> {
-      
-      });
-
-  }
+      }).catch(error=> {});
+    }
 
     render(){
 

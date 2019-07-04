@@ -10,10 +10,46 @@ import './Cart.module.css';
 class Proceed extends React.Component{
 
    state = {
-       user: this.props.state.user,
        firstname: this.props.state.firstname,
        lastname: this.props.state.lastname,
        phone: this.props.state.phone,
+       user: this.props.state.user,
+       password: ''
+    }
+
+    FormHandler = (event) => {
+        event.preventDefault();
+        const data = {
+          email: this.state.user,
+          firstname: this.state.firstname,
+          lastname: this.state.lastname,
+          phone: this.state.phone,
+          password: this.state.password
+
+        };  
+
+        var request = {
+              "async": true,
+              "crossDomain": true,
+              "url": "http://localhost:5000/anonymous_account",
+              "method": "POST",
+              "headers": {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Cache-Control": "no-cache",
+                "Host": "localhost:5000",
+                "accept-encoding": "gzip, deflate",
+                "Connection": "keep-alive",
+                "cache-control": "no-cache"
+              },
+              "processData": false,
+              "data": data
+          };
+
+          axios(request).then(response => {
+           this.props.flash(response.data.message);
+           this.props.updated(data);
+          }).catch(error=> {});
     }
 
  
@@ -21,9 +57,26 @@ class Proceed extends React.Component{
 
         let total = 0;
         let checkout = false;
+        let password_field = null;
+        let msg = <div className="msg"> {this.props.state.message}</div>;
 
+        
         if(this.props.state.loggedin){
            checkout = true
+        }
+        else{
+          password_field = (
+             <div className="form-group">
+                 <div className="col-md-12">
+                    <h3>Create Account</h3>
+                    <hr/>
+                 </div>
+                 <div className="col-md-12">
+                        <label> Password *</label>
+                        <input type="password" value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})} required/>
+                 </div>
+             </div>
+          );
         }
 
         if(this.props.state.tickets.length > 0){			
@@ -39,24 +92,26 @@ class Proceed extends React.Component{
             <div className="container"> 
 
                  <h1> Confirm Your Account </h1>
-                 <div className="payment-tile">                     
-                      <form className="LoginForm row" onSubmit={(event) => this.updateFormHandler(event)}>
+                 <div className="payment-tile"> 
+                      {msg}                    
+                      <form className="LoginForm row" onSubmit={(event) => this.FormHandler(event)}>
                           <div className="col-md-6 form-group">
-                              <label> Email </label>
+                              <label> Email * </label>
                               <input type="text" value={this.state.user} onChange={(event)=>this.setState({user: event.target.value})} required/>
                           </div>
                           <div className="col-md-6 form-group">
-                              <label> Phone Number </label>
+                              <label> Phone Number * </label>
                               <input type="text" value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required/>
                           </div>
                           <div className="col-md-6 form-group">
-                               <label> First Name </label>
+                               <label> First Name * </label>
                                <input type="text" value={this.state.firstname} onChange={(event)=>this.setState({firstname: event.target.value})} required/>
                           </div>
                           <div className="col-md-6 form-group">
-                               <label> Last Name </label>
+                               <label> Last Name * </label>
                                <input type="text" value={this.state.lastname} onChange={(event)=>this.setState({lastname: event.target.value})} required/>
                           </div>
+                          {password_field}
                           <div className="col-md-4 col-md-offset-4">
                                <button className="btn" type="submit"> Update </button>
                           </div>
@@ -93,8 +148,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch =>{  
 
     return{
-        removed: (newCart) => dispatch({type: actionTypes.REMOVE_CART, payload:newCart})
-    
+        flash: (msg) => dispatch({type: actionTypes.FLASH_MESSAGE, message:msg}),
+        updated: (data) => dispatch({type: actionTypes.UPDATE_USER, payload: data})    
     }
 
 };
