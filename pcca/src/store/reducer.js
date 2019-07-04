@@ -47,10 +47,11 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 message: action.message
-                };
+            };
+
         case actionTypes.UPDATE_USER:
-                //console.log('RECIEVED DATA',action.payload);
             return{
+                ...state,
                 userID: action.payload.userID,
                 loggedin: true,
                 token: action.payload.token,
@@ -58,19 +59,18 @@ const reducer = (state = initialState, action) => {
                 firstname: action.payload.firstname,
                 lastname: action.payload.lastname,
                 phone: action.payload.phone
-                };
+            };
+
         case actionTypes.ADD_CART:
-                return{
-                    ...state,
-                    tickets: state.tickets.concat(action.newItem)
-        
-                    };
+            return{
+                ...state,
+                tickets: action.payload      
+            };
         case actionTypes.REMOVE_CART:
             return{
                 ...state,
                 tickets: action.payload
-    
-                };
+            };
 
         default:
             return state;

@@ -11,7 +11,6 @@ class NavEvents extends Component{
 		events: [],
 		quantity: 1,
 		error: false,
-		cart: []
 	}
 
 	componentWillMount(){
@@ -23,18 +22,26 @@ class NavEvents extends Component{
     }
 
 	addToCart=(event)=>{
-        let cart = this.state.cart;
 		let item = {key: event.key, quantity: this.state.quantity , price: event.price, title: event.name};
-		cart.push(item);
-		this.props.addtoCart(item);
-		this.setState({
-			cart: cart,
-			quantity: 0
-		});
+		let all_tickets = this.props.state.tickets;
+		let new_item = true;
+        if(all_tickets.length > 0){
+        	for(let ticket in all_tickets){
+				if(all_tickets[ticket].key === event.key){
+					new_item = false;
+					all_tickets[ticket].quantity += this.state.quantity;
+				}			 
+			}
+        }
+        
+        if (new_item){
+           all_tickets.push(item);
+        }
+        
+		
+		this.props.addtoCart(all_tickets);
 	}
-	createMarkup=(a)=> {
-		return {__html: a};
-	  }
+
 
 	render (){
 
@@ -78,12 +85,18 @@ class NavEvents extends Component{
 
 
 
+const mapStateToProps = state => {
+	return{ 
+		state: state   
+	}
+};
+
 const mapDispatchToProps = dispatch =>{  
     return{
-        addtoCart: (ticket) => dispatch({type: actionTypes.ADD_CART, newItem:ticket})    
+        addtoCart: (tickets) => dispatch({type: actionTypes.ADD_CART, payload:tickets})    
 	}
 };
 
 
 
-export default connect(mapDispatchToProps)(NavEvents);
+export default connect(mapStateToProps,mapDispatchToProps)(NavEvents);

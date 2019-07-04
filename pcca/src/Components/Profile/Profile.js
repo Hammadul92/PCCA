@@ -45,10 +45,11 @@ class Profile extends React.Component{
       "data": data
   
       };
-
+      console.log('SENT DAATA',data);
       axios(request).then(response => {
        this.props.flash(response.data.msg);
        this.props.updated(data);
+       
 
           }).catch(error=> {
       

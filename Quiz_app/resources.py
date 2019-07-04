@@ -212,7 +212,7 @@ banking_information_arguments.add_argument('token_id', required = True)
 banking_information_arguments.add_argument('country', required = True)
 banking_information_arguments.add_argument('last4', required = True)
 banking_information_arguments.add_argument('exp_year', required = True)
-banking_information_arguments.add_argument('bran', required = True)
+banking_information_arguments.add_argument('brand', required = True)
 
 class banking_information(Resource):
    def post():
