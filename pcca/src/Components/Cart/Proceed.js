@@ -4,92 +4,91 @@ import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import CheckoutForm from './Checkout';
 import {Elements, StripeProvider} from 'react-stripe-elements';
-import './Checkout.css';
 import Auxilary from '../../hoc/Auxilary/Auxilary';
+import './Cart.module.css';
 
 class Proceed extends React.Component{
 
+   state = {
+       user: this.props.state.user,
+       firstname: this.props.state.firstname,
+       lastname: this.props.state.lastname,
+       phone: this.props.state.phone,
+    }
 
  
 	render (){
 
-		let firstname = '';
-        let email = '';
-        let items=null;
-        let total = null;
+        let total = 0;
+        let checkout = false;
 
-		if(this.props.state.firstname !== ''){
-			name = this.props.state.firstname;
-            email = this.props.state.user;
+        if(this.props.state.loggedin){
+           checkout = true
         }
 
-        if(this.props.state.tickets.length >0){
-            //console.log(this.props.state.tickets, 'CART Checkout')
-			
-            items = this.props.state.tickets.map((item,index) =>{
+        if(this.props.state.tickets.length > 0){			
+            this.props.state.tickets.map((item,index) =>{
 				let subtotal = Number(item.price)*Number(item.quantity);
 				total = subtotal + total;
-				return (
-					<tr key={index}>
-                    <td>{index}</td>
-                    <td>{item.title}</td>
-                    <td>{item.quantity}</td>
-                    <td>{item.price}</td>
-					<td>{subtotal}</td>
-				    </tr>
-				);
+				
 			});
-
 		}
+
         return(
-            <Auxilary >
-             
 
-             <div className="container">   
-            <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
-            <div className="example">
-            <Elements>
-                <CheckoutForm name= {name} email={email} total= {total} />
-            </Elements>
+            <div className="container"> 
+
+                 <h1> Confirm Your Account </h1>
+                 <div className="payment-tile">                     
+                      <form className="LoginForm row" onSubmit={(event) => this.updateFormHandler(event)}>
+                          <div className="col-md-6 form-group">
+                              <label> Email </label>
+                              <input type="text" value={this.state.user} onChange={(event)=>this.setState({user: event.target.value})} required/>
+                          </div>
+                          <div className="col-md-6 form-group">
+                              <label> Phone Number </label>
+                              <input type="text" value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required/>
+                          </div>
+                          <div className="col-md-6 form-group">
+                               <label> First Name </label>
+                               <input type="text" value={this.state.firstname} onChange={(event)=>this.setState({firstname: event.target.value})} required/>
+                          </div>
+                          <div className="col-md-6 form-group">
+                               <label> Last Name </label>
+                               <input type="text" value={this.state.lastname} onChange={(event)=>this.setState({lastname: event.target.value})} required/>
+                          </div>
+                          <div className="col-md-4 col-md-offset-4">
+                               <button className="btn" type="submit"> Update </button>
+                          </div>
+                      </form> 
+                  </div>
+
+               
+
+                  <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+                     <div>
+                        <Elements>
+                            <CheckoutForm total={total} checkout={checkout} />
+                        </Elements>
+                     </div>
+                  </StripeProvider>
+
             </div>
-            </StripeProvider>
-
-
-                <h3>Purchase Total: {total} </h3>
-
-            <table className="table">
-                        <thead className="thead-dark">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Event</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">SubTotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {items}
-                        </tbody>
-            </table>
-
-            </div>
-
-            </Auxilary>
 
         );
-        }
-    
-    
     }
+    
+    
+}
         
 
     
         
-        const mapStateToProps = state => {
+const mapStateToProps = state => {
 	return{ 
 		state: state   
 	}
-  };
+};
 
 const mapDispatchToProps = dispatch =>{  
 

@@ -7,20 +7,11 @@ class Profile extends React.Component{
 
   state = {
       user: this.props.state.user,
-      firstname: '',
-      lastname: '',
+      firstname: this.props.state.firstname,
+      lastname: this.props.state.lastname,
       phone: this.props.state.phone,
   }
 
-  componentWillMount(){
-    //console.log(this.props.state);
-    if (this.props.state.firstname){
-      this.setState({firstname: this.props.state.firstname })
-    }
-    if(this.props.state.lastname){
-      this.setState({lastname: this.props.state.lastname })
-    }
-  }
 
   updateFormHandler = (event) => {
     event.preventDefault();
@@ -33,7 +24,6 @@ class Profile extends React.Component{
       token: this.props.state.token
     };
 
-    //console.log('SENT DATA',data);
     
 
     var request = {
@@ -55,7 +45,7 @@ class Profile extends React.Component{
       "data": data
   
       };
-      console.log('SENT DAATA',data);
+
       axios(request).then(response => {
        this.props.flash(response.data.msg);
        this.props.updated(data);
@@ -133,8 +123,7 @@ const mapDispatchToProps = dispatch =>{
 
     return{
         flash: (msg) => dispatch({type: actionTypes.FLASH_MESSAGE, message:msg}),
-        updated: (data) => dispatch({type: actionTypes.UPDATE_USER, payload: data})
-    
+        updated: (data) => dispatch({type: actionTypes.UPDATE_USER, payload: data})    
     }
 
 };

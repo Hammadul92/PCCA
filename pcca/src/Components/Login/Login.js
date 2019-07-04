@@ -91,7 +91,7 @@ const mapStateToProps = state => {
 	return{ 
 		msg: state   
 	}
-  };
+};
 
 
 const mapDispatchToProps = dispatch =>{  

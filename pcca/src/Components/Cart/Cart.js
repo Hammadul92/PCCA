@@ -3,7 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
-import './Checkout.css';
+import './Cart.module.css';
 import {Link} from 'react-router-dom';
 
 class Cart extends React.Component{
@@ -20,16 +20,12 @@ class Cart extends React.Component{
 		let msg = null;
 		let checkout = null;
 		let total = 0;
-		let summary = null;
-
-
 		
 		if(this.props.state.tickets.length === 0){
-			msg =  <p> You do not have any items in the cart!</p>
+			msg = <p> You do not have any items in the cart!</p>
 		};
-		console.log(this.props.state);
-        if(this.props.state.tickets.length >0){
-			
+
+        if(this.props.state.tickets.length > 0){			
             items = this.props.state.tickets.map((item,index) =>{
 				let subtotal = Number(item.price)*Number(item.quantity);
 				total = subtotal + total;
@@ -44,36 +40,32 @@ class Cart extends React.Component{
 			});
 
 		}
+		
 		if (total>0){
-			checkout=(<div className="form-group"><Link to="/proceed"><button  className="btn"> Proceed With Checkout Total ${total} </button></Link></div>
-							 );
+
+			checkout=(<div className="form-group clearfix"><Link to="/checkout" className="btn pull-right">Proceed to Checkout</Link></div>);
 		}
 
 		return(
             <div className="container">         
                 
-                <h1 className="text-center">Cart Items</h1>
+                <h1>Cart Items</h1>
 				{msg}
                 <table className="table">
                     <thead>
                        <tr>
-                        <th>Event Name</th>
+                        <th> Event Name</th>
                         <th> Ticket Price</th>
 						<th> Subtotal </th>
 						<th></th>
                        </tr>
                     </thead>
-                    <tbody>
-							{items}                        
-                    </tbody>
-
-			    </table>   
-				{checkout} 
-					
-					
-
-
-			
+                    <tbody>{items}</tbody>
+			    </table> 
+                
+                
+                <h2> Total: $ {total} cad </h2>
+				{checkout}  
 					
             </div>
 			

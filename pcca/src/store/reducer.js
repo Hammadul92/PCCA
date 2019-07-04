@@ -47,9 +47,9 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 message: action.message
-                };
+            };
+
         case actionTypes.UPDATE_USER:
-                //console.log('RECIEVED DATA',action.payload);
             return{
                 ...state,
                 userID: action.payload.userID,
@@ -59,21 +59,18 @@ const reducer = (state = initialState, action) => {
                 firstname: action.payload.firstname,
                 lastname: action.payload.lastname,
                 phone: action.payload.phone
-                };
+            };
+
         case actionTypes.ADD_CART:
-                //console.log('Current Cart DATA',action.newItem, 'Current Cart Redux:', state.tickets);
-                return{
-                    ...state,
-                    tickets: state.tickets.concat(action.newItem)
-        
-                    };
+            return{
+                ...state,
+                tickets: action.payload      
+            };
         case actionTypes.REMOVE_CART:
-            console.log('Current Cart Redux:', action.payload);
             return{
                 ...state,
                 tickets: action.payload
-    
-                };
+            };
 
         default:
             return state;
