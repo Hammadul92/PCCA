@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import CheckoutForm from './Checkout';
 import {Elements, StripeProvider} from 'react-stripe-elements';
-import './Checkout.css';
 import Auxilary from '../../hoc/Auxilary/Auxilary';
 
 class Proceed extends React.Component{
@@ -13,10 +12,6 @@ class Proceed extends React.Component{
  
 	render (){
 
-		let firstname = '';
-        let lastname = '';
-        let email = '';
-        let items=null;
         let total = 0;
 
 
@@ -33,13 +28,12 @@ class Proceed extends React.Component{
 
                <div className="container">   
                   <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
-                     <div className="example">
+                     <div>
                         <Elements>
-                            <CheckoutForm firstname={name} lastname={lastname} email={email} />
+                            <CheckoutForm total={total} />
                         </Elements>
                      </div>
                   </StripeProvider>
-                  <h3>Purchase Total: {total} </h3>
                 </div>
 
         );
