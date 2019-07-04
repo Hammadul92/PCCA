@@ -14,82 +14,48 @@ class Proceed extends React.Component{
 	render (){
 
 		let firstname = '';
+        let lastname = '';
         let email = '';
         let items=null;
-        let total = null;
+        let total = 0;
 
-		if(this.props.state.firstname !== ''){
-			name = this.props.state.firstname;
-            email = this.props.state.user;
-        }
 
-        if(this.props.state.tickets.length >0){
-            //console.log(this.props.state.tickets, 'CART Checkout')
+        if(this.props.state.tickets.length > 0){
 			
-            items = this.props.state.tickets.map((item,index) =>{
+            this.props.state.tickets.map((item,index) =>{
 				let subtotal = Number(item.price)*Number(item.quantity);
 				total = subtotal + total;
-				return (
-					<tr key={index}>
-                    <td>{index}</td>
-                    <td>{item.title}</td>
-                    <td>{item.quantity}</td>
-                    <td>{item.price}</td>
-					<td>{subtotal}</td>
-				    </tr>
-				);
+				
 			});
 
 		}
         return(
-            <Auxilary >
-             
 
-             <div className="container">   
-            <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
-            <div className="example">
-            <Elements>
-                <CheckoutForm name= {name} email={email} />
-            </Elements>
-            </div>
-            </StripeProvider>
-
-
-                <h3>Purchase Total: {total} </h3>
-
-            <table className="table">
-                        <thead className="thead-dark">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Event</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">SubTotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {items}
-                        </tbody>
-            </table>
-
-            </div>
-
-            </Auxilary>
+               <div className="container">   
+                  <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+                     <div className="example">
+                        <Elements>
+                            <CheckoutForm firstname={name} lastname={lastname} email={email} />
+                        </Elements>
+                     </div>
+                  </StripeProvider>
+                  <h3>Purchase Total: {total} </h3>
+                </div>
 
         );
-        }
-    
-    
     }
+    
+    
+}
         
 
     
         
-        const mapStateToProps = state => {
+const mapStateToProps = state => {
 	return{ 
 		state: state   
 	}
-  };
+};
 
 const mapDispatchToProps = dispatch =>{  
 

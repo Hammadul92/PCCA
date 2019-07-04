@@ -43,7 +43,7 @@ class Cart extends React.Component{
 		
 		if (total>0){
 
-			checkout=(<div className="form-group clearfix"><Link to="/proceed" className="btn pull-right">Proceed to Checkout</Link></div>);
+			checkout=(<div className="form-group clearfix"><Link to="/checkout" className="btn pull-right">Proceed to Checkout</Link></div>);
 		}
 
 		return(
