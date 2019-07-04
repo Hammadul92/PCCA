@@ -77,7 +77,7 @@ class NavEvents extends Component{
 			});
 
 
-            return <div className="container"><h1> EVENTS AND TICKETS</h1> {events} </div>;
+            return <div className="container"><h1> Events & Tickets </h1> {events} </div>;
 
 	}
 }

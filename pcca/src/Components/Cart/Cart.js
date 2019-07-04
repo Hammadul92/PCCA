@@ -20,12 +20,9 @@ class Cart extends React.Component{
 		let msg = null;
 		let checkout = null;
 		let total = 0;
-		let summary = null;
-
-
 		
 		if(this.props.state.tickets.length === 0){
-			msg =  <p> You do not have any items in the cart!</p>
+			msg = <p> You do not have any items in the cart!</p>
 		};
 
         if(this.props.state.tickets.length > 0){			
@@ -46,13 +43,13 @@ class Cart extends React.Component{
 		
 		if (total>0){
 
-			checkout=(<div className="form-group"><Link to="/proceed"><button  className="btn"> Proceed With Checkout Total ${total} </button></Link></div>);
+			checkout=(<div className="form-group clearfix"><Link to="/proceed" className="btn pull-right">Proceed to Checkout</Link></div>);
 		}
 
 		return(
             <div className="container">         
                 
-                <h2>Cart Items</h2>
+                <h1>Cart Items</h1>
 				{msg}
                 <table className="table">
                     <thead>
@@ -65,7 +62,9 @@ class Cart extends React.Component{
                     </thead>
                     <tbody>{items}</tbody>
 			    </table> 
-
+                
+                
+                <h2> Total: $ {total} cad </h2>
 				{checkout}  
 					
             </div>
