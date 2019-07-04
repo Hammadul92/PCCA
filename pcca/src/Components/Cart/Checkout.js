@@ -23,6 +23,16 @@ class CheckoutForm extends Component {
   }
 
   render() {
+
+    let button = null
+    
+    if(this.props.checkout){
+      button = <button className="btn" onClick={this.submit}> Complete Transaction </button>
+    }else{
+      button = <button className="btn" disabled title="Please confirm your account before finishing purchase."> Complete Transaction </button>
+    }
+
+
     return (
         <div> 
           <h1> Make a Payment</h1>
@@ -30,7 +40,7 @@ class CheckoutForm extends Component {
             <h4>Purchase Total: $ {this.props.total} CAD </h4>
             <p>Would you like to complete the purchase?</p> 
             <div className="example2 form-group"><CardElement /></div>         
-            <button className="btn" onClick={this.submit}> Complete Transaction </button>
+            {button}
           </div>
         </div>
 

@@ -20,20 +20,23 @@ class Proceed extends React.Component{
 	render (){
 
         let total = 0;
+        let checkout = false;
 
+        if(this.props.state.loggedin){
+           checkout = true
+        }
 
-        if(this.props.state.tickets.length > 0){
-			
+        if(this.props.state.tickets.length > 0){			
             this.props.state.tickets.map((item,index) =>{
 				let subtotal = Number(item.price)*Number(item.quantity);
 				total = subtotal + total;
 				
 			});
-
 		}
+
         return(
 
-               <div className="container"> 
+            <div className="container"> 
 
                  <h1> Confirm Your Account </h1>
                  <div className="payment-tile">                     
@@ -54,19 +57,23 @@ class Proceed extends React.Component{
                                <label> Last Name </label>
                                <input type="text" value={this.state.lastname} onChange={(event)=>this.setState({lastname: event.target.value})} required/>
                           </div>
-                          <div className="col-md-6 col-md-offset-3 form-group">
+                          <div className="col-md-4 col-md-offset-4">
                                <button className="btn" type="submit"> Update </button>
                           </div>
                       </form> 
                   </div>
+
+               
+
                   <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
                      <div>
                         <Elements>
-                            <CheckoutForm total={total} />
+                            <CheckoutForm total={total} checkout={checkout} />
                         </Elements>
                      </div>
                   </StripeProvider>
-                </div>
+
+            </div>
 
         );
     }
