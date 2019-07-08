@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {CardElement, injectStripe} from 'react-stripe-elements';
 import * as actionTypes from '../../store/actions';
+import axios from 'axios';
 import './Cart.module.css';
 
 class CheckoutForm extends Component {
@@ -10,16 +11,45 @@ class CheckoutForm extends Component {
     this.submit = this.submit.bind(this);
   }
 
+  ComponentWillMount(){
+    console.log(this.props.userID);
+  }
+
   async submit(ev) {
     let {token} = await this.props.stripe.createToken({name: this.props.name});
-    console.log(token.card, 'TOKEN ID', token.id );
-    let response = await fetch("/charge", {
-      method: "POST",
-      headers: {"Content-Type": "text/plain"},
-      body: token.id
-    });
-  
-    if (response.ok){this.setState({complete: true}); console.log("Purchase Complete!");} 
+        console.log(this.props.userID);
+        const data = {
+              userID: this.props.userID,
+              token_id: token.id,
+              brand: token.card.brand,
+              country: token.card.country,
+              brand: token.card.brand,
+              last4: token.card.last4,
+              exp_year: token.card.exp_year
+        };  
+
+        var request = {
+              "async": true,
+              "crossDomain": true,
+              "url": "http://localhost:5000/banking_information",
+              "method": "POST",
+              "headers": {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Cache-Control": "no-cache",
+                "Host": "localhost:5000",
+                "accept-encoding": "gzip, deflate",
+                "Connection": "keep-alive",
+                "cache-control": "no-cache"
+              },
+              "processData": false,
+              "data": data
+        };
+
+        axios(request).then(response => {
+           this.props.flash(response.data.message);
+           this.props.updated(data);
+        }).catch(error=> {});
   }
 
   render() {

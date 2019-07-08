@@ -187,18 +187,18 @@ update_profile_arguments.add_argument('userID', required = True)
 class updateProfileForm(Resource):
     @jwt_required
     def post(self):
-        try:
+    #    try:
             data = update_profile_arguments.parse_args()
-            current_user = User.query.filter_by(userID=data['userID']).first()
-            current_user.email = data.email
-            current_user.firstname = data.firstname
-            current_user.lastname = data.lastname
-            current_user.phone = data.phone
+            current_user = User.query.filter_by(userID = data['userID']).first()
+            current_user.email = data['email']
+            current_user.firstname = data['firstname']
+            current_user.lastname = data['lastname']
+            current_user.phone = data['phone']
             db.session.commit()
             return {'message': 'Your account was updated successfully!'}
-        except:
-            db.session.rollback()
-            return {'message': 'Something went wrong'}, 500
+    #    except:
+    #        db.session.rollback()
+    #       return {'message': 'Something went wrong'}, 500
 
 
 
@@ -247,20 +247,21 @@ class anonymous_account(Resource):
 
 
 banking_information_arguments = reqparse.RequestParser()
-banking_information_arguments.add_argument('card_id', required = True)
+banking_information_arguments.add_argument('userID', required = True)
 banking_information_arguments.add_argument('token_id', required = True)
 banking_information_arguments.add_argument('country', required = True)
 banking_information_arguments.add_argument('last4', required = True)
 banking_information_arguments.add_argument('exp_year', required = True)
 banking_information_arguments.add_argument('brand', required = True)
-
 class banking_information(Resource):
-   def post():
+   def post(self):
       try:
         data = banking_information_arguments.parse_args()
         result = {'message':200}
+
+        user = User.query.filter_by(userID=data['userID']).first()
         customer = stripe.Customer.create(
-          email= data['email'],
+          email= user.email,
           source= data['token_id']
         )
         current_user = User.query.filter_by(email = data['email']).first()
