@@ -183,59 +183,88 @@ update_profile_arguments.add_argument('email', required = True)
 update_profile_arguments.add_argument('firstname', required = True)
 update_profile_arguments.add_argument('lastname', required = True)
 update_profile_arguments.add_argument('phone', required = True)
+update_profile_arguments.add_argument('userID', required = True)
 class updateProfileForm(Resource):
     @jwt_required
     def post(self):
-        data = update_profile_arguments.parse_args()
-        if(data):
-            current_user = User.query.filter_by(email=data['email']).first()
-            current_user.email = data.email
-            current_user.firstname = data.firstname
-            current_user.lastname = data.lastname
-            current_user.phone = data.phone
+    #    try:
+            data = update_profile_arguments.parse_args()
+            current_user = User.query.filter_by(userID = data['userID']).first()
+            current_user.email = data['email']
+            current_user.firstname = data['firstname']
+            current_user.lastname = data['lastname']
+            current_user.phone = data['phone']
             db.session.commit()
-            return {'msg': 'Your profile was updated successfully!'}
+            return {'message': 'Your account was updated successfully!'}
+    #    except:
+    #        db.session.rollback()
+    #       return {'message': 'Something went wrong'}, 500
 
-        else:
-            return {'msg': 'There seems to be a problem with the network. Please Try again later'}
 
+
+anonymous_account_arguments = reqparse.RequestParser()
+anonymous_account_arguments.add_argument('email', required = True)
+anonymous_account_arguments.add_argument('password', required = False)
+anonymous_account_arguments.add_argument('phone', required = True)
+anonymous_account_arguments.add_argument('firstname', required = True)
+anonymous_account_arguments.add_argument('lastname', required = True)
+class anonymous_account(Resource):
+    def post(self):
+        try:
+            result = {}
+            data = anonymous_account_arguments.parse_args()
+            current_user = User.query.filter_by(email = data['email']).first()
+            if not current_user:
+               current_user = User( email = data['email'], password = data['password'], phone = data['phone'])
+               result['message'] = 'Logged in as {}'.format(current_user.email)
+            else:
+               current_user.phone = data['phone']
+               current_user.email = data['email'] 
+               result['message'] = 'Your account was updated successfully!'
+
+            current_user.firstname = data['firstname']
+            current_user.lastname = data['lastname']
+            db.session.add(current_user)
+            db.session.commit()
+
+            result['userID'] = current_user.userID
+            result['email'] = current_user.email
+            result['firstname'] = current_user.firstname
+            result['lastname'] = current_user.lastname
+            result['phone'] = current_user.phone
+            result['access_token'] = create_access_token(identity = data['email'])
+            result['refresh_token'] = create_refresh_token(identity = data['email'])
+            return result
+        except:
+            db.session.rollback()
+            return {'message': 'Something went wrong'}, 500
+
+
+
+
+            
+            
 
 
 banking_information_arguments = reqparse.RequestParser()
-banking_information_arguments.add_argument('email', required = True)
-banking_information_arguments.add_argument('password', required = False)
-banking_information_arguments.add_argument('phone', required = False)
-banking_information_arguments.add_argument('firstname', required = False)
-banking_information_arguments.add_argument('lastname', required = False)
-banking_information_arguments.add_argument('card_id', required = True)
+banking_information_arguments.add_argument('userID', required = True)
 banking_information_arguments.add_argument('token_id', required = True)
 banking_information_arguments.add_argument('country', required = True)
 banking_information_arguments.add_argument('last4', required = True)
 banking_information_arguments.add_argument('exp_year', required = True)
 banking_information_arguments.add_argument('brand', required = True)
-
 class banking_information(Resource):
-   def post():
+   def post(self):
       try:
         data = banking_information_arguments.parse_args()
         result = {'message':200}
+
+        user = User.query.filter_by(userID=data['userID']).first()
         customer = stripe.Customer.create(
-          email= data['email'],
+          email= user.email,
           source= data['token_id']
         )
         current_user = User.query.filter_by(email = data['email']).first()
-        if not current_user:
-           if data['password']  != '' and data['firstname'] != '' and data['lastname'] != '' and data['phone'] != '':
-              current_user = User( email = data['email'], password = data['password'], phone = data['phone'])
-              current_user.firstname = data['firstname']
-              current_user.lastname = data['lastname']
-           else:
-              current_user = User(email = data['email'], password = 'xyz123' , phone = 'N/A')
-              current_user.firstname = 'N/A'
-              current_user.lastname = 'N/A'
- 
-           db.session.add(current_user)
-           db.session.commit()
         current_user.customer_ID = customer.id
         current_user.card_country = data['country']
         current_user.card_last4 = "XXXX-XXXX-XXXX-" + data['last4']

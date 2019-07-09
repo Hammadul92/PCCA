@@ -29,7 +29,7 @@ class NavEvents extends Component{
         	for(let ticket in all_tickets){
 				if(all_tickets[ticket].key === event.key){
 					new_item = false;
-					all_tickets[ticket].quantity += this.state.quantity;
+					all_tickets[ticket].quantity += Number(this.state.quantity);
 				}			 
 			}
         }

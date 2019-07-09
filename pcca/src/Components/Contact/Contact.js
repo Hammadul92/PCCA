@@ -9,7 +9,8 @@ class Contact extends React.Component{
 	state = {
     	name: '',
     	email: '',
-    	message: ''
+    	message: '',
+    	flash:''
     }
 
 	contactDataHandler = (event) => {
@@ -40,7 +41,8 @@ class Contact extends React.Component{
 		  };
 
 		  axios(contact).then(response => {
-			 this.props.flash(response.data.msg);
+		  	let msg = response.data.msg;
+		  	this.setState({flash: msg });
           }).catch(error=> {
 			
 		  });
@@ -48,8 +50,12 @@ class Contact extends React.Component{
 	}
 
 	render (){
-		
-        var msg = <div className="msg"> {this.props.state.message}</div>;
+		let msg = '';
+		if(this.state.flash !== ''){
+
+			 msg = <div className="msg"> {this.state.flash}</div>;
+		}
+        
 
 		return(
 				<form className="container" onSubmit={(event) => this.contactDataHandler(event)}>
@@ -58,15 +64,15 @@ class Contact extends React.Component{
                      <div className="row LoginForm">
                         <div className="form-group col-md-6 col-md-offset-3">
                             <label> Name </label>
-                        	<input type="text" value={this.state.name} onChange={(event)=>this.setState({name: event.target.value})} required />
+                        	<input type="text" value={this.state.name} onChange={(event)=>this.setState({name: event.target.value})} required placeholder="e.g. John Doe"/>
                         </div>
                         <div className="form-group col-md-6 col-md-offset-3">
                             <label>  Email </label>
-                        	<input type="email" value={this.state.email} onChange={(event)=>this.setState({email: event.target.value})} required />
+                        	<input type="email" value={this.state.email} onChange={(event)=>this.setState({email: event.target.value})} required  placeholder="example@example.com" />
                         </div>
                         <div className="form-group col-md-6 col-md-offset-3">
                             <label>  Message </label>
-                        	<textarea style={{ height: 200 }} value={this.state.message} onChange={(event)=>this.setState({message: event.target.value})} required />
+                        	<textarea style={{ height: 200 }} value={this.state.message} onChange={(event)=>this.setState({message: event.target.value})}  placeholder="Please type your message here" >  </textarea>
                         </div>
                         <div className="form-group col-md-6 col-md-offset-3">
                            <button type="submit" className="btn"> Contact </button>
