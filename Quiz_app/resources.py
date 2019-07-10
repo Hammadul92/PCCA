@@ -264,12 +264,11 @@ class banking_information(Resource):
           email= user.email,
           source= data['token_id']
         )
-        current_user = User.query.filter_by(email = data['email']).first()
-        current_user.customer_ID = customer.id
-        current_user.card_country = data['country']
-        current_user.card_last4 = "XXXX-XXXX-XXXX-" + data['last4']
-        current_user.card_exp_year = data['exp_year']
-        current_user.card_brand = data['brand']
+        user.customer_ID = customer.id
+        user.card_country = data['country']
+        user.card_last4 = "XXXX-XXXX-XXXX-" + data['last4']
+        user.card_exp_year = data['exp_year']
+        user.card_brand = data['brand']
         db.session.commit()
       except stripe.error.InvalidRequestError as e:
         body = e.json_body
@@ -297,7 +296,6 @@ class banking_information(Resource):
         db.session.rollback()
         result['message'] = err.get('message')
       except Exception as e:
-        result['message'] = 401
         db.session.rollback()
         result['message'] = e
 

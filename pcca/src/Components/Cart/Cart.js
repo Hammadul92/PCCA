@@ -1,6 +1,4 @@
-
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import './Cart.module.css';

@@ -13,8 +13,9 @@ class Config(object):
     RECAPTCHA_PRIVATE_KEY = '6Ld80pIUAAAAAObtBv7Za_pZJ2xEYc1xBI8Xc9pj'
     #STRIPE_SECRET_KEY = ''
     #STRIPE_PUBLISHABLE_KEY = ''
-    #STRIPE_SECRET_KEY= 'sk_test_Hlr17KjbC8wiV5Gu5qO33uEj'
-    #STRIPE_PUBLISHABLE_KEY = 'pk_test_Pa8DU2oaTOmupt8sG3ckUxMF'
+    STRIPE_SECRET_KEY= 'sk_test_St9GesoAavItBjjhJ4vfPPFD00k4dhRzfP'
+    STRIPE_PUBLISHABLE_KEY = 'pk_test_eJH3BMV0metBp2P9ifEgdNTb00RuLa5mJw'
+
     SQLALCHEMY_DATABASE_URI = 'postgresql:///pcca' 
     #SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:paklea536!nse@178.128.231.135/nateralife'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -26,8 +27,6 @@ class Config(object):
     MAIL_PASSWORD = 'Royo9790'
     MAIL_ASCII_ATTACHMENTS = True
     MAIL_DEFAULT_SENDER = 'admin@naturallysplendid.com'
-    ADMINS = ['hammad@naturallysplendid.com']
     INVOICE_FILES_DEST = Top_level_dir + '/Quiz_app/static/invoices/'
-    PSLIPS_FILES_DEST = Top_level_dir + '/Quiz_app/static/pslips/'
     UPLOADED_MEDIA_DEST = Top_level_dir + '/Quiz_app/static/media/'
 

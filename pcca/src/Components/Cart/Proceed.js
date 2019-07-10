@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import CheckoutForm from './Checkout';
 import {Elements, StripeProvider} from 'react-stripe-elements';
-import Auxilary from '../../hoc/Auxilary/Auxilary';
 import './Cart.module.css';
 
 class Proceed extends React.Component{
@@ -60,8 +59,6 @@ class Proceed extends React.Component{
         let password_field = null;
         let usr = this.props.state.userID;
         let msg = <div className="msg"> {this.props.state.message}</div>;
-
-        console.log('RENDER PROCEEDDD',this.props.state);
 
         
         if(this.props.state.loggedin){
@@ -122,7 +119,7 @@ class Proceed extends React.Component{
 
                
 
-                  <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+                  <StripeProvider apiKey="pk_test_eJH3BMV0metBp2P9ifEgdNTb00RuLa5mJw">
                      <div>
                         <Elements>
                             <CheckoutForm total={total} checkout={checkout} userID={usr} />
