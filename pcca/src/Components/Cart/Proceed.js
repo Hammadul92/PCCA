@@ -53,12 +53,14 @@ class Proceed extends React.Component{
 
  
 	render (){
-
         let total = 0;
+        let subtotal = 0;
+        let gst = 0;
         let checkout = false;
         let password_field = null;
         let usr = this.props.state.userID;
         let token = this.props.state.token;
+        let tickets = this.props.state.tickets;
         let msg = <div className="msg"> {this.props.state.message}</div>;
 
         
@@ -82,9 +84,12 @@ class Proceed extends React.Component{
 
         if(this.props.state.tickets.length > 0){			
             this.props.state.tickets.map((item,index) =>{
-				let subtotal = Number(item.price)*Number(item.quantity);
-				total = subtotal + total;				
+				let amount = Number(item.price)*Number(item.quantity);
+				subtotal = amount + total;				
 			});
+
+            gst = subtotal * 0.05;
+            total = subtotal + gst;
 		}
 
         return(
@@ -123,7 +128,7 @@ class Proceed extends React.Component{
                   <StripeProvider apiKey="pk_test_eJH3BMV0metBp2P9ifEgdNTb00RuLa5mJw">
                      <div>
                         <Elements>
-                            <CheckoutForm total={total} checkout={checkout} userID={usr} token={token} />
+                            <CheckoutForm total={total} subtotal={subtotal} gst={gst} checkout={checkout} userID={usr} token={token} tickets={tickets} />
                         </Elements>
                      </div>
                   </StripeProvider>

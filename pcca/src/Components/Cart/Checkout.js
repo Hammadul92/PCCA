@@ -45,7 +45,8 @@ class CheckoutForm extends Component {
            
            const payment_data = {
               userID: this.props.userID,
-              total: this.props.total
+              total: this.props.total,
+              cart: this.props.tickets
             };  
 
             var payment_request = {
@@ -89,7 +90,12 @@ class CheckoutForm extends Component {
         <div> 
           <h1> Make a Payment</h1>
           <div className="payment-tile">
-            <h4>Purchase Total: $ {this.props.total} CAD </h4>
+            <div className="bill">
+              <b>Subtotal:</b> $ {this.props.subtotal} CAD <br/>
+              <b>GST:</b> $ {this.props.gst} CAD <br/>
+              <b>Purchase Total:</b> $ {this.props.total} CAD 
+            </div>
+            <hr/>
             <p>Would you like to complete the purchase?</p> 
             <div className="example2 form-group"><CardElement /></div>         
             {button}
