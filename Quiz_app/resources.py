@@ -254,6 +254,7 @@ banking_information_arguments.add_argument('last4', required = True)
 banking_information_arguments.add_argument('exp_year', required = True)
 banking_information_arguments.add_argument('brand', required = True)
 class banking_information(Resource):
+   @jwt_required
    def post(self):
       try:
         data = banking_information_arguments.parse_args()
@@ -312,7 +313,7 @@ charge_arguments.add_argument('cart', required = True)
 charge_arguments.add_argument('user_ID', required = True)
 class charge(Resource):
     @jwt_required
-    def post():
+    def post(self):
       try:
         data = charge_arguments.parse_args()
         result = {'message':200}

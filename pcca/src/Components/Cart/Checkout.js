@@ -10,6 +10,7 @@ class CheckoutForm extends Component {
     this.submit = this.submit.bind(this);
   }
 
+
   async submit(ev) {
     let {token} = await this.props.stripe.createToken({name: this.props.name});
         const data = {
@@ -33,14 +34,43 @@ class CheckoutForm extends Component {
                 "Host": "localhost:5000",
                 "accept-encoding": "gzip, deflate",
                 "Connection": "keep-alive",
-                "cache-control": "no-cache"
+                "cache-control": "no-cache",
+                "Authorization": "Bearer " + this.props.token
               },
               "processData": false,
               "data": data
         };
 
         axios(request).then(response => {
-           this.props.flash(response.data.message);
+           
+           const payment_data = {
+              userID: this.props.userID,
+              total: this.props.total
+            };  
+
+            var payment_request = {
+              "async": true,
+              "crossDomain": true,
+              "url": "http://localhost:5000/charge",
+              "method": "POST",
+              "headers": {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Cache-Control": "no-cache",
+                "Host": "localhost:5000",
+                "accept-encoding": "gzip, deflate",
+                "Connection": "keep-alive",
+                "cache-control": "no-cache",
+                "Authorization": "Bearer " + this.props.token
+              },
+              "processData": false,
+              "data": payment_data
+            };
+
+            axios(payment_request).then(response => {
+               
+            }).catch(error=> {});
+
         }).catch(error=> {});
   }
 

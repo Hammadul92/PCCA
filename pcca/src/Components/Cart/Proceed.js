@@ -58,6 +58,7 @@ class Proceed extends React.Component{
         let checkout = false;
         let password_field = null;
         let usr = this.props.state.userID;
+        let token = this.props.state.token;
         let msg = <div className="msg"> {this.props.state.message}</div>;
 
         
@@ -122,7 +123,7 @@ class Proceed extends React.Component{
                   <StripeProvider apiKey="pk_test_eJH3BMV0metBp2P9ifEgdNTb00RuLa5mJw">
                      <div>
                         <Elements>
-                            <CheckoutForm total={total} checkout={checkout} userID={usr} />
+                            <CheckoutForm total={total} checkout={checkout} userID={usr} token={token} />
                         </Elements>
                      </div>
                   </StripeProvider>
