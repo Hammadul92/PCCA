@@ -14,8 +14,8 @@ class Profile extends React.Component{
 
 
   updateFormHandler = (event) => {
+    console.log(this.props.state);
     event.preventDefault();
-    console.log(this.props.state.userID);
     const data = {
       userID: this.props.state.userID,
       email: this.state.user,
@@ -23,8 +23,6 @@ class Profile extends React.Component{
       lastname: this.state.lastname,
       phone: this.state.phone
     };
-
-    
 
     var request = {
       "async": true,
@@ -46,7 +44,7 @@ class Profile extends React.Component{
   
       };
 
-      axios(request).then(response => {
+      axios(request).then(response => {      
        this.props.flash(response.data.message);
        this.props.updated(data);
       }).catch(error=> {});

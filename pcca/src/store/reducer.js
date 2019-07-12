@@ -53,7 +53,6 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 loggedin: true,
-                token: action.payload.token,
                 user: action.payload.email,
                 firstname: action.payload.firstname,
                 lastname: action.payload.lastname,
