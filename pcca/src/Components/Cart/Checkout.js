@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {CardElement, injectStripe} from 'react-stripe-elements';
-import * as actionTypes from '../../store/actions';
 import axios from 'axios';
 import './Cart.module.css';
 
@@ -11,19 +10,14 @@ class CheckoutForm extends Component {
     this.submit = this.submit.bind(this);
   }
 
-  ComponentWillMount(){
-    console.log(this.props.userID);
-  }
 
   async submit(ev) {
     let {token} = await this.props.stripe.createToken({name: this.props.name});
-        console.log(this.props.userID);
         const data = {
               userID: this.props.userID,
               token_id: token.id,
               brand: token.card.brand,
               country: token.card.country,
-              brand: token.card.brand,
               last4: token.card.last4,
               exp_year: token.card.exp_year
         };  
@@ -40,15 +34,44 @@ class CheckoutForm extends Component {
                 "Host": "localhost:5000",
                 "accept-encoding": "gzip, deflate",
                 "Connection": "keep-alive",
-                "cache-control": "no-cache"
+                "cache-control": "no-cache",
+                "Authorization": "Bearer " + this.props.token
               },
               "processData": false,
               "data": data
         };
 
         axios(request).then(response => {
-           this.props.flash(response.data.message);
-           this.props.updated(data);
+           
+           const payment_data = {
+              userID: this.props.userID,
+              total: this.props.total,
+              cart: this.props.tickets
+            };  
+
+            var payment_request = {
+              "async": true,
+              "crossDomain": true,
+              "url": "http://localhost:5000/charge",
+              "method": "POST",
+              "headers": {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Cache-Control": "no-cache",
+                "Host": "localhost:5000",
+                "accept-encoding": "gzip, deflate",
+                "Connection": "keep-alive",
+                "cache-control": "no-cache",
+                "Authorization": "Bearer " + this.props.token
+              },
+              "processData": false,
+              "data": payment_data
+            };
+
+            axios(payment_request).then(response => {
+               
+            }).catch(error=> {});
+
         }).catch(error=> {});
   }
 
@@ -67,7 +90,12 @@ class CheckoutForm extends Component {
         <div> 
           <h1> Make a Payment</h1>
           <div className="payment-tile">
-            <h4>Purchase Total: $ {this.props.total} CAD </h4>
+            <div className="bill">
+              <b>Subtotal:</b> $ {this.props.subtotal} CAD <br/>
+              <b>GST:</b> $ {this.props.gst} CAD <br/>
+              <b>Purchase Total:</b> $ {this.props.total} CAD 
+            </div>
+            <hr/>
             <p>Would you like to complete the purchase?</p> 
             <div className="example2 form-group"><CardElement /></div>         
             {button}
@@ -79,20 +107,6 @@ class CheckoutForm extends Component {
 }
 
 
-const mapStateToProps = state => {
-  return{ 
-      state: state      
-  }
-};
 
-const mapDispatchToProps = dispatch =>{  
-
-    return{
-        flash: (msg) => dispatch({type: actionTypes.FLASH_MESSAGE, message:msg}),
-        updated: (data) => dispatch({type: actionTypes.UPDATE_USER, payload: data})
-    
-    }
-
-};
 
 export default injectStripe(CheckoutForm);

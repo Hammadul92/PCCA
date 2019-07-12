@@ -1,82 +1,47 @@
-import React, { Component }   from 'react';
-import Carousel from 'react-bootstrap/Carousel';
+import React  from 'react';
 import Auxilary from '../../hoc/Auxilary/Auxilary';
+import './styles.css';
 
 class ControlledCarousel extends React.Component {
-    constructor(props, context) {
-      super(props, context);
-  
-      this.handleSelect = this.handleSelect.bind(this);
-  
-      this.state = {
-        index: 0,
-        direction: null,
-      };
-    }
-  
-    handleSelect(selectedIndex, e) {
-      this.setState({
-        index: selectedIndex,
-        direction: e.direction,
-      });
-    }
   
     render() {
-      const { index, direction } = this.state;
+
   
       return (
           <Auxilary>
+        <div className='slider'>
+              <div id="myCarousel" className="carousel slide" data-ride="carousel">
+                <ol className="carousel-indicators">
+                  <li data-target="#myCarousel" data-slide-to="0" className="active"></li>
+                  <li data-target="#myCarousel" data-slide-to="1"></li>
+                  <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
 
-            <link
-                    rel="stylesheet"
-                    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-                    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-                    crossorigin="anonymous"
-                />
+                <div className="carousel-inner">
+                  <div className="item active">
+                    <img className='image' src="https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2012/03/pakistan-flag.jpg" alt="Los Angeles" width='100%'/>
+                  </div>
 
-        <script src="https://unpkg.com/react/umd/react.production.js" crossorigin />
+                  <div className="item">
+                    <img className='image' src="https://article.images.consumerreports.org/prod/content/dam/CRO%20Images%202018/Cars/November/CR-Cars-InlineHero-2019-Honda-Insight-driving-trees-11-18" alt="Chicago" width='100%'/>
+                  </div>
 
-        <script
-        src="https://unpkg.com/react-dom/umd/react-dom.production.js"
-        crossorigin
-        />
+                  <div className="item">
+                    <img className='image' src="https://production-354f.kxcdn.com/wp-content/uploads/sites/66/2017/11/Perfect-car_-front-view-1206x602.jpg" alt="New York" width='100%'/>
+                  </div>
+                </div>
 
-        <script
-        src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js"
-        crossorigin
-        />
-        <Carousel
-          activeIndex={index}
-          direction={direction}
-          onSelect={this.handleSelect}>
+                <a className="left carousel-control" href="#myCarousel" data-slide="prev">
+                  <span className="glyphicon glyphicon-arrow-left"></span>
+                  <span className="sr-only">Previous</span>
+                </a>
+                <a className="right carousel-control" href="#myCarousel" data-slide="next">
+                  <span className="glyphicon glyphicon-arrow-right">asdd</span>
+                  <span className="sr-only">Next</span>
+                </a>
+              </div>
+        </div>
 
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://media.wired.com/photos/5b86fce8900cb57bbfd1e7ee/master/pass/Jaguar_I-PACE_S_Indus-Silver_065.jpg"
-              alt="Third slide"
-            />
-  
-            <Carousel.Caption>
-              <h3>Second slide label</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://media.wired.com/photos/5b86fce8900cb57bbfd1e7ee/master/pass/Jaguar_I-PACE_S_Indus-Silver_065.jpg"
-              alt="Third slide"
-            />
-  
-            <Carousel.Caption>
-              <h3>Third slide label</h3>
-              <p>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-              </p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
         </Auxilary>
       );
     }

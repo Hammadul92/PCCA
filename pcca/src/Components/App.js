@@ -17,7 +17,7 @@ import Login from './Login/Login';
 import './App.css';
 import {Route,Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import ControlledCarousel from './Slider/Slider';
 
 
 
@@ -36,7 +36,7 @@ class App extends React.Component{
 		     <Switch>
 								
 					<Route path='/events' exact component={NavEvents}/>
-					<Route path='/donations' exact component={Donations}/>
+					<Route path='/donations' exact component={ControlledCarousel}/>
 					<Route path='/about' exact component={AboutUs}/>
 					<Route path='/contact' exact component={Contact}/>
 					<Route path='/gallery' exact component={Gallery}/>

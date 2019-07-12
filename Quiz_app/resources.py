@@ -254,6 +254,7 @@ banking_information_arguments.add_argument('last4', required = True)
 banking_information_arguments.add_argument('exp_year', required = True)
 banking_information_arguments.add_argument('brand', required = True)
 class banking_information(Resource):
+   @jwt_required
    def post(self):
       try:
         data = banking_information_arguments.parse_args()
@@ -264,12 +265,11 @@ class banking_information(Resource):
           email= user.email,
           source= data['token_id']
         )
-        current_user = User.query.filter_by(email = data['email']).first()
-        current_user.customer_ID = customer.id
-        current_user.card_country = data['country']
-        current_user.card_last4 = "XXXX-XXXX-XXXX-" + data['last4']
-        current_user.card_exp_year = data['exp_year']
-        current_user.card_brand = data['brand']
+        user.customer_ID = customer.id
+        user.card_country = data['country']
+        user.card_last4 = "XXXX-XXXX-XXXX-" + data['last4']
+        user.card_exp_year = data['exp_year']
+        user.card_brand = data['brand']
         db.session.commit()
       except stripe.error.InvalidRequestError as e:
         body = e.json_body
@@ -297,7 +297,6 @@ class banking_information(Resource):
         db.session.rollback()
         result['message'] = err.get('message')
       except Exception as e:
-        result['message'] = 401
         db.session.rollback()
         result['message'] = e
 
@@ -314,7 +313,7 @@ charge_arguments.add_argument('cart', required = True)
 charge_arguments.add_argument('user_ID', required = True)
 class charge(Resource):
     @jwt_required
-    def post():
+    def post(self):
       try:
         data = charge_arguments.parse_args()
         result = {'message':200}
