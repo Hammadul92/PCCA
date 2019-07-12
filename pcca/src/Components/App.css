@@ -142,3 +142,10 @@ section:last-child {
 .margin-bottom{
 	margin-bottom: 80px;
 } 
+
+
+#exampleCheck1 {
+	text-align: left;
+	width: 20px;
+	display: block;
+}

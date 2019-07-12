@@ -79,6 +79,8 @@ class Signup extends React.Component{
 			var msg= (<div className="msg"> {this.state.message}</div>);
 			
 			this.SuccessfullSignUp();
+
+			  
 		
 		return (
 				<div className="container">
@@ -108,6 +110,13 @@ class Signup extends React.Component{
 		                            <label>Phone Number *</label>
 									<input type='tel' required value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required />
 								   </div>
+
+									<div class=" form-check col-md-12">
+									<label class="form-check-label" for="exampleCheck1">Accept Terms & Agreements, Community News & Events NewsLetter</label>
+										
+										<input type="checkbox" class="form-check-input" id="exampleCheck1" required/>
+										
+									</div>
 
 								   <div className="col-md-12 form-group ">
 									<button  type="submit" className="btn">Register</button>

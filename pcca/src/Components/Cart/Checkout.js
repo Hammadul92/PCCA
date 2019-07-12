@@ -67,8 +67,10 @@ class CheckoutForm extends Component {
               "processData": false,
               "data": payment_data
             };
+            console.log('Payment Data',payment_data);
 
             axios(payment_request).then(response => {
+              console.log('charge',response)
                
             }).catch(error=> {});
 
