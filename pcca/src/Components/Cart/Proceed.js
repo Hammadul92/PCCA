@@ -24,7 +24,6 @@ class Proceed extends React.Component{
           lastname: this.state.lastname,
           phone: this.state.phone,
           password: this.state.password
-
         };  
 
         var request = {
