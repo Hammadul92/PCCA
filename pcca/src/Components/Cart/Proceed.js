@@ -83,13 +83,13 @@ class Proceed extends React.Component{
 
         if(this.props.state.tickets.length > 0){			
             this.props.state.tickets.map((item,index) =>{
-				let amount = Number(item.price)*Number(item.quantity);
-				subtotal = amount + total;				
-			});
+    				let amount = Number(item.price)*Number(item.quantity);
+    				subtotal = amount + subtotal;				
+    			});
 
-            gst = subtotal * 0.05;
-            total = subtotal + gst;
-		}
+          gst = subtotal * 0.05;
+          total = subtotal + gst;
+		    }
 
         return(
 

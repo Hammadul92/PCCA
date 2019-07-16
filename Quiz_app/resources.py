@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
-from .models import Media, User, RevokedTokenModel, Gallery, Events, Blogs, Contact
+from .models import Media, User, RevokedTokenModel, Gallery, Events, Blogs, Contact, Sales
 from .email import  send_contact_message, contact_confirmation_email
-from .views import get_month_name, date_now
+from .views import get_month_name, date_now, month_now, year_now
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask import request, session, redirect, url_for, flash, g,json,jsonify,abort, Response
 from . import db
@@ -310,63 +310,25 @@ charge_arguments.add_argument('subtotal', required = True)
 charge_arguments.add_argument('total', required = True)
 charge_arguments.add_argument('gst', required = True)
 charge_arguments.add_argument('cart', required = True)
-charge_arguments.add_argument('user_ID', required = True)
+charge_arguments.add_argument('userID', required = True)
 class charge(Resource):
     @jwt_required
     def post(self):
       try:
-        data = charge_arguments.parse_args()
         result = {'message':200}
+        data = charge_arguments.parse_args()
         subtotal = data['subtotal']
         total =  data['total']
         gst = data['gst']
-
-        current_user = User.query.filter_by(userID = data['user_ID']).first()
+        current_user = User.query.filter_by(userID = data['userID']).first()
 
         sale = Sales(current_user.userID, current_user.firstname, current_user.lastname, current_user.email, total , subtotal, date_now(), month_now(), year_now())
         db.session.add(sale)
-
-
+        print(data['cart'])
         cart = data['cart']
-        for ticket in cart:
-            event = Events.query.filter_by(event_ID = ticket['ticket_ID']).first()
-            event.inventory = event.inventory - ticket['amount']
-            invoice = Invoices(sale.sale_ID, event.event_ID, event.event_name, event.price, ticket['amount'])
-            db.session.add(invoice)
-        
-
-        total = float(total) * 100 #converted into cents
-        if total > 50:
-          charge = stripe.Charge.create(
-              customer= current_user.customer_ID,
-              amount=int(total),
-              currency= "cad",
-              description ='PCCA Charge - Order # ' + str(sale.sale_ID)
-             )
-          sale.charge_id = charge.id
-
-
-        db.session.commit()
-       
-
-
-        invoices = Invoices.query.filter_by(sale_ID = sale.sale_ID).all()  
-        
-        create_pdf(render_template('invoice.html', total=round(total/100,2), special_instructions = special_instructions, invoices = invoices, gst=gst, subtotal=subtotal, invoice_number=sale.sale_ID, 
-          shipping_rate=shipping_rate, date=sale.date), "[" + str(sale.sale_ID) + "][invoice].pdf", app.config['INVOICE_FILES_DEST'])
-        
-        
-        if sale.invoice != None:
-           os.remove(app.config['INVOICE_FILES_DEST'] + sale.invoice)
-
-        sale.invoice = "[" + str(sale.sale_ID) + "][invoice].pdf"           
-
-   
-        db.session.commit()
-
-        admin = User.query.filter_by(role='admin').first()
-        #send_invoice(sale, admin)
-        send_invoice(sale, current_user)
+        for ticket in cart: 
+            print(cart[ticket])            
+            
         
       except stripe.error.InvalidRequestError as e:
         body = e.json_body
@@ -397,4 +359,4 @@ class charge(Resource):
         db.session.rollback()
         result['message'] = e
 
-      return response
+      return result

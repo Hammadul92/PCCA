@@ -57,8 +57,6 @@ class Events extends React.Component{
 
 		}
 
-		
-
 
   
 

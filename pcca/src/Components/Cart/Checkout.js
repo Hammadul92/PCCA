@@ -42,11 +42,18 @@ class CheckoutForm extends Component {
         };
 
         axios(request).then(response => {
+           let tickets = {}
+           let all_tickets = this.props.tickets
+           for(let ticket in all_tickets){
+              tickets[all_tickets[ticket].key] = {'price': all_tickets[ticket].price, 'quantity': all_tickets[ticket].quantity, 'title': all_tickets[ticket].title}
+           }
            
            const payment_data = {
               userID: this.props.userID,
               total: this.props.total,
-              cart: this.props.tickets
+              cart: tickets,
+              subtotal: this.props.subtotal,
+              gst: this.props.gst
             };  
 
             var payment_request = {
@@ -67,10 +74,8 @@ class CheckoutForm extends Component {
               "processData": false,
               "data": payment_data
             };
-            console.log('Payment Data',payment_data);
 
             axios(payment_request).then(response => {
-              console.log('charge',response)
                
             }).catch(error=> {});
 
