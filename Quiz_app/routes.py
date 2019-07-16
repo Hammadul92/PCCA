@@ -1,7 +1,7 @@
 from . import app
 from .views import get_month_name, date_now, month_now, year_now, day_now, allowed_file, decrease_inventory, inventory_remaining, variational_inventory, generate_email, year_month_day, get_month_from_date, calc_days_gap
 from flask import render_template, request, session, redirect, url_for, flash, g, json, jsonify, abort, Response
-from .models import Media, User, Blogs, Events, Joinmail, Invoices, Sales, Contact, Gallery
+from .models import Media, User, Blogs, Events, Joinmail, Invoices, Sales, Contact, Gallery, Pages
 from . import db
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask_login import login_required, login_user, logout_user, current_user
@@ -56,6 +56,22 @@ def add_galleryimage():
      return redirect(url_for('admin', tab = 'gallery'))
   else:
      abort(403)
+
+
+@app.route('/update_page', methods=["POST"])
+@login_required
+def update_page():
+    if current_user.role == 'admin':
+       form = request.form
+       if request.method == 'POST':
+          page = Pages.query.filter_by(page_name =  'About Us').first()
+          page.page_description = form['page_description']
+          db.session.commit()
+       return redirect(url_for('admin', tab = 'about_us'))
+    else:
+       abort(403)
+
+
 
 @app.route('/delete_galleryimage/<int:gallery_ID>')
 @login_required
@@ -577,9 +593,8 @@ def admin(tab, subtab="edit",  update_ID = 1):
     associated_products = []
     
     update_event = Events.query.filter_by(event_ID = update_ID).first()   
-    update_blog = Blogs.query.filter_by(blog_ID = update_ID).first()
-
-    
+    update_blog = Blogs.query.filter_by(blog_ID = update_ID).first()   
+    update_page = Pages.query.filter_by(page_name = 'About Us').first()
   
 
     if request.method == 'POST':
@@ -623,7 +638,7 @@ def admin(tab, subtab="edit",  update_ID = 1):
     return render_template('admin.html', users=users, blogs = blogs, events=events, subscribers=subscribers, orders=orders, tab=tab, contacts=contacts, gallery = gallery, next_url_gallery = next_url_gallery, 
     prev_url_gallery=prev_url_gallery, read_queries=read_queries, next_url_events=next_url_events, prev_url_events = prev_url_events, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
     next_url_subscriber = next_url_subscriber, prev_url_subscriber = prev_url_subscriber, authentication_requests = authentication_requests, next_url_user=next_url_user, prev_url_user = prev_url_user, 
-    update_event = update_event, update_blog = update_blog, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, subtab = subtab,  num_of_subscribers = num_of_subscribers,
+    update_event = update_event, update_blog = update_blog, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, subtab = subtab,  num_of_subscribers = num_of_subscribers, update_page = update_page,
     prev_url_media = prev_url_media, next_url_media = next_url_media, media=media, page = page)
 
   else:

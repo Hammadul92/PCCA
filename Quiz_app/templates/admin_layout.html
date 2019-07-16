@@ -49,6 +49,8 @@
 
   {% if tab =='status' %}<li class ="admin active"> {% else %} <li class ="admin"> {% endif %}<a href="/admin/status"><img src="https://www.naturallysplendid.com/static/media/clipboard.png"> <span>Orders</span></a></li>
 
+  {% if tab =='about_us' %}<li class ="admin active"> {% else %} <li class ="admin"> {% endif %}<a href="/admin/about_us"><img src="https://www.naturallysplendid.com/static/media/document.png"> <span>About Us</span></a></li>
+
 
   <li class="admin">
 </div>
@@ -69,6 +71,13 @@
  {% block body %} {% endblock %}
 
 
+   {% if tab == "about_us" %}
+      <form action="/update_page" class="table-container" method="post">
+        <input class="form-control form-group" value="{{update_page.page_name}}" disabled>
+        <textarea id="froala-editor" name="page_description">{{update_page.page_description}}</textarea>
+        <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 20px;"> Update <i class="fa fa-check-circle"></i></button>
+      </form>
+   {% endif %}
 
    {% if tab =="media" %}
 
