@@ -325,15 +325,9 @@
              
              <tr>
                 <th> <i class="fa fa-trash"></i></th>
-                <th> </th>
                 <th>Subtotal (cad-$)</th>
                 <th>Total (cad-$)</th>
-                <th>Invoice / P. Slip </th> 
-                <th>Status </th>
-                <th>Shipping Paid (cad-$)</th> 
-                <th>Shipping Cost (cad-$)</th> 
-                <th>Tracking # </th>     
-                <th>Lot #</th>
+                <th>Invoice / P. Slip </th>  
              </tr>
              {% for order in orders.items %}
              
@@ -345,20 +339,7 @@
                           <label for="{{order.sale_ID}}"></label>
                     </div>
                 </td>
-                <td>
-                  <h5><b> Order # {{order.sale_ID}}</b></h5>
-                  {{order.firstname}} {{order.lastname}} <br/> <b>Email:</b> {{order.email}} <br/> <i class="far fa-clock"></i> {{order.date}}
-                
-                  {% if order.status != 'Completed'%}
-                        <a href="/refund/{{order.sale_ID}}" type="submit" class="btn btn-primary btn-sm"><i class="fa fa-undo"></i> </a>
-                  {% endif %}
-                   {% if order.refunded == True %} 
-                        <a class="btn btn-danger btn-sm">Cancelled</a>
-                  {% endif %}
-                  <a href="/order_details/{{order.sale_ID}}" class="btn btn-primary btn-sm"><i class="fas fa-info-circle"></i> </a> <br/>
-                  
 
-                </td>
 
               
                 <td><b>{{order.subtotal}}</b></td>
@@ -367,50 +348,13 @@
                      <a href="/static/invoices/{{order.invoice}}" title="PDF invoice" target="_blank"><img src="https://www.naturallysplendid.com/static/media/packing-slip.png"></a>
                      <a href="/static/pslips/{{order.packing_slip}}" title="PDF Packing Slip" target="_blank"><img src="https://www.naturallysplendid.com/static/media/packing-slip.png"></a>
                 </td>
-                <td>
-                       {% if order.status == 'Received' %}
-                       <select name ="status{{order.sale_ID}}" class="form-control" style="border: 2px solid brown;">
-                       {% elif order.status == 'Processing' %}
-                       <select name ="status{{order.sale_ID}}" class="form-control" style="border: 2px solid orange;">
-                       {% else %}
-                       <select name ="status{{order.sale_ID}}" class="form-control">
-                       {% endif %}
-                            {% if order.status == 'Received' %}
-                               <option value="Received" selected="selected" >Received</option>
-                            {% else %}
-                               <option value="Received" >Received</option>
-                            {% endif %}
-
-                            {% if order.status == 'Processing' %}
-                               <option value="Processing" selected="selected">Processing</option>
-                            {% else %}
-                               <option value="Processing">Processing</option>
-                            {% endif %}
-
-                            {% if order.status == 'Completed' %}
-                               <option value="Completed" selected="selected">Completed</option>
-                            {% else %}
-                               <option value="Completed">Completed</option>
-                            {% endif %}
-                          </select>                  
-
-                </td>
-
-                <td><input type='number' step="0.01" name="shipping_paid{{order.sale_ID}}"  value="{{order.shipping_charge}}" class="form-control" required></td>
-                <td><input type='number' step="0.01" name="shipping_cost{{order.sale_ID}}"  value="{{order.shipping_cost}}" class="form-control" required></td>
-                <td>
-                  <input type='text' name="tracking{{order.sale_ID}}"  value="{{order.tracking_number}}" class="form-control" required>
-                  {% if order.status == 'Completed' and order.tracking_number != 'None' %}<a href="/send_order_status/{{order.sale_ID}}/{{page}}" class="btn btn-primary btn-sm"><i class="fa fa-envelope"></i> <i class="fa fa-arrow-right"></i> </a> {% endif %} 
-                </td>
-
-                <td>
-                   <textarea name ="lot{{order.sale_ID}}" class="form-control" rows="4">{{order.lot_numbers}}</textarea>
-                </td>    
+                
+                   
 
         </tr>
        
         {% endfor %}
-        <tr> <th><button type="submit" class="btn btn-sm btn-primary"> Update <i class="fas fa-check-circle"></i></button><th/><th/><th/><th/><th/><th/><th/><th/><th/></tr>
+        <tr> <th><button type="submit" class="btn btn-sm btn-primary"> Update <i class="fas fa-check-circle"></i></button><th/><th/><th/></tr>
         </form>
         </table>        
 

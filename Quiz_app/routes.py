@@ -17,7 +17,7 @@ import random
 import math
 import os
 import time
-from flask_json import FlaskJSON, JsonError, json_response, as_json
+
 
 
 @app.errorhandler(404)
@@ -551,12 +551,7 @@ def admin(tab, subtab="edit",  update_ID = 1):
    
     orders = Sales.query.order_by(Sales.sale_ID.desc()).paginate(page, 15, False)
 
-    all_orders = Sales.query.order_by(Sales.sale_ID).all()
 
-    read_orders = 0
-    for order in all_orders:
-       if order.status != 'Completed':
-          read_orders +=1
 
     contacts = Contact.query.order_by(Contact.contact_ID.desc()).all()
     read_queries = 0
@@ -626,7 +621,7 @@ def admin(tab, subtab="edit",  update_ID = 1):
       if orders.has_prev else None
     
     return render_template('admin.html', users=users, blogs = blogs, events=events, subscribers=subscribers, orders=orders, tab=tab, contacts=contacts, gallery = gallery, next_url_gallery = next_url_gallery, 
-    prev_url_gallery=prev_url_gallery,  read_orders= read_orders, read_queries=read_queries, next_url_events=next_url_events, prev_url_events = prev_url_events, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
+    prev_url_gallery=prev_url_gallery, read_queries=read_queries, next_url_events=next_url_events, prev_url_events = prev_url_events, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
     next_url_subscriber = next_url_subscriber, prev_url_subscriber = prev_url_subscriber, authentication_requests = authentication_requests, next_url_user=next_url_user, prev_url_user = prev_url_user, 
     update_event = update_event, update_blog = update_blog, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, subtab = subtab,  num_of_subscribers = num_of_subscribers,
     prev_url_media = prev_url_media, next_url_media = next_url_media, media=media, page = page)

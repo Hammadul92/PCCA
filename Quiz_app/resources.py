@@ -324,11 +324,46 @@ class charge(Resource):
 
         sale = Sales(current_user.userID, current_user.firstname, current_user.lastname, current_user.email, total , subtotal, date_now(), month_now(), year_now())
         db.session.add(sale)
-        print(data['cart'])
-        cart = data['cart']
-        for ticket in cart: 
-            print(cart[ticket])            
-            
+
+      
+        cart = json.loads(data['cart'])
+        for ticket in cart:  
+            print(cart[ticket])         
+            event = Events.query.filter_by(event_ID = ticket['ticket_ID']).first()
+            event.inventory = event.inventory - ticket['amount']
+            invoice = Invoices(sale.sale_ID, event.event_ID, event.event_name, event.price, ticket['amount'])
+            db.session.add(invoice)
+        
+
+        total = float(total) * 100 #converted into cents
+        if total > 50:
+          charge = stripe.Charge.create(
+              customer= current_user.customer_ID,
+              amount=int(total),
+              currency= "cad",
+              description ='PCCA Charge - Order # ' + str(sale.sale_ID)
+             )
+          sale.charge_id = charge.id
+
+
+        db.session.commit()
+       
+
+
+        invoices = Invoices.query.filter_by(sale_ID = sale.sale_ID).all()          
+        create_pdf(render_template('invoice.html', total=round(total/100,2), special_instructions = special_instructions, invoices = invoices, gst=gst, subtotal=subtotal, invoice_number=sale.sale_ID, 
+          shipping_rate=shipping_rate, date=sale.date), "[" + str(sale.sale_ID) + "][invoice].pdf", app.config['INVOICE_FILES_DEST'])
+        
+        
+        if sale.invoice != None:
+           os.remove(app.config['INVOICE_FILES_DEST'] + sale.invoice)
+
+        sale.invoice = "[" + str(sale.sale_ID) + "][invoice].pdf"           
+
+   
+        db.session.commit()
+
+        send_invoice(sale, current_user)
         
       except stripe.error.InvalidRequestError as e:
         body = e.json_body
