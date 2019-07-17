@@ -349,11 +349,10 @@
 
                     <table class="table">
                       <tr>
-                        <th> <img src="https://www.naturallysplendid.com/static/media/delete.png" style="width:16px;"></th>
-                        <th> </th>
+                        <th> Delete </th>
                         <th> Name </th>
                         <th> Email </th>
-                        <th> <img src="https://www.naturallysplendid.com/static/media/clock.png" style="width: 16px;"> </th>
+                        <th> Date </th>
                         <th></th>
 
                       </tr>
@@ -365,9 +364,6 @@
                                   <label for="delete{{contact.contact_ID}}"></label>
                             </div>
                           </td>
-                          <td> 
-                            <img src="https://www.naturallysplendid.com/static/media/message.png"  style="width: 20px;">
-                           </td>
                           <td>{{contact.name}}</td>
                           <td>{{contact.email}}</td>
                           <td> {{contact.date}} </td>
@@ -382,7 +378,7 @@
                         </div>     
                       {% endfor %}
                       <tr>
-                           <th/><th/><th/><th/><th></th>
+                           <th/><th/><th/><th/>
                            <th> <button type="submit" class="btn-sm btn btn-info"> Update <i class="fa fa-check-circle"></i></button></th>
                       </tr>
                     </table>    
