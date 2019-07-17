@@ -228,8 +228,6 @@ def delete_users():
 
 
 
-
-
 @app.route('/update_orders/<int:page>', methods=['POST'])
 @login_required
 def update_orders(page):
@@ -491,11 +489,6 @@ def update_event(event_ID):
                event.disable = True
           else:
                event.disable = False
-
-          if len(form.getlist('taxable'))==1:
-              event.taxable = True
-          else:
-              event.taxable = False
           
           event.mainimage = form['mainimage']
               

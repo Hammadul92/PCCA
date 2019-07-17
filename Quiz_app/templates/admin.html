@@ -11,7 +11,7 @@
                                 <div class="input-group form-group">
                                     <input type="text" name="name" class="form-control" placeholder="Search By Name">
                                     <div class="input-group-btn">
-                                      <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                      <button type="submit" class="btn btn-info"><i class="fa fa-search"></i></button>
                                     </div><!-- group -->
                                 </div>
                           </form>
@@ -67,7 +67,7 @@
                           </tr>
                         {% endfor %}
                         <tr>
-                          <th><button type="submit" class="btn btn-primary btn-sm"> Update <i class="fas fa-check-circle"></i></button> </th>
+                          <th><button type="submit" class="btn btn-info btn-sm"> Update <i class="fas fa-check-circle"></i></button> </th>
                           <th></th><th></th><th></th><th></th><th></th><th></th>                          
                         </tr>
                       </form>
@@ -96,14 +96,14 @@
                                       <div class="input-group">
                                         <input type="text" class="form-control" readonly>
                                         <div class="input-group-btn">
-                                          <span class="fileUpload btn btn-primary">
+                                          <span class="fileUpload btn btn-info">
                                               <span class="upl" id="upload"> <i class="fa fa-plus"></i></span>
                                               <input type="file" accept=".csv" class="upload up" name="file" id="up" onchange="readURL(this);" />
                                             </span><!-- btn-orange -->
                                          </div><!-- btn -->
                                        </div><!-- group -->
 
-                            <button type="submit" class="btn btn-primary btn-sm"> Upload <i class="fa fa-upload"></i></button>
+                            <button type="submit" class="btn btn-info btn-sm"> Upload <i class="fa fa-upload"></i></button>
                       </form>                    
                   </div>
                 </section>
@@ -146,7 +146,7 @@
                          <form action="/add_event" method="post">
                              <div class="input-group form-group">
                                 <input type="text" name="name" class="form-control" placeholder="Event Name">
-                                <div class="input-group-btn"><button class="btn btn-primary"> Add </button></div>
+                                <div class="input-group-btn"><button class="btn btn-info"> Add </button></div>
                              </div>
                           </form>
                      </div>
@@ -204,7 +204,7 @@
                 <form action="/blog_post" method="post">
                    <div class="input-group form-group">
                     <input type="text" name="blogtitle" class="form-control" placeholder="Blog Name">
-                    <div class="input-group-btn"><button class="btn btn-primary"> Add <i class="fa fa-plus-circle"></i></button></div>
+                    <div class="input-group-btn"><button class="btn btn-info"> Add <i class="fa fa-plus-circle"></i></button></div>
                    </div>
                 </form>
               </div>
@@ -254,7 +254,7 @@
                                 <form action="/add_province/{{update_country.country_ID}}"  method="post">
                                   <div class="input-group">
                                     <input type="text" name="provincename" class="form-control" placeholder="Province Name ">
-                                    <div class="input-group-btn"><button type="submit" class="btn btn-primary"> Add <i class="fas fa-plus-circle"></i></button></div>
+                                    <div class="input-group-btn"><button type="submit" class="btn btn-info"> Add <i class="fas fa-plus-circle"></i></button></div>
                                   </div>
                                 </form>
                               </div>
@@ -283,7 +283,7 @@
                                  </tr>
                               {% endfor %}
                               <tr>
-                                <th></th><th></th><th></th><th></th><th></th><th><th><button type="submit" class="btn btn-primary"> Update <i class="fa fa-check-circle"></i></button></th>
+                                <th></th><th></th><th></th><th></th><th></th><th><th><button type="submit" class="btn btn-info"> Update <i class="fa fa-check-circle"></i></button></th>
                               </tr>
                           </table>
                        </form>
@@ -322,7 +322,7 @@
               </tr>
        
             {% endfor %}
-            <tr><th><button type="submit" class="btn btn-sm btn-primary"> Update <i class="fas fa-check-circle"></i></button><th/><th/><th/><th/></tr>
+            <tr><th><button type="submit" class="btn btn-sm btn-info"> Update <i class="fas fa-check-circle"></i></button><th/><th/><th/><th/></tr>
         </form>
         </table>        
 
@@ -371,7 +371,7 @@
                           <td>{{contact.name}}</td>
                           <td>{{contact.email}}</td>
                           <td> {{contact.date}} </td>
-                          <td> <a style="cursor: pointer;" onclick="showme('{{contact.contact_ID}}')" class="btn btn-primary btn-sm"> View <i class="fa fa-eye"></i></a></td>
+                          <td> <a style="cursor: pointer;" onclick="showme('{{contact.contact_ID}}')" class="btn btn-info btn-sm"> View <i class="fa fa-eye"></i></a></td>
                         </tr>
                         <div id="{{contact.contact_ID}}" style="display:none;" class="contact-box">
                               <div class="header"> <b>Name:</b> {{contact.name}} <a style="cursor: pointer; color: #fff;" onclick="showme('{{contact.contact_ID}}')" class="pull-right"><i class="fas fa-times-circle"></i></a> </div>
@@ -383,7 +383,7 @@
                       {% endfor %}
                       <tr>
                            <th/><th/><th/><th/><th></th>
-                           <th> <button type="submit" class="btn-sm btn btn-primary"> Update <i class="fa fa-check-circle"></i></button></th>
+                           <th> <button type="submit" class="btn-sm btn btn-info"> Update <i class="fa fa-check-circle"></i></button></th>
                       </tr>
                     </table>    
                 </div>
