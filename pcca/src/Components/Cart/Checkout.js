@@ -40,18 +40,27 @@ class CheckoutForm extends Component {
               "processData": false,
               "data": data
         };
-
+ 
         axios(request).then(response => {
-           let tickets = {}
+
            let all_tickets = this.props.tickets
-           for(let ticket in all_tickets){
-              tickets[all_tickets[ticket].key] = {'price': all_tickets[ticket].price, 'quantity': all_tickets[ticket].quantity, 'title': all_tickets[ticket].title}
-           }
-           
+           let cart = all_tickets.reduce(
+            (obj, item) => Object.assign(obj, {
+                          [item.key]: {
+                            price: item.price.toString(),
+                            title: item.title,
+                            quantity: item.quantity.toString(),
+                            id : item.key.toString()
+
+                          }}) ,{});
+            console.log(cart);
+      
+
+
            const payment_data = {
               userID: this.props.userID,
-              total: this.props.total,
-              cart: tickets,
+              total: (this.props.total),
+              cart: cart,
               subtotal: this.props.subtotal,
               gst: this.props.gst
             };  
@@ -72,10 +81,11 @@ class CheckoutForm extends Component {
                 "Authorization": "Bearer " + this.props.token
               },
               "processData": false,
-              "data": payment_data
+              "data": JSON.stringify(payment_data)
             };
-
+            console.log('Charge Response:', payment_data);
             axios(payment_request).then(response => {
+              
                
             }).catch(error=> {});
 
@@ -84,6 +94,8 @@ class CheckoutForm extends Component {
 
   render() {
 
+
+ 
     let button = null
     
     if(this.props.checkout){
