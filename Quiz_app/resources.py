@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from .models import Media, User, RevokedTokenModel, Gallery, Events, Blogs, Contact, Sales
+from .models import Media, User, RevokedTokenModel, Gallery, Events, Blogs, Contact, Sales ,Invoices
 from .email import  send_contact_message, contact_confirmation_email
 from .views import get_month_name, date_now, month_now, year_now
 from sqlalchemy import exc, func, cast, DATE, or_
@@ -7,7 +7,7 @@ from flask import request, session, redirect, url_for, flash, g,json,jsonify,abo
 from . import db
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 import stripe
-
+import ast
 
 
 
@@ -208,6 +208,8 @@ anonymous_account_arguments.add_argument('password', required = False)
 anonymous_account_arguments.add_argument('phone', required = True)
 anonymous_account_arguments.add_argument('firstname', required = True)
 anonymous_account_arguments.add_argument('lastname', required = True)
+
+
 class anonymous_account(Resource):
     def post(self):
         try:
@@ -314,6 +316,7 @@ charge_arguments.add_argument('userID', required = True)
 class charge(Resource):
     @jwt_required
     def post(self):
+
       try:
         result = {'message':200}
         data = charge_arguments.parse_args()
@@ -324,24 +327,39 @@ class charge(Resource):
 
         sale = Sales(current_user.userID, current_user.firstname, current_user.lastname, current_user.email, total , subtotal, date_now(), month_now(), year_now())
         db.session.add(sale)
+        
+        cart = json.dumps((data['cart']))
 
-      
-        cart = json.loads(data['cart'])
+        c = ast.literal_eval(json.dumps(cart))
+        c = c.replace("u", "")
+        c = c.replace("'",'"') 
+        c = c[1:-1]
+        cart = json.loads(c)
+        print('string',cart, 'type', type(cart))
+
+        
+        
         for ticket in cart:  
-            print(cart[ticket])         
-            event = Events.query.filter_by(event_ID = ticket['ticket_ID']).first()
-            event.inventory = event.inventory - ticket['amount']
-            invoice = Invoices(sale.sale_ID, event.event_ID, event.event_name, event.price, ticket['amount'])
-            db.session.add(invoice)
+          print(cart[str(ticket)])
+          print(cart[str(ticket)]['price'])
+          print(cart[str(ticket)]['qantity'])
+          print(cart[str(ticket)]['title'])
+          print(cart[str(ticket)]['id'])
+            
+          event = Events.query.filter_by(event_ID = int(cart[str(ticket)]['id'])).first()
+          event.inventory = event.inventory - int(cart[str(ticket)]['qantity'])
+          invoice = Invoices(sale.sale_ID, event.event_ID, event.name, event.price, int(cart[str(ticket)]['qantity']))
+          db.session.add(invoice)
         
 
         total = float(total) * 100 #converted into cents
+
         if total > 50:
           charge = stripe.Charge.create(
               customer= current_user.customer_ID,
               amount=int(total),
               currency= "cad",
-              description ='PCCA Charge - Order # ' + str(sale.sale_ID)
+              description ='PCCA Charge - Order # ' + str('Tickets')
              )
           sale.charge_id = charge.id
 
@@ -351,19 +369,19 @@ class charge(Resource):
 
 
         invoices = Invoices.query.filter_by(sale_ID = sale.sale_ID).all()          
-        create_pdf(render_template('invoice.html', total=round(total/100,2), special_instructions = special_instructions, invoices = invoices, gst=gst, subtotal=subtotal, invoice_number=sale.sale_ID, 
-          shipping_rate=shipping_rate, date=sale.date), "[" + str(sale.sale_ID) + "][invoice].pdf", app.config['INVOICE_FILES_DEST'])
+        # create_pdf(render_template('invoice.html', total=round(total/100,2), special_instructions = special_instructions, invoices = invoices, gst=gst, subtotal=subtotal, invoice_number=sale.sale_ID, 
+        #   shipping_rate=shipping_rate, date=sale.date), "[" + str(sale.sale_ID) + "][invoice].pdf", app.config['INVOICE_FILES_DEST'])
         
         
-        if sale.invoice != None:
-           os.remove(app.config['INVOICE_FILES_DEST'] + sale.invoice)
+        # if sale.invoice != None:
+        #    os.remove(app.config['INVOICE_FILES_DEST'] + sale.invoice)
 
-        sale.invoice = "[" + str(sale.sale_ID) + "][invoice].pdf"           
+        # sale.invoice = "[" + str(sale.sale_ID) + "][invoice].pdf"           
 
    
-        db.session.commit()
+        # db.session.commit()
 
-        send_invoice(sale, current_user)
+        # send_invoice(sale, current_user)
         
       except stripe.error.InvalidRequestError as e:
         body = e.json_body
