@@ -1,17 +1,27 @@
 
-import Auxilary from '../../hoc/Auxilary/Auxilary';
 import React from 'react';
-import classes from './AboutUs.module.css';
+import axios from 'axios';
 
-class AboutUs extends React.Component{
+class AboutUs extends React.Component{	
+	state = {
+		page_description: '',
+	}
+
+	componentWillMount(){      
+      axios.get('http://localhost:5000/about_us').then(response=>{
+      this.setState({page_description: response.data.page_description});
+      }).catch(error=>{});
+
+    }
 
 	render (){
-		return (
-				<Auxilary>
-                        <h1 className={classes.h1}> About Us</h1>
-
-	            </Auxilary>
-			);
+		let page_description = <div className="form-group" dangerouslySetInnerHTML={{ __html: this.state.page_description}}  />		
+		return(
+            <div className="container">
+                 <h1> About Us</h1>
+                 {page_description}    
+            </div>               
+        );
 	}
 }
 

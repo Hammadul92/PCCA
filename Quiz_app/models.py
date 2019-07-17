@@ -88,6 +88,16 @@ class RevokedTokenModel(db.Model):
 #####################################################################################################
 
 
+
+class Pages(db.Model):
+   __tablename__ = 'pages'
+   page_ID = db.Column(db.Integer,    primary_key = True)
+   page_name = db.Column(db.String, nullable = False, unique = True)
+   page_description = db.Column(db.String)
+   def __init__(self, page_name):
+      self.page_name = page_name
+
+
 class Joinmail(db.Model):
    __tablename__ = 'joinmail'
    joinmail_ID = db.Column(db.Integer,    primary_key = True)

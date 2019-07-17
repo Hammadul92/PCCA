@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from .models import Media, User, RevokedTokenModel, Gallery, Events, Blogs, Contact, Sales ,Invoices
+from .models import Media, User, RevokedTokenModel, Gallery, Events, Blogs, Contact, Sales ,Invoices,  Pages
 from .email import  send_contact_message, contact_confirmation_email
 from .views import get_month_name, date_now, month_now, year_now
 from sqlalchemy import exc, func, cast, DATE, or_
@@ -8,10 +8,6 @@ from . import db
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 import stripe
 import ast
-
-
-
-
 
 
 
@@ -118,10 +114,6 @@ class SecretResource(Resource):
         }
 
 
-
-
-
-
 class GalleryImages(Resource):
     def get(self):
         gallery = Gallery.query.order_by(Gallery.gallery_ID.desc()).all()
@@ -130,6 +122,13 @@ class GalleryImages(Resource):
             response['images'].append({'gallery_ID': pic.gallery_ID, 'img_url': pic.img_url})      
         return response
 
+class AboutUs(Resource):
+    def get(self):
+        page = Pages.query.filter_by(page_name = 'About Us').first()
+        response = {'page_description': ''}
+        if page:
+           response = {'page_description': page.page_description }  
+        return response
 
 
 class BlogPosts(Resource):
