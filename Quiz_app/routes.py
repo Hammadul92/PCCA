@@ -238,14 +238,9 @@ def update_orders(page):
     if request.method == 'POST':
        orders = Sales.query.order_by(Sales.sale_ID).all()
        for order in orders:
-        if 'status' + str(order.sale_ID) in form:
-          order.status = form['status' + str(order.sale_ID)]
-          order.tracking_number = form['tracking' + str(order.sale_ID)]
-          order.shipping_charge = form['shipping_paid' + str(order.sale_ID)]
-          order.shipping_cost = form['shipping_cost' + str(order.sale_ID)]
-          order.lot_numbers = form['lot' + str(order.sale_ID)]
-          if len(form.getlist('delete' + str(order.sale_ID)))==1:
-             Sales.query.filter_by(sale_ID = order.sale_ID).delete()
+         if 'delete' + str(order.sale_ID) in form:
+           if len(form.getlist('delete' + str(order.sale_ID)))==1:
+              Sales.query.filter_by(sale_ID = order.sale_ID).delete()
        db.session.commit()
     return redirect(url_for('admin', tab = 'status', page = page))
   else:

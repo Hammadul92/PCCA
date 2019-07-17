@@ -296,42 +296,18 @@
 
       {% if tab == 'status' %}
 
-
-           <div class="table-container">
-
-              <section class="row form-group">
-                  <form action="/admin/status" method="POST" class="col-md-3">
-                        <div class="row remove-margin">
-                          <div class="col-md-4">
-                            <select name="filter" class="form-control"  required>
-                              <option value=""> -- Filter By --</option>
-                              <option value="Lot Number">  Lot Number </option>
-                              <option value="Tracking Number"> Tracking Number </option>
-                            </select>
-                          </div>
-                          <div class="col-md-6" >
-                            <input type="text" name="search" class="form-control" placeholder="Search.." required>
-                          </div>
-                          <div class="col-md-2">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                          </div><!-- group -->
-                        </div>
-                  </form>                 
-             </section>
-
-            <table class="table table-striped">
+        <div class="table-container">
+          <table class="table table-striped">
              
-            <form action="/update_orders/{{page}}" method="POST">
-             
+            <form action="/update_orders/{{page}}" method="POST">            
              <tr>
-                <th> <i class="fa fa-trash"></i></th>
+                <th>Delete</th>
+                <th>Sale ID </th>
+                <th>Buyer Name </th>
                 <th>Subtotal (cad-$)</th>
-                <th>Total (cad-$)</th>
-                <th>Invoice / P. Slip </th>  
+                <th>Total (cad-$)</th>                
              </tr>
-             {% for order in orders.items %}
-             
-             
+             {% for order in orders.items %}                          
               <tr>
                 <td>
                     <div class="checkbox">                                   
@@ -339,22 +315,14 @@
                           <label for="{{order.sale_ID}}"></label>
                     </div>
                 </td>
-
-
-              
+                <td>{{order.sale_ID}}</td>
+                <td>{{order.firstname}} {{order.lastname}}</td>
                 <td><b>{{order.subtotal}}</b></td>
-                <td><b>{{order.sale_amount}}</b></td>
-                <td>                                     
-                     <a href="/static/invoices/{{order.invoice}}" title="PDF invoice" target="_blank"><img src="https://www.naturallysplendid.com/static/media/packing-slip.png"></a>
-                     <a href="/static/pslips/{{order.packing_slip}}" title="PDF Packing Slip" target="_blank"><img src="https://www.naturallysplendid.com/static/media/packing-slip.png"></a>
-                </td>
-                
-                   
-
-        </tr>
+                <td><b>{{order.total}}</b></td>                   
+              </tr>
        
-        {% endfor %}
-        <tr> <th><button type="submit" class="btn btn-sm btn-primary"> Update <i class="fas fa-check-circle"></i></button><th/><th/><th/></tr>
+            {% endfor %}
+            <tr><th><button type="submit" class="btn btn-sm btn-primary"> Update <i class="fas fa-check-circle"></i></button><th/><th/><th/><th/></tr>
         </form>
         </table>        
 
