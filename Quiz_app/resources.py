@@ -323,7 +323,6 @@ class charge(Resource):
         total =  data['total']
         gst = data['gst']
         current_user = User.query.filter_by(userID = data['userID']).first()
-
         sale = Sales(current_user.userID, current_user.firstname, current_user.lastname, current_user.email, total , subtotal, date_now(), month_now(), year_now())
         db.session.add(sale)
         
@@ -334,18 +333,9 @@ class charge(Resource):
         c = c.replace("'",'"') 
         c = c[1:-1]
         cart = json.loads(c)
-        print('string',cart, 'type', type(cart))
-
         
-        
-        for ticket in cart:  
-          print(cart[str(ticket)])
-          print(cart[str(ticket)]['price'])
-          print(cart[str(ticket)]['qantity'])
-          print(cart[str(ticket)]['title'])
-          print(cart[str(ticket)]['id'])
-            
-          event = Events.query.filter_by(event_ID = int(cart[str(ticket)]['id'])).first()
+        for ticket in cart:       
+          event = Events.query.filter_by(event_ID = int(ticket)).first()
           event.inventory = event.inventory - int(cart[str(ticket)]['qantity'])
           invoice = Invoices(sale.sale_ID, event.event_ID, event.name, event.price, int(cart[str(ticket)]['qantity']))
           db.session.add(invoice)
@@ -358,7 +348,7 @@ class charge(Resource):
               customer= current_user.customer_ID,
               amount=int(total),
               currency= "cad",
-              description ='PCCA Charge - Order # ' + str('Tickets')
+              description ='PCCA Charge - Order # ' + str(sale.sale_ID)
              )
           sale.charge_id = charge.id
 

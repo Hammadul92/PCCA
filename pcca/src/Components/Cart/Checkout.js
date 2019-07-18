@@ -47,14 +47,8 @@ class CheckoutForm extends Component {
            let cart = all_tickets.reduce(
             (obj, item) => Object.assign(obj, {
                           [item.key]: {
-                            price: item.price.toString(),
-                            title: item.title,
-                            quantity: item.quantity.toString(),
-                            id : item.key.toString()
-
+                            quantity: item.quantity.toString()
                           }}) ,{});
-            console.log(cart);
-      
 
 
            const payment_data = {
