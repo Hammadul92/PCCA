@@ -29,7 +29,7 @@ class Proceed extends React.Component{
         var request = {
               "async": true,
               "crossDomain": true,
-              "url": "http://localhost:5000/anonymous_account",
+              "url": "http://68.183.207.29:5000/anonymous_account",
               "method": "POST",
               "headers": {
                 "Content-Type": "application/json",

@@ -24,7 +24,7 @@ class Contact extends React.Component{
 		var contact = {
 			"async": true,
 			"crossDomain": true,
-			"url": "http://localhost:5000/contact",
+			"url": "http://68.183.207.29:5000/contact",
 			"method": "POST",
 			"headers": {
 			  "Content-Type": "application/json",

@@ -29,7 +29,7 @@ class Signup extends React.Component{
 		var Resgistration = {
 			"async": true,
 			"crossDomain": true,
-			"url": "http://localhost:5000/registration",
+			"url": "http://68.183.207.29:5000/registration",
 			"method": "POST",
 			"headers": {
 			  "Content-Type": "application/json",

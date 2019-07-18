@@ -11,7 +11,7 @@ class News extends React.Component{
 
   componentWillMount(){
       
-      axios.get('http://localhost:5000/blogs').then(response=>{
+      axios.get('http://68.183.207.29:5000/blogs').then(response=>{
       this.setState({blogs: response.data.blogs});
       }).catch(error=>{this.setState({error:true})});
 
