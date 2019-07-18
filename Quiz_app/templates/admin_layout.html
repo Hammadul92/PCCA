@@ -16,22 +16,10 @@
 <body>
 
 
-   <section style="min-height: 90px; overflow: hidden; background: #23282d;">
-     <div class="col-md-1 col-sm-2 col-xs-12 text-center" style="padding: 15px;"><a href="/"><img src="https://www.naturallysplendid.com/static/media/logo2x.png" style="width: 75px; display: inline;"></a></div>
- 
-    <ul id="horizontal_nav" class="col-md-11 col-sm-10 col-xs-12">
-        <li><a href="/read_queries"> <img src="https://www.naturallysplendid.com/static/media/chat.png" style="width: 30px;"> <br/> <span>Customer Queries</span>  {% if read_queries >=1 %}<span class="badge">{{read_queries}}</span>{% endif %}</a></li>
-        <li><a href="/logout"> <img src="https://www.naturallysplendid.com/static/media/logout.png" style="width:30px;"> <br/><span> Log Out </span></a></li>
-    </ul>
-   </section>
-   
-
-
-
- 
 
 <div class="nav nav-pills nav-stacked col-md-1 col-sm-2 admin_navbar">
   
+  <li><a href="/"> <img src="https://www.naturallysplendid.com/static/media/domain.png"> PCCA </a></li>
 
   {% if tab =='media' %}<li class ="active admin">{% else %}<li class="admin">{% endif %}<a href="/admin/media"><img src="https://www.naturallysplendid.com/static/media/gall.png"> <span> Media </span> </a></li>
 
@@ -50,9 +38,11 @@
   {% if tab =='status' %}<li class ="admin active"> {% else %} <li class ="admin"> {% endif %}<a href="/admin/status"><img src="https://www.naturallysplendid.com/static/media/clipboard.png"> <span>Orders</span></a></li>
 
   {% if tab =='about_us' %}<li class ="admin active"> {% else %} <li class ="admin"> {% endif %}<a href="/admin/about_us"><img src="https://www.naturallysplendid.com/static/media/document.png"> <span>About Us</span></a></li>
+  
+  {% if tab== 'customer_query' %}<li class ="admin active"> {% else %} <li class ="admin"> {% endif %}<a href="/read_queries"><img src="https://www.naturallysplendid.com/static/media/chat.png"> <span>Customer Queries</span>{% if read_queries >=1 %}<span class="badge">{{read_queries}}</span>{% endif %}</a></li>
+  
+  <li class ="admin"><a href="/logout"><img src="https://www.naturallysplendid.com/static/media/logout.png"> <span> Log Out</span></a></li>
 
-
-  <li class="admin">
 </div>
 
 <div class="col-md-11 col-sm-10" style="height: 100vh; overflow: auto; padding: 15px;">
@@ -75,7 +65,7 @@
       <form action="/update_page" class="table-container" method="post">
         <input class="form-control form-group" value="{{update_page.page_name}}" disabled>
         <textarea id="froala-editor" name="page_description">{{update_page.page_description}}</textarea>
-        <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 20px;"> Update <i class="fa fa-check-circle"></i></button>
+        <button type="submit" class="btn btn-info btn-sm" style="margin-top: 20px;"> Update <i class="fa fa-check-circle"></i></button>
       </form>
    {% endif %}
 
@@ -111,14 +101,14 @@
                   <div class="input-group">
                       <input type="text" class="form-control" readonly>
                       <div class="input-group-btn">
-                            <span class="fileUpload btn btn-primary">
+                            <span class="fileUpload btn btn-info">
                               <span class="upl" id="upload"> <i class="fa fa-plus"></i> </span>
                               <input type="file" class="upload up" name="image" id="up" onchange="readURL(this);"  multiple required />
                             </span><!-- btn-orange -->
                       </div><!-- btn -->
                   </div><!-- group -->
             </div><!-- form-group --> 
-            <button type="submit" class="btn btn-primary btn-sm"> Upload <i class="fa fa-upload"></i> </button>
+            <button type="submit" class="btn btn-info btn-sm"> Upload <i class="fa fa-upload"></i> </button>
         </form>
         <section class="box-style3">          
             <div style="font-size: 11px;">
@@ -160,7 +150,7 @@
           <form action="/add_galleryimage" method="post">
            <div class="input-group">
               <input type="text" name="img_url" class="form-control" placeholder="Image url">
-              <div class="input-group-btn"><button class="btn btn-primary"> Add</button></div>
+              <div class="input-group-btn"><button class="btn btn-info"> Add</button></div>
            </div> 
           </form>  
          </div>
@@ -183,7 +173,7 @@
                 <input type="text" name="img_url" value="{{update_blog.img_url}}" placeholder="Image url" class="form-control form-group" required>
                 <img src="{{update_blog.img_url}}" class="img-responsive form-group">
                 <hr/>
-                <button type="submit" class="btn btn-primary btn-sm"> Update <i class="fas fa-check-circle"></i></button> 
+                <button type="submit" class="btn btn-info btn-sm"> Update <i class="fas fa-check-circle"></i></button> 
               </div>
             </div>
             <div class="col-md-9" style="margin-top: 3px;">                     
@@ -263,7 +253,7 @@
                           </div> 
                     </div>
 
-                      <button type="submit"  class="btn-primary btn"> Update <i class="fa fa-check"></i></button>  
+                      <button type="submit"  class="btn-info btn"> Update <i class="fa fa-check"></i></button>  
 
                     </div>
 

@@ -159,8 +159,7 @@ class Events(db.Model):
     desc = db.Column(db.String(10000), nullable = True, default = None)  
     price = db.Column(db.Integer, default = 0)
     inventory = db.Column(db.Integer, default = 0)
-    mainimage = db.Column(db.String,     nullable=True, default=None)
-    taxable = db.Column(db.Boolean, nullable = True, default = False)
+    mainimage = db.Column(db.String,  nullable=True, default=None)
     def __init__(self, name, date):
         self.name = name
         self.date = date
@@ -169,7 +168,6 @@ class Events(db.Model):
         self.price = 0
         self.inventory = 0
         self.mainimage = None
-        self.taxable = False
 
 
 
