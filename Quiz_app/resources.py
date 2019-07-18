@@ -155,7 +155,7 @@ class EventsResource(Resource):
                     'price':data.price, 
                     'inventory': data.inventory,
                     'mainimage': data.mainimage,
-                    'taxable': data.taxable
+                    
             })
         return response
         
