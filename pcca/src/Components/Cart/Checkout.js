@@ -6,7 +6,7 @@ import './Cart.module.css';
 class CheckoutForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {complete: false};
+    this.state = {message: null};
     this.submit = this.submit.bind(this);
   }
 
@@ -25,7 +25,7 @@ class CheckoutForm extends Component {
         var request = {
               "async": true,
               "crossDomain": true,
-              "url": "http://68.183.207.29:5000/banking_information",
+              "url": "http://localhost:5000/banking_information",
               "method": "POST",
               "headers": {
                 "Content-Type": "application/json",
@@ -62,7 +62,7 @@ class CheckoutForm extends Component {
             var payment_request = {
               "async": true,
               "crossDomain": true,
-              "url": "http://68.183.207.29:5000/charge",
+              "url": "http://localhost:5000/charge",
               "method": "POST",
               "headers": {
                 "Content-Type": "application/json",
@@ -77,10 +77,8 @@ class CheckoutForm extends Component {
               "processData": false,
               "data": JSON.stringify(payment_data)
             };
-            console.log('Charge Response:', payment_data);
-            axios(payment_request).then(response => {
-              
-               
+            axios(payment_request).then(response => {             
+                this.setState({message: response.data.message});
             }).catch(error=> {});
 
         }).catch(error=> {});
@@ -89,33 +87,45 @@ class CheckoutForm extends Component {
   render() {
 
 
- 
-    let button = null
+    if(this.state.message == null){
+
+      let button = null
     
-    if(this.props.checkout){
-      button = <button className="btn" onClick={this.submit}> Complete Transaction </button>
+      if(this.props.checkout){
+        button = <button className="btn" onClick={this.submit}> Complete Transaction </button>
+      }else{
+        button = <button className="btn" disabled title="Please confirm your account before finishing purchase."> Complete Transaction </button>
+      }
+
+
+      return (
+          <div> 
+            <h1> Make a Payment</h1>
+            <div className="payment-tile">
+              <div className="bill">
+                <b>Subtotal:</b> $ {this.props.subtotal} CAD <br/>
+                <b>GST:</b> $ {this.props.gst} CAD <br/>
+                <b>Purchase Total:</b> $ {this.props.total} CAD 
+              </div>
+              <hr/>
+              <p>Would you like to complete the purchase?</p> 
+              <div className="example2 form-group"><CardElement /></div>         
+              {button}
+            </div>
+          </div>
+
+      );
+      
     }else{
-      button = <button className="btn" disabled title="Please confirm your account before finishing purchase."> Complete Transaction </button>
+      return (
+         <div className="text-center distance">
+            <img src="https://www.naturallysplendid.com/static/media/success.png" />
+            <h3> Your payment was successfully processed </h3>          
+         </div>
+      )
     }
 
-
-    return (
-        <div> 
-          <h1> Make a Payment</h1>
-          <div className="payment-tile">
-            <div className="bill">
-              <b>Subtotal:</b> $ {this.props.subtotal} CAD <br/>
-              <b>GST:</b> $ {this.props.gst} CAD <br/>
-              <b>Purchase Total:</b> $ {this.props.total} CAD 
-            </div>
-            <hr/>
-            <p>Would you like to complete the purchase?</p> 
-            <div className="example2 form-group"><CardElement /></div>         
-            {button}
-          </div>
-        </div>
-
-    );
+    
   }
 }
 

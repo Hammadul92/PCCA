@@ -1,5 +1,5 @@
 
-body{
+body{ 
   background: #f7f7f7;
 }
 
@@ -8,25 +8,16 @@ a{
   outline:0;
 } 
 
-
-.red{
-  color:rgb(247, 98, 98);
+.text-small{
+  font-size: 11px;
 }
 
-.red:hover{
-  color: darkred;
-}
-.yellow{
-  color:rgb(232, 177, 0);
-}
-.yellow:hover{
-  color: rgb(244, 158, 66);
-}
 
 .success{
     color:rgb(2, 107, 17);
     text-align:center;
     font-weight:600;
+    background:rgb(2, 107, 17,0.1);
     padding: 15px;
     margin-bottom: 2px; 
 }
@@ -35,6 +26,7 @@ a{
     color:rgb(247, 98, 98);
     text-align:center;
     font-weight:600;
+    background:rgb(247, 98, 98, 0.1);
     padding: 15px;
     margin-bottom: 2px;
 }
@@ -43,12 +35,44 @@ a{
      color:rgb(232, 177, 0);
     text-align:center;
     font-weight:600;
+    background-color:rgb(232, 177, 0, 0.1);
     padding: 15px;
     margin-bottom: 2px;
 }
 
 
+     #horizontal_nav{
+      min-height: 60px; 
+      overflow: hidden;
+      background: #23282d;
+     }
      
+     #horizontal_nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;       
+        padding: 0;
+        
+      }
+
+      #horizontal_nav > ul li {
+        float: left;
+      }
+
+      #horizontal_nav > ul li a {
+        display: block;
+        color: #fff;
+        text-align: center;
+        padding: 15px;
+        font-size: 12px;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      #horizontal_nav > li a:hover {
+        color: rgba(0,0,0,1);
+      }
 
 
 
@@ -119,12 +143,14 @@ a{
     border: 1px solid #ddd;
 }
 
-.table th{
-  background: #eee;
-  font-size: 13px;
-
+.table tr:first-child{
+  box-shadow: 0 4px 2px -2px #ddd;
 }
 
+.table th{
+  background: #eee;
+  font-size: 11px;
+}
 
 .table td{
   font-size: 11px;
@@ -219,17 +245,38 @@ a{
  background: #fff;
  padding: 15px;
  margin-bottom: 15px;
- box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+ box-shadow: 0 10px 10px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);
 
 }
 
-.table-container select{
-  border: none; -webkit-appearance: none; border: 1px solid #ddd;
-  color: rgba(0,0,0,0);
-  text-shadow: 0 0 0 #000;
+.img-container{
   background: #f7f7f7;
-  
+  width: 100%;
+  min-height: 50px;
+  text-align: center;
+  padding: 5px;
 }
+
+.img-container img{
+  max-width: 100%;
+  max-height: 100%;
+  display: inline;
+}
+
+select{
+  border: none; 
+  -webkit-appearance: none; 
+  border: 1px solid #ddd;
+  text-shadow: 0 0 0 #000 !important;
+  background: #f7f7f7 !important;
+  font-size: 11px !important;
+}
+
+input, textarea{
+  font-size:11px !important;
+}
+
+
 
 .remove-margin{
   margin: 0;
@@ -238,6 +285,7 @@ a{
 .remove-margin div{
   padding: 0;
 }
+
 
 
 .form-control{
@@ -256,7 +304,7 @@ a{
 }
 
 .checkbox label{
-  font-size: 14px;
+  font-size: 12px;
 
 }
 .checkbox label::before{
@@ -312,8 +360,8 @@ a{
 }
 
 .checkbox input[type="checkbox"]:checked + label::before {
-    background: #006799;
-    box-shadow: 0 0 2px #006799;
+    background: #5bc0de;
+    box-shadow: 0 0 1px #5bc0de;
     border: none;
 }
 
@@ -332,36 +380,33 @@ a{
 
 
 .paginate-btn{
-  border: 1px solid #ddd; background: #fff; font-size: 18px;
-  padding: 12px 28px 8px;
-  margin: 10px 0;
+  border: 1px solid #ddd; background: #fff;
+  padding: 6px 14px 4px;
+  margin: 0 0;
   color: #222;
+  font-size: 9px;
 }
 
 .paginate-btn:hover{
   background: #eee;
 }
 
-.btn{
-  border-radius: 0;
-}
-
 .btn-info{
-  border-radius: 0;
-  background: #fff;
-  color: #222;
-  border: 1px solid #ddd;
+  background: #51cbce;
+  color: #fff;
+  border: 1px solid #51cbce;
 }
 
 .btn-info:hover, .btn-info:focus{
-  background: #eee;
-  color: #222;
-  border: 1px solid #ddd;
+  background: #51cbce;
+  color: #fff;
+  border: 1px solid #51cbce;
 }
 
 .btn-info:disabled{
    background: #eee;
 }
+
 
 .search-main{
   background: #f7f7f7;
@@ -370,20 +415,6 @@ a{
 }
 
 
-.SearchButton
-{
-    padding: 6px 12px;
-    margin-top: -1px; 
-    background:#707070;
-    color:#fff;
-    border:none;
-    border-radius:none;
-    transition: all 0.7s; 
-}
-.SearchButton:hover{
-    background:black;
-    color: #fff;
-}
 
 
 
@@ -416,13 +447,14 @@ a{
 
         .analytics-btn{
           padding: 50px 15px; color: #fff; text-align: center; cursor: pointer;
-           border-radius: 5px; margin-bottom: 30px;
+           border-radius: 5px;
+           margin-bottom: 15px;
            text-decoration: none;
            display: block;
            background: #708fff;
         }
 
-        .analytics-btn:hover{
+        .analytics-btn > h4{
             color: #fff;
         }
 

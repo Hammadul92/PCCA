@@ -29,7 +29,7 @@ class Proceed extends React.Component{
         var request = {
               "async": true,
               "crossDomain": true,
-              "url": "http://68.183.207.29:5000/anonymous_account",
+              "url": "http://localhost:5000/anonymous_account",
               "method": "POST",
               "headers": {
                 "Content-Type": "application/json",
@@ -88,6 +88,7 @@ class Proceed extends React.Component{
     			});
 
           gst = subtotal * 0.05;
+          gst= Math.round( gst * 100 ) / 100;
           total = subtotal + gst;
 		    }
 
