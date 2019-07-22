@@ -24,7 +24,7 @@ class Home extends React.Component{
                 <section>
                     <div className="row">
                         
-                        <div className="col-md-8"><News /></div>
+                        <div className=" col-md-8"><News /></div>
                         <div className="col-md-4 sidebar-gutter">
                             <Events />
                         </div>

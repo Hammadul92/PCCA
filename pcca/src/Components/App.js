@@ -36,7 +36,7 @@ class App extends React.Component{
 		     <Switch>
 								
 					<Route path='/events' exact component={NavEvents}/>
-					<Route path='/donations' exact component={ControlledCarousel}/>
+					<Route path='/donations' exact component={Donations}/>
 					<Route path='/about' exact component={AboutUs}/>
 					<Route path='/contact' exact component={Contact}/>
 					<Route path='/gallery' exact component={Gallery}/>

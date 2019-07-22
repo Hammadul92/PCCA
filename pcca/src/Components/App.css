@@ -72,12 +72,23 @@ section:last-child {
 	padding-right: 20px;
 }
 .sidebar-gutter {
-	padding-left: 50px;
+	padding-left: 20px;
 }
 .navbar .navbar-nav > li > a {
 	color:#fff;
 }
 
+button.navbar-toggle:focus, button.navbar-toggle:hover{
+	background-color: #01680c;
+	color: aliceblue;
+	
+}
+
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover{
+	background-color: #01680c;
+	color: aliceblue;
+	
+}
 
 
 .LoginForm input, .LoginForm textarea{
@@ -102,7 +113,7 @@ section:last-child {
 }
 
 .btn{
-	background: linear-gradient(45deg, #01680c 1%, #55c862 100%);
+	background: linear-gradient(45deg, #01680c 1%, #4ce75e 100%);
 	color: #fff;
 	margin-right: 5px;
 }
@@ -148,4 +159,14 @@ section:last-child {
 	text-align: left;
 	width: 20px;
 	display: block;
+}
+
+
+@media only screen and (min-width: 1200px) {
+
+.container {
+
+    width: 1500px;
+
+}
 }

@@ -17,7 +17,7 @@ const BlogCard = (props) => {
 					</div>
 					<p dangerouslySetInnerHTML={{ __html: props.blog.blog_desc }}  />		
 					
-					<div className="read-more"><a href="#">Continue Reading</a></div>
+					<hr/>
 				</div>
 		    </article>
 			

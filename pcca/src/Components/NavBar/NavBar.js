@@ -1,6 +1,6 @@
 import './NavBar.module.css';
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink , Link} from 'react-router-dom';
 import Auxilary from '../../hoc/Auxilary/Auxilary';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions';
@@ -32,10 +32,12 @@ class NavBar extends React.Component{
 		var cart = this.props.state.tickets;
 		var itemNum = cart.length;
 		if(itemNum){
-			 var checkout = <li><NavLink to="/cart"> <i className="fa fa-opencart"></i> {itemNum}  </NavLink></li>
+			 var checkout = <li><Link to="/cart"> <i className="fa fa-opencart"></i> {itemNum}  </Link></li>
 		}
 		return (
 				<nav className="navbar navbar-inverse navbar-fixed-top">
+					
+					<Link exact  to="/"  activeStyle={{fontWeight: "bold", color: "White"}}><a className="navbar-brand " href="#">Pakistan Canada Association</a></Link>
 					<div className="container">
 						<div className="navbar-header">
 							<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -48,7 +50,7 @@ class NavBar extends React.Component{
 						<div id="navbar" className="collapse navbar-collapse">
 							<ul className="nav navbar-nav">
 							
-								<li ><NavLink exact  to="/"  activeStyle={{fontWeight: "bold", color: "White"}}>Home</NavLink></li>
+								<li ><NavLink exact  to="/"  activeStyle={{fontWeight: "bold", color: "White"}}><i className="fa fa-1.5x fa-home"></i> Home</NavLink></li>
 								<li><NavLink to="/events" activeStyle={{fontWeight: "bold", color: "White"}}>Events</NavLink></li>
 								<li><NavLink to="/donations" activeStyle={{fontWeight: "bold", color: "White"}}>Donations</NavLink></li>
 								<li><NavLink to="/gallery" activeStyle={{fontWeight: "bold", color: "White"}}>Gallery</NavLink></li>
@@ -57,6 +59,7 @@ class NavBar extends React.Component{
 								
 
 							</ul>
+						
 
 							<ul className="nav navbar-nav navbar-right">{user}</ul>
 							<ul className="nav navbar-nav navbar-right">{checkout}</ul>
