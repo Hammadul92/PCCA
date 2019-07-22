@@ -20,7 +20,6 @@ import { connect } from 'react-redux';
 import ControlledCarousel from './Slider/Slider';
 
 
-
 class App extends React.Component{
 
 	

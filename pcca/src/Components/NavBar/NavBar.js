@@ -5,6 +5,7 @@ import Auxilary from '../../hoc/Auxilary/Auxilary';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions';
 
+
 class NavBar extends React.Component{
 
 
@@ -36,7 +37,7 @@ class NavBar extends React.Component{
 		}
 		return (
 				<nav className="navbar navbar-inverse navbar-fixed-top">
-					
+			
 					<Link exact  to="/"  activeStyle={{fontWeight: "bold", color: "White"}}><a className="navbar-brand " href="#">Pakistan Canada Association</a></Link>
 					<div className="container">
 						<div className="navbar-header">
