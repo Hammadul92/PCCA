@@ -38,7 +38,7 @@ class NavBar extends React.Component{
 		return (
 				<nav className="navbar navbar-inverse navbar-fixed-top">
 			
-					<Link exact  to="/"  activeStyle={{fontWeight: "bold", color: "White"}}><a className="navbar-brand " href="#">Pakistan Canada Association</a></Link>
+					<Link to="/" ><i className="navbar-brand ">Pakistan Canada Association</i></Link>
 					<div className="container">
 						<div className="navbar-header">
 							<div className='cellcart'>{checkout}</div>
