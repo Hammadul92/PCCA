@@ -17,7 +17,7 @@ class NavEvents extends Component{
 
 	componentWillMount(){
       
-      axios.get('http://68.183.207.29/events').then(response=>{
+      axios.get('http://68.183.207.29:5000/events').then(response=>{
       this.setState({events: response.data.events, loading: false});
       }).catch(error=>{this.setState({error:true, loading: false})});
 

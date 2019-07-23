@@ -10,7 +10,7 @@ class Gallery extends React.Component{
 
   componentWillMount(){
       
-      axios.get('http://68.183.207.29:5000/gallery').then(response=>{
+      axios.get('http://68.183.207.29:5000:5000/gallery').then(response=>{
       this.setState({images: response.data.images});
       }).catch(error=>{this.setState({error:true})});
 

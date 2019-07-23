@@ -27,7 +27,7 @@ class Profile extends React.Component{
     var request = {
       "async": true,
       "crossDomain": true,
-      "url": "http://68.183.207.29:5000/updateProfile",
+      "url": "http://68.183.207.29:5000:5000/updateProfile",
       "method": "POST",
       "headers": {
         "Content-Type": "application/json",

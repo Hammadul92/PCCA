@@ -25,7 +25,7 @@ class CheckoutForm extends Component {
         var request = {
               "async": true,
               "crossDomain": true,
-              "url": "http://68.183.207.29/banking_information",
+              "url": "http://68.183.207.29:5000/banking_information",
               "method": "POST",
               "headers": {
                 "Content-Type": "application/json",
@@ -62,7 +62,7 @@ class CheckoutForm extends Component {
             var payment_request = {
               "async": true,
               "crossDomain": true,
-              "url": "http://68.183.207.29/charge",
+              "url": "http://68.183.207.29:5000/charge",
               "method": "POST",
               "headers": {
                 "Content-Type": "application/json",
