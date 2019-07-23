@@ -6,16 +6,6 @@ import Card from 'react-bootstrap/Card'
 const thank=()=>(
 
     <Auxilary>
-        <Card bg="success" text="white" style={{ width: '25rem', marginTop: '80px' }}>
-            <Card.Header>THANK YOU!</Card.Header>
-            <Card.Body>
-            <Card.Title>Success Card Title</Card.Title>
-            <Card.Text>
-                Some quick example text to build on the card title and make up the bulk
-                of the card's content.
-            </Card.Text>
-            </Card.Body>
-        </Card>
 
         <div className="main-content">
         <i className="fa fa-check fa-5x main-content__checkmark" id="checkmark"></i><i className="site-header__title" data-lead-id="site-header-title">THANK YOU!</i>
