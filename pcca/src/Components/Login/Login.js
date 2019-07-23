@@ -2,6 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import axios from 'axios';
+import './Login.module.css';
+import Slider from '../Slider/Slider';
+import Spinner from '../Spinner/Spinner';
 
  
 
@@ -63,10 +66,12 @@ class Login extends React.Component{
 		
 		return (
                 <div className="container">
-
-                        <h1 className="text-center">Login</h1>
+						
+						<h1 className="text-center">Login</h1>
+                       
 						{msg}
 						<form className='LoginForm row' onSubmit={(event) => this.loginDataHandler(event)} >
+						
 						    <div className="col-md-6 col-md-offset-3 form-group">
 								<label>Email</label>
 								<input type='email'  value={this.state.username} onChange={(event)=>this.setState({username: event.target.value})} required />

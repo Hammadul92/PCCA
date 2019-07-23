@@ -16,3 +16,21 @@
 
 
 
+@media only screen and (max-width: 600px)  {
+  .image {
+
+    max-width: 100%;
+    margin-bottom: -50px;
+    
+  }
+  
+  
+  .slider{
+  
+    text-align: center;
+  
+  }
+  
+
+
+}

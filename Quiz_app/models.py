@@ -91,7 +91,7 @@ class RevokedTokenModel(db.Model):
 
 class Pages(db.Model):
    __tablename__ = 'pages'
-   page_ID = db.Column(db.Integer,    primary_key = True)
+   page_ID = db.Column(db.Integer, primary_key = True)
    page_name = db.Column(db.String, nullable = False, unique = True)
    page_description = db.Column(db.String)
    def __init__(self, page_name):
@@ -107,7 +107,7 @@ class Joinmail(db.Model):
 
 class Media(db.Model):
 	__tablename__ = 'media'
-	media_ID = db.Column(db.Integer,    primary_key = True) 
+	media_ID = db.Column(db.Integer, primary_key = True) 
 	url = db.Column(db.String,     nullable=False)
 	def __init__(self, url):
 		self.url = url

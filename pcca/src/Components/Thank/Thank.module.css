@@ -1,0 +1,13 @@
+#checkmark {
+    color: green;
+  }
+
+  .main-content{
+      text-align: center;
+  }
+
+  .site-header__title{
+      font-size: 5em;
+      margin-top: 20px;
+      display: inline-block; 
+  }

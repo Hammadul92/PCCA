@@ -8,7 +8,7 @@ class Footer extends React.Component{
 				<footer className="footer">
 					<div className="footer-socials">
 					<img className='image' src="logo.jpg" alt="Los Angeles" />
-						<a href="https://www.facebook.com/PCCA.BC/" target="_blank"><i className="fa fa-facebook"></i></a>
+						<a href="https://www.facebook.com/joinpakcan/" target="_blank"><i className="fa fa-facebook"></i></a>
 						
 					</div>
 
