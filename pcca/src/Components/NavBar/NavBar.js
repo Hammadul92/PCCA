@@ -33,7 +33,7 @@ class NavBar extends React.Component{
 		var cart = this.props.state.tickets;
 		var itemNum = cart.length;
 		if(itemNum){
-			 var checkout = <li><Link to="/cart"> <i className="fa fa-opencart"></i> {itemNum}  </Link></li>
+			 var checkout = <Link to="/cart"> <i className="fa fa-opencart"> </i> {itemNum}  </Link>
 		}
 		return (
 				<nav className="navbar navbar-inverse navbar-fixed-top">
@@ -41,6 +41,7 @@ class NavBar extends React.Component{
 					<Link exact  to="/"  activeStyle={{fontWeight: "bold", color: "White"}}><a className="navbar-brand " href="#">Pakistan Canada Association</a></Link>
 					<div className="container">
 						<div className="navbar-header">
+							<div className='cellcart'>{checkout}</div>
 							<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 							<span className="sr-only">Toggle navigation</span>
 							<span className="icon-bar"></span>
@@ -63,7 +64,7 @@ class NavBar extends React.Component{
 						
 
 							<ul className="nav navbar-nav navbar-right">{user}</ul>
-							<ul className="nav navbar-nav navbar-right">{checkout}</ul>
+							<ul className="nav navbar-nav navbar-right"><li>{checkout}</li></ul>
 
 						</div>
 
