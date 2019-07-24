@@ -21,7 +21,7 @@ def send_email(subject, recipients, html):
 ###############################################################################   Invoices   ##################################################################################################
 
 def send_invoice(sale, user):
-    msg = Message('NSE Order Confirmation', recipients=[user.email])
+    msg = Message('PCA Order Confirmation', recipients=[user.email])
     msg.html = render_template('email.html', user = user, type = 'confirm_order')
     if sale.invoice != None: 
      with app.open_resource(app.config['INVOICE_FILES_DEST'] + sale.invoice) as fp:
@@ -48,4 +48,4 @@ def send_contact_message(contact , admin):
 
 def contact_confirmation_email(email):
     html = render_template('email.html', type="contact_confirmation") 
-    send_email('NSE Contact', email, html)
+    send_email('PCA Contact', email, html)

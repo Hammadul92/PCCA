@@ -8,7 +8,8 @@ from . import db
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 import stripe
 import ast
-
+import requests 
+ 
 
 
 reg = reqparse.RequestParser()
@@ -402,3 +403,12 @@ class charge(Resource):
         result['message'] = e
 
       return result
+
+
+class Azan(Resource):
+    def get(self):
+        url = 'http://api.aladhan.com/v1/calendarByCity?city=Vancouver&country=Canada&month=6&year=2019'
+        r = requests.get(url)
+        r = r.json()
+   
+        return r

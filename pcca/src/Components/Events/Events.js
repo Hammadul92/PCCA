@@ -16,16 +16,8 @@ class Events extends React.Component{
     componentWillMount(){
 		var d = new Date();
 		var n = d.getDate();	
-		axios.get('http://api.aladhan.com/v1/calendarByCity', {
-			params: {
-			  city: 'Vancouver',
-			  country: 'Canada',
-			  month: d.getMonth(),
-			  year: d.getFullYear()
-
-
-			}
-		  }).then(response=>{
+		axios.get('https://pcabc.ca/api/azan')
+		.then(response=>{
 			this.setState({prayerTimes: response.data.data[n].timings});
 		  }).catch(error=>{this.setState({error:true})});		   
 	

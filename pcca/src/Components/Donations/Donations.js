@@ -12,7 +12,7 @@ class Donations extends React.Component{
 				
 				<div className= 'donate'>
 				<h1> Donations/Zakat</h1>
-					<iframe src="https://donorbox.org/embed/pay-your-zakat-1?show_content=true&hide_donation_meter=true" height="685px" width="500px"  seamless="seamless" name="donorbox" frameBorder="0" scrolling="no" allowpaymentrequest="true"></iframe>
+					<iframe src="https://donorbox.org/embed/pay-your-zakat-1?show_content=true&hide_donation_meter=true" height="685px" width="450px"  seamless="seamless" name="donorbox" frameBorder="0" scrolling="no" allowpaymentrequest="true"></iframe>
 				</div>	
 			</Auxilary>
 			);
