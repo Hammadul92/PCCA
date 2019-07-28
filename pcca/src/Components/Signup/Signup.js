@@ -118,7 +118,7 @@ class Signup extends React.Component{
 										
 									</div>
 
-								   <div className="col-md-12 form-group ">
+								   <div className="col-md-4 col-md-offset-4 form-group ">
 									<button  type="submit" className="btn">Register</button>
 								   </div>
 

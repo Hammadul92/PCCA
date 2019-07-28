@@ -38,7 +38,7 @@ class NavBar extends React.Component{
 		return (
 				<nav className="navbar navbar-inverse navbar-fixed-top">
 			
-					<Link to="/" ><i className="navbar-brand ">Pakistan Canada Association</i></Link>
+					<Link to="/" ><i className="navbar-brand "></i></Link>
 					<div className="container">
 						<div className="navbar-header">
 							<div className='cellcart'>{checkout}</div>
@@ -52,7 +52,7 @@ class NavBar extends React.Component{
 						<div id="navbar" className="collapse navbar-collapse">
 							<ul className="nav navbar-nav">
 							
-								<li ><NavLink exact  to="/"  activeStyle={{fontWeight: "bold", color: "White"}}><i className="fa fa-1.5x fa-home"></i> Home</NavLink></li>
+								<li ><NavLink exact  to="/"  activeStyle={{fontWeight: "bold", color: "White"}}><i className="fa fa-1.5x fa-home"></i> Pakistan Canada Association</NavLink></li>
 								<li><NavLink to="/events" activeStyle={{fontWeight: "bold", color: "White"}}>Events</NavLink></li>
 								<li><NavLink to="/donations" activeStyle={{fontWeight: "bold", color: "White"}}>Donations</NavLink></li>
 								<li><NavLink to="/gallery" activeStyle={{fontWeight: "bold", color: "White"}}>Gallery</NavLink></li>

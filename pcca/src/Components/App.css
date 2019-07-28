@@ -101,8 +101,8 @@ button.navbar-toggle:focus, button.navbar-toggle:hover{
 }
 
 .LoginForm input:focus, .LoginForm textarea:focus{
-	box-shadow: none;
-	border: 1px solid #222;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+	border: 2px solid #222;
 }
 
 .LoginForm .btn{

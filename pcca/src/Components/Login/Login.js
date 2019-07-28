@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import axios from 'axios';
-import './Login.module.css';
 import Slider from '../Slider/Slider';
 import Spinner from '../Spinner/Spinner';
 
@@ -71,18 +70,21 @@ class Login extends React.Component{
                        
 						{msg}
 						<form className='LoginForm row' onSubmit={(event) => this.loginDataHandler(event)} >
-						
-						    <div className="col-md-6 col-md-offset-3 form-group">
-								<label>Email</label>
-								<input type='email'  value={this.state.username} onChange={(event)=>this.setState({username: event.target.value})} required />
-							</div>
-							<div className="col-md-6 col-md-offset-3 form-group">
-								<label>Password</label>
-								<input type='password' value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})} required />	
-						    </div>						
-							<div className="col-md-6 col-md-offset-3 form-group text-center">
-							   <button  className="btn" type="submit"> Login </button>
-							</div>
+						    <div className="col-md-6 col-md-offset-3">
+							    <div className="form-group">
+									<label>Email</label>
+									<input type='email'  value={this.state.username} onChange={(event)=>this.setState({username: event.target.value})} required />
+								</div>
+								<div className="form-group">
+									<label>Password</label>
+									<input type='password' value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})} required />	
+							    </div>	
+							    <div className="row">					
+									<div className="col-md-6 col-md-offset-3 form-group text-center">
+									   <button  className="btn" type="submit"> Login </button>
+									</div>
+								</div>
+						   </div>
 						</form>
 
                 </div>
