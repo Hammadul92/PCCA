@@ -16,7 +16,7 @@ class Events extends React.Component{
     componentWillMount(){
 		var d = new Date();
 		var n = d.getDate();	
-		axios.get('https://pcabc.ca/api/azan')
+		axios.get('http://localhost:5000/azan')
 		.then(response=>{
 			this.setState({prayerTimes: response.data.data[n].timings});
 		  }).catch(error=>{this.setState({error:true})});		   

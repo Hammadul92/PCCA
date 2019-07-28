@@ -10,7 +10,7 @@ class Gallery extends React.Component{
 
   componentWillMount(){
       
-      axios.get('https://pcabc.ca/api/gallery').then(response=>{
+      axios.get('http://localhost:5000/gallery').then(response=>{
       this.setState({images: response.data.images});
       }).catch(error=>{this.setState({error:true})});
       

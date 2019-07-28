@@ -29,7 +29,7 @@ class Signup extends React.Component{
 		var Resgistration = {
 			"async": true,
 			"crossDomain": true,
-			"url": "https://pcabc.ca/api/registration",
+			"url": "http://localhost:5000/registration",
 			"method": "POST",
 			"headers": {
 			  "Content-Type": "application/json",

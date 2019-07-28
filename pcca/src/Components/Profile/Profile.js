@@ -27,7 +27,7 @@ class Profile extends React.Component{
     var request = {
       "async": true,
       "crossDomain": true,
-      "url": "https://pcabc.ca/api/updateProfile",
+      "url": "http://localhost:5000/updateProfile",
       "method": "POST",
       "headers": {
         "Content-Type": "application/json",

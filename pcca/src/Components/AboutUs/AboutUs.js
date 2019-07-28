@@ -8,7 +8,7 @@ class AboutUs extends React.Component{
 	}
 
 	componentWillMount(){      
-      axios.get('https://pcabc.ca/api/about_us').then(response=>{
+      axios.get('http://localhost:5000/about_us').then(response=>{
       this.setState({page_description: response.data.page_description});
       }).catch(error=>{});
 

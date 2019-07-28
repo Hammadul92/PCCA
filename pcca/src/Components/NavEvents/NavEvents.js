@@ -17,7 +17,7 @@ class NavEvents extends Component{
 
 	componentWillMount(){
       
-      axios.get('https://pcabc.ca/api/events').then(response=>{
+      axios.get('http://localhost:5000/events').then(response=>{
       this.setState({events: response.data.events, loading: false});
       }).catch(error=>{this.setState({error:true, loading: false})});
 

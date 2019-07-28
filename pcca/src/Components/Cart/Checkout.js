@@ -25,7 +25,7 @@ class CheckoutForm extends Component {
         var request = {
               "async": true,
               "crossDomain": true,
-              "url": "https://pcabc.ca/api/banking_information",
+              "url": "http://localhost:5000/banking_information",
               "method": "POST",
               "headers": {
                 "Content-Type": "application/json",
@@ -62,7 +62,7 @@ class CheckoutForm extends Component {
             var payment_request = {
               "async": true,
               "crossDomain": true,
-              "url": "https://pcabc.ca/api/charge",
+              "url": "http://localhost:5000/charge",
               "method": "POST",
               "headers": {
                 "Content-Type": "application/json",
