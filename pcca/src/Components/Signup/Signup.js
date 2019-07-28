@@ -110,13 +110,12 @@ class Signup extends React.Component{
 		                            <label>Phone Number *</label>
 									<input type='tel' required value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required />
 								   </div>
-
-									<div class=" form-check col-md-12">
-									<label class="form-check-label" for="exampleCheck1">Accept Terms & Agreements, Community News & Events NewsLetter</label>
-										
-										<input type="checkbox" class="form-check-input" id="exampleCheck1" required/>
-										
-									</div>
+                                   <div className="col-md-12">
+								       <div className="checkbox">                                   
+		                                  <input type="checkbox" id="consent" name="consent"/>
+		                                  <label for="consent"> &nbsp;&nbsp; Accept Terms & Agreements, Community News & Events NewsLetter </label>
+		                              </div>
+                                   </div>
 
 								   <div className="col-md-4 col-md-offset-4 form-group ">
 									<button  type="submit" className="btn">Register</button>
