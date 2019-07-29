@@ -3,7 +3,6 @@
 
     {% if tab =='users' %} 
 
-
                 <div class="table-container">
                   <section class="row">
                      <div class="col-md-3">
@@ -23,10 +22,12 @@
                        <th>Delete</th>
                        <th>User ID</th>
                        <th>Email </th>
-                       <th>User Information </th>
+                       <th>Name </th>
+                       <th>Banking Information </th>
+                       <th>Number Of Sales </th>
                        <th>Phone</th>
                        <th>Date Activated</th>
-                       <th> Role </th>
+                       <th>Role </th>
                      </tr>
                      <form action="{{url_for('delete_users', page = page)}}" method="POST">
                          {% for user in users%}
@@ -35,24 +36,22 @@
                                  <div class="checkbox">                                   
                                       <input type="checkbox" id="{{user[0]}}" name="delete{{user[0]}}">
                                       <label for="{{user[0]}}"></label>
-                                  </div>
-
+                                 </div>
                             </td>
-
-
                             <td><b>{{user[0]}}</b></td>
                             <td> {{user[3]}}</td>
-
                             <td> 
                               <i class="far fa-user"></i> {{user[1]}} {{user[2]}} <br/>
+                            </td>
+                            <td>
                               {% if user[8] == False %}
                                 <b>Banking Info:</b> <i class="fa fa-times" style="color: brown;"></i>
                               {% else %}
-                                <div style="background: #fff; padding: 10px; border: 1px solid #ddd;">{{user[8]}}</div>
+                                <div>{{user[8]}}</div>
                               {% endif %}
-                              {% if user[7]> 0 %}
-                                 <div><b> Number Of Sales:</b>{{user[7]}}</div>
-                              {% endif %}
+                            </td>
+                            <td>
+                              {{user[7]}}
                             </td>
                             <td>{{user[4]}}</td>
                             <td>{{user[5]}}</td>
@@ -68,7 +67,7 @@
                         {% endfor %}
                         <tr>
                           <th><button type="submit" class="btn btn-info btn-sm"> Update <i class="fas fa-check-circle"></i></button> </th>
-                          <th></th><th></th><th></th><th></th><th></th><th></th>                          
+                          <th></th><th></th><th></th><th></th><th></th><th/><th/><th/>                        
                         </tr>
                       </form>
                   </table>
@@ -305,7 +304,8 @@
                 <th>Sale ID </th>
                 <th>Buyer Name </th>
                 <th>Subtotal (cad-$)</th>
-                <th>Total (cad-$)</th>                
+                <th>Total (cad-$)</th> 
+                <th></th>               
              </tr>
              {% for order in orders.items %}                          
               <tr>
@@ -318,11 +318,12 @@
                 <td>{{order.sale_ID}}</td>
                 <td>{{order.firstname}} {{order.lastname}}</td>
                 <td><b>{{order.subtotal}}</b></td>
-                <td><b>{{order.total}}</b></td>                   
+                <td><b>{{order.total}}</b></td>  
+                <td><a class="btn btn-info btn-sm" href="/admin/view_order/{{order.sale_ID}}"> View Order </a></td>                 
               </tr>
        
             {% endfor %}
-            <tr><th><button type="submit" class="btn btn-sm btn-info"> Update <i class="fas fa-check-circle"></i></button><th/><th/><th/><th/></tr>
+            <tr><th><button type="submit" class="btn btn-sm btn-info"> Update <i class="fas fa-check-circle"></i></button><th/><th/><th/><th/><th/></tr>
         </form>
         </table>        
 
@@ -334,8 +335,20 @@
  
         </div>
       </div>
-
         
+      {% endif %}
+
+
+      {% if tab == 'view_order' %}
+         <div class="table-container">
+             <h3> Order Details </h3>
+             <hr/>
+             <div>
+               {% for item in invoice %}
+                  <div style="padding: 15px; background: #eee; margin-bottom: 3px;"> <b>Event ID: </b> {{item.event_ID}} &nbsp;&nbsp; <b>Event Name:</b> {{item.event_name}}  &nbsp;&nbsp;<b> Price: </b> $ {{item.price}} CAD &nbsp;&nbsp; Quantity: {{item.amount}} </div>
+               {% endfor %}
+             </div>
+         </div>
       {% endif %}
 
 

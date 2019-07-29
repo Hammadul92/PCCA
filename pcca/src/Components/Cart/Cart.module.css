@@ -17,10 +17,7 @@
 }
 
 .payment-tile{
-  padding: 15px;
-  border: 1px solid #ddd;
   margin-bottom: 40px;
-  box-shadow: 0 0 10px #ddd;
 }
 
 .bill{
@@ -36,4 +33,9 @@ img{
 
 .distance{
   margin-bottom: 40px;
+}
+
+.success img{
+  width: 160px;
+  display: inline-block;
 }

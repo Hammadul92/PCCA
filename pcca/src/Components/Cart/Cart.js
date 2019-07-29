@@ -46,29 +46,29 @@ class Cart extends React.Component{
 
 		return(
             <div className="container">         
-                
-                <h1>Cart Items</h1>
-				{msg}
-                <table className="table">
-                    <thead>
-                       <tr>
-                        <th> Event Name</th>
-                        <th> Ticket Price</th>
-						<th> Subtotal </th>
-						<th></th>
-                       </tr>
-                    </thead>
-                    <tbody>{items}</tbody>
-			    </table> 
-                
-                
-                <h2> Total: $ {total} cad </h2>
-				{checkout}  
-					
+	            <section className="row">   
+	                <div className="col-md-6 col-md-offset-3"> 
+		                <h1>Cart Items</h1>
+						{msg}
+		                <table className="table">
+		                    <thead>
+		                       <tr>
+		                        <th> Event Name</th>
+		                        <th> Ticket Price</th>
+								<th> Subtotal </th>
+								<th></th>
+		                       </tr>
+		                    </thead>
+		                    <tbody>{items}</tbody>
+					    </table> 		                
+		                
+		                <h2> Total: $ {total} cad </h2>
+						{checkout} 
+				    </div> 
+				</section>		
             </div>
 			
-			
-			);
+		);
 	}
 }
 

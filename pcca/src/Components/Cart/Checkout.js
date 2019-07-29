@@ -118,7 +118,7 @@ class CheckoutForm extends Component {
       
     }else{
       return (
-         <div className="text-center distance">
+         <div className="text-center distance success">
             <img src="https://www.naturallysplendid.com/static/media/success.png" />
             <h3> Your payment was successfully processed </h3>          
          </div>

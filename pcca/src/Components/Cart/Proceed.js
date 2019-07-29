@@ -95,45 +95,47 @@ class Proceed extends React.Component{
         return(
 
             <div className="container"> 
+                <section className="row">
+                  <div className="col-md-6 col-md-offset-3">
+                     <h1> Confirm Your Account </h1>
+                     <div className="payment-tile"> 
+                          {msg}                    
+                          <form className="LoginForm row" onSubmit={(event) => this.FormHandler(event)}>
+                              <div className="col-md-6 form-group">
+                                  <label> Email * </label>
+                                  <input type="text" value={this.state.user} onChange={(event)=>this.setState({user: event.target.value})} required/>
+                              </div>
+                              <div className="col-md-6 form-group">
+                                  <label> Phone Number * </label>
+                                  <input type="text" value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required/>
+                              </div>
+                              <div className="col-md-6 form-group">
+                                   <label> First Name * </label>
+                                   <input type="text" value={this.state.firstname} onChange={(event)=>this.setState({firstname: event.target.value})} required/>
+                              </div>
+                              <div className="col-md-6 form-group">
+                                   <label> Last Name * </label>
+                                   <input type="text" value={this.state.lastname} onChange={(event)=>this.setState({lastname: event.target.value})} required/>
+                              </div>
+                              {password_field}
+                              <div className="col-md-4 col-md-offset-4">
+                                   <button className="btn" type="submit"> Update </button>
+                              </div>
+                          </form> 
+                      </div>
 
-                 <h1> Confirm Your Account </h1>
-                 <div className="payment-tile"> 
-                      {msg}                    
-                      <form className="LoginForm row" onSubmit={(event) => this.FormHandler(event)}>
-                          <div className="col-md-6 form-group">
-                              <label> Email * </label>
-                              <input type="text" value={this.state.user} onChange={(event)=>this.setState({user: event.target.value})} required/>
-                          </div>
-                          <div className="col-md-6 form-group">
-                              <label> Phone Number * </label>
-                              <input type="text" value={this.state.phone} onChange={(event)=>this.setState({phone: event.target.value})} required/>
-                          </div>
-                          <div className="col-md-6 form-group">
-                               <label> First Name * </label>
-                               <input type="text" value={this.state.firstname} onChange={(event)=>this.setState({firstname: event.target.value})} required/>
-                          </div>
-                          <div className="col-md-6 form-group">
-                               <label> Last Name * </label>
-                               <input type="text" value={this.state.lastname} onChange={(event)=>this.setState({lastname: event.target.value})} required/>
-                          </div>
-                          {password_field}
-                          <div className="col-md-4 col-md-offset-4">
-                               <button className="btn" type="submit"> Update </button>
-                          </div>
-                      </form> 
+                   
+
+                      <StripeProvider apiKey="pk_test_eJH3BMV0metBp2P9ifEgdNTb00RuLa5mJw">
+                         <div>
+                            <Elements>
+                                <CheckoutForm total={total} subtotal={subtotal} gst={gst} checkout={checkout} userID={usr} token={token} tickets={tickets} />
+                            </Elements>
+                         </div>
+                      </StripeProvider>
                   </div>
-
-               
-
-                  <StripeProvider apiKey="pk_test_eJH3BMV0metBp2P9ifEgdNTb00RuLa5mJw">
-                     <div>
-                        <Elements>
-                            <CheckoutForm total={total} subtotal={subtotal} gst={gst} checkout={checkout} userID={usr} token={token} tickets={tickets} />
-                        </Elements>
-                     </div>
-                  </StripeProvider>
-
-            </div>
+              </section>
+          </div>
 
         );
     }

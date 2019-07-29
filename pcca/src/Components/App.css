@@ -176,7 +176,6 @@ button.navbar-toggle:focus, button.navbar-toggle:hover{
 .LoginForm .btn{
 	height: 50px;
 	width: 100%;
-	margin-top: 20px; 
 
 }
 
@@ -203,7 +202,7 @@ button.navbar-toggle:focus, button.navbar-toggle:hover{
 }
 
 .LoginForm label{
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 500;
 }
 

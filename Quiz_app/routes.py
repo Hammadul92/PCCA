@@ -534,7 +534,7 @@ def admin(tab, subtab="edit",  update_ID = 1):
            bank = user.card_last4 + " (" + user.card_brand + ") Exp: " + user.card_exp_year 
         order_history = Sales.query.filter_by(user_ID = user.userID).all()
         number_of_orders = len(order_history)
-        users.append([user.userID, user.firstname, user.lastname, user.email,  user.phone,  user.registered_on_app, user.role, number_of_orders, bank, 0])
+        users.append([user.userID, user.firstname, user.lastname, user.email,  user.phone,  user.registered_on_app, user.role, number_of_orders, bank])
 
     db.session.commit()
     authentication_requests = 0 
@@ -554,8 +554,6 @@ def admin(tab, subtab="edit",  update_ID = 1):
        if subscribers.has_prev else None
    
     orders = Sales.query.order_by(Sales.sale_ID.desc()).paginate(page, 15, False)
-
-
 
     contacts = Contact.query.order_by(Contact.contact_ID.desc()).all()
     read_queries = 0
@@ -583,35 +581,20 @@ def admin(tab, subtab="edit",  update_ID = 1):
     update_event = Events.query.filter_by(event_ID = update_ID).first()   
     update_blog = Blogs.query.filter_by(blog_ID = update_ID).first()   
     update_page = Pages.query.filter_by(page_name = 'About Us').first()
-  
+    invoice = Invoices.query.filter_by(sale_ID = update_ID).all()
 
     if request.method == 'POST':
-
        if tab == "users":
           users_database = User.query.filter(or_(User.firstname.contains(request.form['name'].title()), User.lastname.contains(request.form['name'].title()))).paginate(page, 10000, False)
           users=[]
           for user in users_database.items:
-            cart_value = 0
-            cart_items = Cart.query.filter_by(user_ID = user.userID).all()
-            for item in cart_items:
-                product = Products.query.filter_by(product_ID = item.product_ID).first()
-                index = product.product_weight.split(',').index(item.product_size)
-                price = float(product.product_price.split(',')[index])
-                price = round(price * item.amount,2)
-                cart_value += price
-            cart_value = round(cart_value,2)
             bank = False
             if user.customer_ID:
                bank = user.card_last4 + " (" + user.card_brand + ") Exp: " + user.card_exp_year 
             order_history = Sales.query.filter_by(user_ID = user.userID).all()
             number_of_orders = len(order_history)
-            users.append([user.userID, user.firstname, user.lastname, user.email, user.currency, user.phone, 
-            user.address, user.city, user.country, user.zipcode, user.province, user.registered_on_app, user.role, number_of_orders, bank, cart_value])
-       if tab == "status":
-          if request.form['filter'] == 'Tracking Number':
-             orders = Sales.query.filter(Sales.tracking_number.contains(request.form['search'])).paginate(page, 10000, False)
-          elif request.form['filter'] == 'Lot Number':
-             orders = Sales.query.filter(Sales.lot_numbers.contains(request.form['search'])).paginate(page, 10000, False)
+            users.append([user.userID, user.firstname, user.lastname, user.email,  user.phone,  user.registered_on_app, user.role, number_of_orders, bank])
+ 
   
     next_url_user = url_for('admin', tab=tab, page=users_database.next_num) \
       if users_database.has_next else None
@@ -627,7 +610,7 @@ def admin(tab, subtab="edit",  update_ID = 1):
     prev_url_gallery=prev_url_gallery, read_queries=read_queries, next_url_events=next_url_events, prev_url_events = prev_url_events, next_url_blog = next_url_blog, prev_url_blog = prev_url_blog, 
     next_url_subscriber = next_url_subscriber, prev_url_subscriber = prev_url_subscriber, authentication_requests = authentication_requests, next_url_user=next_url_user, prev_url_user = prev_url_user, 
     update_event = update_event, update_blog = update_blog, next_url_orders= next_url_orders, prev_url_orders = prev_url_orders, subtab = subtab,  num_of_subscribers = num_of_subscribers, update_page = update_page,
-    prev_url_media = prev_url_media, next_url_media = next_url_media, media=media, page = page)
+    prev_url_media = prev_url_media, next_url_media = next_url_media, media=media, page = page, invoice = invoice)
 
   else:
     abort(403)

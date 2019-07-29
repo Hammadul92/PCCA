@@ -20,7 +20,6 @@ class Home extends React.Component{
         return (
             <div className="container">
                 <ControlledCarousel/>
-
                 <section>
                     <div className="row">
                         

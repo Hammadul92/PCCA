@@ -355,8 +355,6 @@ class charge(Resource):
 
 
         db.session.commit()
-       
-
 
         invoices = Invoices.query.filter_by(sale_ID = sale.sale_ID).all()          
         # create_pdf(render_template('invoice.html', total=round(total/100,2), special_instructions = special_instructions, invoices = invoices, gst=gst, subtotal=subtotal, invoice_number=sale.sale_ID, 
@@ -369,7 +367,6 @@ class charge(Resource):
         # sale.invoice = "[" + str(sale.sale_ID) + "][invoice].pdf"           
 
    
-        # db.session.commit()
 
         # send_invoice(sale, current_user)
         

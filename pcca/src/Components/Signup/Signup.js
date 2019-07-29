@@ -87,7 +87,7 @@ class Signup extends React.Component{
                         <h1 className="text-center"> Register </h1>
 						{msg}
 						<form className='LoginForm row' onSubmit={(event) => this.SignupDataHandler(event)}>
-						   <div className="col-md-8 col-md-offset-2">
+						   <div className="col-md-6 col-md-offset-3">
                            		<div className="row">
 								   <div className="col-md-6 form-group">
 									<label> First Name *</label>
