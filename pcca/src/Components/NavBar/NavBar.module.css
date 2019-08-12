@@ -3,12 +3,7 @@
     background-image: linear-gradient(45deg, #01680c 1%, #55c862 100%);
 }
 
-.navbar-inverse .navbar-brand {
 
-    color: #fffdfd;
-    font-weight: bold;
-
-}
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
 
     text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.25);
@@ -25,10 +20,29 @@
 }
 
 
+.navbar-top .image{
+    height: 150px;
+    display: inline-block;
+}
+
+.navbar-top{
+    background: #fff;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.navbar-top p{
+    display: inline-block;
+    color: #777;
+    margin: 0 15px;
+}
+
+
+
 
 @media only screen and (min-width: 760px) {
 
     .cellcart{
         display: none;
     }
-    }
+}

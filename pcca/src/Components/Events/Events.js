@@ -76,7 +76,7 @@ class Events extends React.Component{
 							</div>
 					</div>
 
-					<div className="sidebar-widget">
+					<div className="sidebar-widget hidden">
 							<h3 className="sidebar-title">Featured Posts</h3>
 							<div className="widget-container">
 								<article className="widget-post">

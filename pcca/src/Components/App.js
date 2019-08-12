@@ -17,20 +17,16 @@ import Login from './Login/Login';
 import './App.css';
 import {Route,Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
-import ControlledCarousel from './Slider/Slider';
 
 
-class App extends React.Component{
-
-	
+class App extends React.Component{	
 	
 	render(){
 
        return (
 
        	<Auxilary>
-			   
-	       	 
+			          	 
 	       	 <NavBar loggedin={this.props.loggedin} user={this.props.user} />
 		     <Switch>
 								

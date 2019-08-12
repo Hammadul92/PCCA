@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import axios from 'axios';
-import Slider from '../Slider/Slider';
 import Spinner from '../Spinner/Spinner';
 
  

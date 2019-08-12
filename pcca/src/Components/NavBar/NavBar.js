@@ -36,44 +36,54 @@ class NavBar extends React.Component{
 			 var checkout = <Link to="/cart"> <i className="fa fa-opencart"> </i> {itemNum}  </Link>
 		}
 		return (
-				<nav className="navbar navbar-inverse navbar-fixed-top">
-			
-					<Link to="/" ><i className="navbar-brand "></i></Link>
-					<div className="container">
-						<div className="navbar-header">
-							<div className='cellcart'>{checkout}</div>
-							<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-							<span className="sr-only">Toggle navigation</span>
-							<span className="icon-bar"></span>
-							<span className="icon-bar"></span>
-							<span className="icon-bar"></span>
-							</button>
-						</div>
-						<div id="navbar" className="collapse navbar-collapse">
-							<ul className="nav navbar-nav">
-							
-								<li ><NavLink exact  to="/"  activeStyle={{fontWeight: "bold", color: "White"}}><i className="fa fa-1.5x fa-home"></i> Pakistan Canada Association</NavLink></li>
-								<li><NavLink to="/events" activeStyle={{fontWeight: "bold", color: "White"}}>Events</NavLink></li>
-								<li><NavLink to="/donations" activeStyle={{fontWeight: "bold", color: "White"}}>Donations</NavLink></li>
-								<li><NavLink to="/gallery" activeStyle={{fontWeight: "bold", color: "White"}}>Gallery</NavLink></li>
-								<li><NavLink to="/about" activeStyle={{fontWeight: "bold", color: "White"}}>About Us</NavLink></li>
-								<li><NavLink to="/contact" activeStyle={{fontWeight: "bold", color: "White"}}>Contact</NavLink></li>
+
+                <div>
+					    <nav className="navbar-top">
+					       <div className="container">
+					          <NavLink exact  to="/" ><img className='image' src="logo.jpg" alt="Logo" /></NavLink>
+					          <p>
+					             <b>Conatct Us @ example@example.com, </b> <br/> P.O. Box 47002, Unit 19-555 West 8th Avenue Vancouver, <br/> British Columbia, Canada
+					          </p>
+					        </div>
+					    </nav>
+						<nav className="navbar navbar-inverse">
+					
+							<Link to="/" ><i className="navbar-brand "></i></Link>
+							<div className="container">
+								<div className="navbar-header">
+									<div className='cellcart'>{checkout}</div>
+									<button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+									<span className="sr-only">Toggle navigation</span>
+									<span className="icon-bar"></span>
+									<span className="icon-bar"></span>
+									<span className="icon-bar"></span>
+									</button>
+								</div>
+								<div id="navbar" className="collapse navbar-collapse">
+									<ul className="nav navbar-nav">
+
+										<li><NavLink to="/events" activeStyle={{fontWeight: "bold", color: "White"}}>Events</NavLink></li>
+										<li><NavLink to="/donations" activeStyle={{fontWeight: "bold", color: "White"}}>Donations</NavLink></li>
+										<li><NavLink to="/gallery" activeStyle={{fontWeight: "bold", color: "White"}}>Gallery</NavLink></li>
+										<li><NavLink to="/about" activeStyle={{fontWeight: "bold", color: "White"}}>About Us</NavLink></li>
+										<li><NavLink to="/contact" activeStyle={{fontWeight: "bold", color: "White"}}>Contact</NavLink></li>
+										
+
+									</ul>
 								
 
-							</ul>
-						
+									<ul className="nav navbar-nav navbar-right">{user}</ul>
+									<ul className="nav navbar-nav navbar-right"><li>{checkout}</li></ul>
 
-							<ul className="nav navbar-nav navbar-right">{user}</ul>
-							<ul className="nav navbar-nav navbar-right"><li>{checkout}</li></ul>
+								</div>
 
-						</div>
+								<div>
+									
 
-						<div>
-							
-
-						</div>
-					</div>
-				</nav>
+								</div>
+							</div>
+						</nav>
+				</div>
 
 			);
 	}
