@@ -18,6 +18,36 @@ class Home extends React.Component{
 
         return (
             <div className="container">
+                <div className="slider-area">
+                    <div className="slider-wrapper owl-carousel">
+                        <div className="slider-item text-center home-one-slider-otem slider-item-four slider-bg-one">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="slider-content-area">
+                                        <div className="slide-text">                                
+                                            <img src="https://www.naturallysplendid.com/static/media/logo2x.png"  className="image" />
+                                            <h1 className="homepage-three-title"> One Choice. <span> Global Impact </span></h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="slider-item text-center home-one-slider-otem slider-item-four slider-bg-two">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="slider-content-area">
+                                        <div className="slide-text">                                
+                                            <img src="https://www.naturallysplendid.com/static/media/logo2x.png" className="image" />
+                                            <h1 className="homepage-three-title"> One Choice. <span> Global Impact </span></h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <section>
                     <div className="row">                       
                         <div className=" col-md-8"><News /></div>
