@@ -11,7 +11,7 @@ body {
 
 
 .slider-bg-one {
-    background-image: url("https://www.naturallysplendid.com/static/media/IMG_39249.jpg");
+    background-image: url("backdrop.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -19,7 +19,7 @@ body {
 
 
 .slider-bg-two {
-    background-image: url("https://www.naturallysplendid.com/static/media/IMG_39249.jpg");
+    background-image: url("backdrop.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

@@ -25,7 +25,7 @@ class Home extends React.Component{
                                 <div className="row">
                                     <div className="slider-content-area">
                                         <div className="slide-text">                                
-                                            <img src="https://www.naturallysplendid.com/static/media/logo2x.png"  className="image" />
+                                            <img src="logo.jpg"  className="image" />
                                             <h1 className="homepage-three-title"> One Choice. <span> Global Impact </span></h1>
                                         </div>
                                     </div>
@@ -37,7 +37,7 @@ class Home extends React.Component{
                                 <div className="row">
                                     <div className="slider-content-area">
                                         <div className="slide-text">                                
-                                            <img src="https://www.naturallysplendid.com/static/media/logo2x.png" className="image" />
+                                            <img src="logo.jpg" className="image" />
                                             <h1 className="homepage-three-title"> One Choice. <span> Global Impact </span></h1>
                                         </div>
                                     </div>

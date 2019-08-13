@@ -42,7 +42,7 @@ class NavBar extends React.Component{
 					       <div className="container">
 					          <NavLink exact  to="/" ><img className='image' src="logo.jpg" alt="Logo" /></NavLink>
 					          <p>
-					             <b><i className="fa fa-envelope"></i> example@example.com, <i className="fa fa-phone"></i> 000-000-0000 </b> <br/> P.O. Box 47002, Unit 19-555 West 8th Avenue Vancouver, <br/> British Columbia, Canada
+					             <b><i className="fa fa-envelope"></i> info@pakcan.com </b> <br/> P.O. Box 47002, Unit 19-555 West 8th Avenue Vancouver, <br/> British Columbia, Canada
 					          </p>
 					        </div>
 					    </nav>
