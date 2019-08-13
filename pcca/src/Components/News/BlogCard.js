@@ -12,12 +12,9 @@ const BlogCard = (props) => {
 				<div className="blog-post-body">
 					<h2><a href="#">{props.blog.blog_topic}</a></h2>
 					<div className="post-meta">
-					       <span><i className="fa fa-clock-o"></i>{props.blog.date}</span>/
-					       <span><i className="fa fa-eye"></i>{props.blog.visits}</span>
+					       <span><i className="fa fa-clock-o"></i>{props.blog.date}</span>
 					</div>
 					<p dangerouslySetInnerHTML={{ __html: props.blog.blog_desc }}  />		
-					
-					<hr/>
 				</div>
 		    </article>
 			
