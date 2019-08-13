@@ -55,7 +55,7 @@ class Home extends React.Component{
                 <section className="container">
                     <div className="owl-carousel why-we-matter">
                         <div className="item-carousel">
-                           <img src="https://naturallysplendid.com/static/media/shutterstock1.jpg" alt="img" className="img-responsive" />                                                           
+                           <img src="https://scontent.fyvr3-1.fna.fbcdn.net/v/t1.0-9/10551081_861122393900333_4961286750790252350_n.jpg?_nc_cat=111&_nc_oc=AQkDfByFtIPchFgpgRPsyDw3PlhwWzEd9hjSnZVem6cUnAuRZliFg3waqMVpNDTJnWs&_nc_ht=scontent.fyvr3-1.fna&oh=5206addc12155dbc2ae00f0bb4613597&oe=5DA12596" alt="img" className="img-responsive" />                                                           
                         </div>  
                         <div className="item-carousel">
                            <img src="https://scontent.fyvr3-1.fna.fbcdn.net/v/t1.0-9/44063085_2178430772169482_3677718029560446976_o.jpg?_nc_cat=107&_nc_oc=AQmrAOeOdeKLeXD2gdqv2LQlxw41YFDy6vYByVJSrRZOa0aXHbA-clE6IMIzp0oqDDE&_nc_ht=scontent.fyvr3-1.fna&oh=cb5c3c85f6faade318617f906c8c2ba1&oe=5DB53E09" alt="img" className="img-responsive" />                                                           

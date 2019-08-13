@@ -68,12 +68,12 @@ class Proceed extends React.Component{
         }
         else{
           password_field = (
-             <div className="form-group">
-                 <div className="col-md-12">
+             <div>
+                 <div className="col-md-12 form-group">
                     <h3>Create Account</h3>
                     <hr/>
                  </div>
-                 <div className="col-md-12">
+                 <div className="col-md-12 form-group">
                         <label> Password *</label>
                         <input type="password" value={this.state.password} onChange={(event)=>this.setState({password: event.target.value})} required/>
                  </div>
