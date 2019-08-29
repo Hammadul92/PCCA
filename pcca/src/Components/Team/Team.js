@@ -30,13 +30,13 @@ class Team extends Component{
                                             <hr/>
                                             <h4>General Secretary:</h4><p>Raza Mirani</p>
                                             <hr/>
-                                            <h4>Treasure: </h4><p>Waqas Chaudry</p>
+                                            <h4>Treasurer: </h4><p>Waqas Chaudry</p>
                                             <hr/>
                                             <h4>Director of Public Relations: </h4><p>Abu Bakar Khan</p>
                                             <hr/>
                                             <h4>Directors: </h4><p>M. Arfan Malik, Ramez Alam, Haroon Khan, Nayyar Sohail, Adeel Hussain </p>
                                             <hr/>
-                                            <h4>Trustees: </h4><p>Farrukh Alam, Ihsan Malik, Jamil Chaudry, Liaqat Khan, Saif Pannan </p>
+                                            <h4>Trustees: </h4><p>Farrukh Alam, Ihsan Malik, Jamil Chaudry, Liaqat Khan, Saif Pannu </p>
                                             <hr/>
 
                                         </div>
@@ -63,7 +63,7 @@ class Team extends Component{
                                             <hr/>
                                             <h4>Directors: </h4><p>M. Umar Javed Khan, Malik M Irfan, Ramez Alam, Haroon Khan, Abubakar Khan, Mahwish Yusuf, Umar Khan </p>
                                             <hr/>
-                                            <h4>Trustees: </h4><p>Farrukh Alam, Ihsan Malik, Jamil Chaudry, Liaqat Khan, Saif Pannan </p>
+                                            <h4>Trustees: </h4><p>Farrukh Alam, Ihsan Malik, Jamil Chaudry, Liaqat Khan, Saif Pannu </p>
                                             <hr/>
 
                                         </div>
@@ -89,13 +89,13 @@ class Team extends Component{
                                             <hr/>
                                             <h4>General Secretary:</h4><p>Ramez Alam </p>
                                             <hr/>
-                                            <h4>Treasure: </h4><p>Waseem Javed</p>
+                                            <h4>Treasurer: </h4><p>Waseem Javed</p>
                                             <hr/>
                                             <h4>Director of Public Relations: </h4><p>Abu Bakar Khan</p>
                                             <hr/>
                                             <h4>Directors: </h4><p>Hayat Soofi, Adeel Haider Hussain, M. Akmal Gundhra, Mohamad Arfan, Akhtar Reza, Haroon Khan </p>
                                             <hr/>
-                                            <h4>Trustees: </h4><p>Farrukh Alam, Ihsan Malik, Jamil Chaudry, Liaqat Khan, Saif Pannan </p>
+                                            <h4>Trustees: </h4><p>Farrukh Alam, Ihsan Malik, Jamil Chaudry, Liaqat Khan, Saif Pannu </p>
                                             <hr/>
 
                                         </div>
@@ -116,13 +116,13 @@ class Team extends Component{
                                             <hr/>
                                             <h4>General Secretary:</h4><p>Raza Mirani </p>
                                             <hr/>
-                                            <h4>Treasure: </h4><p>Imran Gehlan</p>
+                                            <h4>Treasurer: </h4><p>Imran Gehlan</p>
                                             <hr/>
                                             <h4>Director of Public Relations: </h4><p>Arfan Malik</p>
                                             <hr/>
                                             <h4>Directors: </h4><p>Adeel Hussain, Akmal Gundhara, Amaran Tyab </p>
                                             <hr/>
-                                            <h4>Trustees: </h4><p>Farrukh Alam, Ihsan Malik, Jamil Chaudry, Liaqat Khan, Saif Pannan </p>
+                                            <h4>Trustees: </h4><p>Farrukh Alam, Ihsan Malik, Jamil Chaudry, Liaqat Khan, Saif Pannu </p>
                                             <hr/>
 
                                         </div>
@@ -144,7 +144,7 @@ class Team extends Component{
                                             <hr/>
                                             <h4>General Secretary:</h4><p> Shaukat Khan </p>
                                             <hr/>
-                                            <h4>Treasure: </h4><p>Kamran Hayat</p>
+                                            <h4>Treasurer: </h4><p>Kamran Hayat</p>
                                             <hr/>
                                             <h4>Director of Public Relations: </h4><p>Ihsan Khan</p>
                                             <hr/>
@@ -187,7 +187,7 @@ class Team extends Component{
                                             <hr/>
                                             <h4>General Secretary:</h4><p>Akhter Raza Mirani</p>
                                             <hr/>
-                                            <h4>Treasure: </h4><p>Saif Mehmood Pannun</p>
+                                            <h4>Treasurer: </h4><p>Saif Mehmood Pannun</p>
                                             <hr/>
                                             <h4>Director of Public Relations: </h4><p>Liaqat A Khan</p>
                                             <hr/>
