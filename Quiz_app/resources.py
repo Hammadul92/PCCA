@@ -349,7 +349,7 @@ class charge(Resource):
               customer= current_user.customer_ID,
               amount=int(total),
               currency= "cad",
-              description ='PCCA Charge - Order # ' + str(sale.sale_ID)
+              description ='PCA Charge - Order # ' + str(sale.sale_ID)
              )
           sale.charge_id = charge.id
 

@@ -418,13 +418,16 @@ button.navbar-toggle:focus, button.navbar-toggle:hover{
 	width: 20px;
 	display: block;
 }
-
+.container {
+  margin-bottom: 20px;
+}
 
 @media only screen and (min-width: 1200px) {
 
 .container {
 
     width: 1500px;
+
 
 }
 }

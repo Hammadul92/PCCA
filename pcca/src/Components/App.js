@@ -13,6 +13,7 @@ import Cart from './Cart/Cart';
 import Home from './Home';
 import Proceed from './Cart/Proceed';
 import Login from './Login/Login';
+import Team from './Team/Team';
 
 import './App.css';
 import {Route,Switch} from 'react-router-dom';
@@ -40,6 +41,7 @@ class App extends React.Component{
 					<Route path='/signup' exact component={Signup}/>
 					<Route path='/cart' exact component={Cart}/>
 					<Route path='/checkout' exact component={Proceed}/>
+					<Route path='/team' exact component={Team}/>
 					<Route path='/' exact component={Home}/>
 					
              </Switch>	

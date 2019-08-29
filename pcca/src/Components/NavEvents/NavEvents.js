@@ -91,6 +91,7 @@ class NavEvents extends Component{
 			);
 		});
 
+
 		let show = null
 		if(this.state.loading){
 			show = <Spinner msg='Adding to Cart'/>;

@@ -4,21 +4,72 @@ import News from './News/News';
 import Events from './Events/Events';
 import Gallery from './Gallery/Gallery';
 import './App.css';
+import axios from 'axios';
 
 
-
-
-//import * as actionTypes from '../../store/actions';
 
 
 class Home extends React.Component{
 
 
+ 
+        state = {
+            images: [],
+            error: false,
+            isLoaded: false,
+        
+          }
+          UNSAFE_componentWillMount(){
+    
+              
+              axios.get('https://www.pakcan.com/api/gallery').then(response=>{
+                var arr=[];
+                for (var key in response.data.images) {
+                  arr.push(response.data.images[key]);
+                 // console.log(response.data.images[key]);
+                }
+              this.setState({images: arr});
+
+    
+              }).catch(error=>{this.setState({error:true})});
+              
+        
+          };
+          
+          
+          componentWillUpdate(nextProps, nextState) {
+             if (nextState.images.length>0 && !nextState.isLoaded)
+             {
+              console.log(nextProps, nextState);
+              this.setState({isLoaded: true});
+            }
+          }
+
     render(){
-        //console.log('MAP TO Props TEST',this.props.test);
+
+        let gal,gal1,gal2,gal3,gal4,gal5,gal6,gal7 = null;
+
+        if (this.state.isLoaded){
+            let l = this.state.images.length;
+            console.log(this.state.images.length - 1);
+            gal = (<img src={this.state.images[l-8].img_url} alt="img" className="img-responsive" /> );
+            gal1 = (<img src={this.state.images[l-1].img_url} alt="img" className="img-responsive" /> );
+            gal2 = (<img src={this.state.images[l-2].img_url} alt="img" className="img-responsive" /> );
+            gal3 = (<img src={this.state.images[l-3].img_url} alt="img" className="img-responsive" /> );
+            gal4 = (<img src={this.state.images[l-4].img_url} alt="img" className="img-responsive" /> );
+            gal5 = (<img src={this.state.images[l-5].img_url} alt="img" className="img-responsive" /> );
+            gal6 = (<img src={this.state.images[l-6].img_url} alt="img" className="img-responsive" /> );
+            gal7 = (<img src={this.state.images[l-7].img_url} alt="img" className="img-responsive" /> );
+ 
+        }
+
+        // if (this.state.isLoaded){
+        // console.log(this.state.images.length)
+        // }
 
         return (
             <div>
+                
                 <div className="container">
                     <div className="slider-area">
                         <div className="slider-wrapper owl-carousel">
@@ -49,20 +100,6 @@ class Home extends React.Component{
                         </div>
                     </div>
                 </div>
-
-
-               
-                <section className="container">
-                    <div className="owl-carousel why-we-matter">
-                        <div className="item-carousel">
-                           <img src="https://scontent.fyvr3-1.fna.fbcdn.net/v/t1.0-9/10551081_861122393900333_4961286750790252350_n.jpg?_nc_cat=111&_nc_oc=AQkDfByFtIPchFgpgRPsyDw3PlhwWzEd9hjSnZVem6cUnAuRZliFg3waqMVpNDTJnWs&_nc_ht=scontent.fyvr3-1.fna&oh=5206addc12155dbc2ae00f0bb4613597&oe=5DA12596" alt="img" className="img-responsive" />                                                           
-                        </div>  
-                        <div className="item-carousel">
-                           <img src="https://scontent.fyvr3-1.fna.fbcdn.net/v/t1.0-9/44063085_2178430772169482_3677718029560446976_o.jpg?_nc_cat=107&_nc_oc=AQmrAOeOdeKLeXD2gdqv2LQlxw41YFDy6vYByVJSrRZOa0aXHbA-clE6IMIzp0oqDDE&_nc_ht=scontent.fyvr3-1.fna&oh=cb5c3c85f6faade318617f906c8c2ba1&oe=5DB53E09" alt="img" className="img-responsive" />                                                           
-                        </div>               
-                     </div>
-                </section>
-
                 <section className="container">
                     <div className="row">                       
                         <div className=" col-md-8"><News /></div>
@@ -71,9 +108,50 @@ class Home extends React.Component{
                         </div>
                     </div>
                 </section>
+
+                <section className="container">
+                <div className="owl-carousel why-we-matter"> 
+                    <div className="item-carousel">
+                        {gal}
+                    </div> 
+                    <div className="item-carousel">
+                        {gal1}
+                    </div> 
+                    <div className="item-carousel">
+                        {gal2}
+                    </div> 
+                    <div className="item-carousel">
+                        {gal3}
+                    </div> 
+                    <div className="item-carousel">
+                        {gal4}
+                    </div> 
+                    <div className="item-carousel">
+                        {gal5}
+                    </div> 
+                    <div className="item-carousel">
+                        {gal6}
+                    </div> 
+                    <div className="item-carousel">
+                        {gal7}
+                    </div> 
+                </div>
+
+                   
+                
+                 </section>
+
+
             </div>
         );
     }
+
+    // componentDidUpdate() {
+    //     console.log('DID update',this.state.images.length);
+    //     if (!this.state.isLoaded)
+    //         this.setState({isLoaded: true});
+
+    // }
 }
 
 

@@ -48,4 +48,5 @@ def send_contact_message(contact , admin):
 
 def contact_confirmation_email(email):
     html = render_template('email.html', type="contact_confirmation") 
+    print(email)
     send_email('PCA Contact', email, html)

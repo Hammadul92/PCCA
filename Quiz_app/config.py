@@ -19,14 +19,15 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'postgresql:///pcca' 
     #SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:paklea536!nse@178.128.231.135/nateralife'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    MAIL_SERVER = 'smtp-mail.outlook.com'
+    MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
-    MAIL_USERNAME = 'admin@naturallysplendid.com'
-    MAIL_PASSWORD = 'Royo9790'
+    MAIL_USERNAME = 'pcavancouver@gmail.com'
+    MAIL_PASSWORD = 'paklah92'
     MAIL_ASCII_ATTACHMENTS = True
-    MAIL_DEFAULT_SENDER = 'admin@naturallysplendid.com'
+    MAIL_DEFAULT_SENDER = 'pcavancouver@gmail.com'
     INVOICE_FILES_DEST = Top_level_dir + '/Quiz_app/static/invoices/'
     UPLOADED_MEDIA_DEST = Top_level_dir + '/Quiz_app/static/media/'
 
+ 

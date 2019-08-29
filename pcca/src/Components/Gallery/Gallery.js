@@ -1,6 +1,6 @@
 import React from 'react';
 import ImageList from './imageList';
-import axios from 'axios'
+import axios from 'axios';
 
 class Gallery extends React.Component{
   state = {
@@ -8,7 +8,7 @@ class Gallery extends React.Component{
     error: false
   }
 
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
       
       axios.get('https://www.pakcan.com/api/gallery').then(response=>{
       this.setState({images: response.data.images});
@@ -18,6 +18,7 @@ class Gallery extends React.Component{
   }
 
   render(){
+    console.log(this.state.images.length);
     return (
      
       <div className="container">
