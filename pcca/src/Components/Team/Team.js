@@ -46,7 +46,7 @@ class Team extends Component{
 
 
 
-{/* 
+
                             <div className="accordion-group">
                                 <div className="accordion-heading">
                                     <a className="accordion-toggle"  data-toggle="collapse" data-parent="toggle" href="#collapseTwo">
@@ -54,13 +54,23 @@ class Team extends Component{
                                 </div>
                                     <div id="collapseOne" className="accordion-body collapse in">
                                         <div className="accordion-inner">
-                                                To be Updated Soon
+                                        <hr/>
+                                            <h4>President: </h4><p> Shaukat Khan</p>
+                                            <hr/>
+                                            <h4>Vice President: </h4><p>Akhtr Raza Mirani</p>
+                                            <hr/>
+                                            <h4>General Secretary:</h4><p>Hayat Soofi</p>
+                                            <hr/>
+                                            <h4>Directors: </h4><p>M. Umar Javed Khan, Malik M Irfan, Ramez Alam, Haroon Khan, Abubakar Khan, Mahwish Yusuf, Umar Khan </p>
+                                            <hr/>
+                                            <h4>Trustees: </h4><p>Farrukh Alam, Ihsan Malik, Jamil Chaudry, Liaqat Khan, Saif Pannan </p>
+                                            <hr/>
 
                                         </div>
                                     </div>
 
                                 </div>
- */}
+ 
 
 
 
@@ -149,7 +159,7 @@ class Team extends Component{
                                 </div>
 
 
-                                {/* <div className="accordion-group">
+                                <div className="accordion-group">
                                 <div className="accordion-heading">
                                     <a className="accordion-toggle"  data-toggle="collapse" data-parent="toggle" href="#collapseSix">
                                      Board Members for Year: 2014-2015 </a>
@@ -161,9 +171,8 @@ class Team extends Component{
                                         </div>
                                     </div>
 
-                                </div> */}
-
-
+                                </div>
+                                
                                 <div className="accordion-group">
                                 <div className="accordion-heading">
                                     <a className="accordion-toggle"  data-toggle="collapse" data-parent="toggle" href="#collapseSeven">
