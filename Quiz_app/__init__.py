@@ -93,4 +93,5 @@ api.add_resource(resources.banking_information, '/banking_information')
 api.add_resource(resources.charge, '/charge')
 api.add_resource(resources.anonymous_account, '/anonymous_account')
 api.add_resource(resources.Azan, '/azan')
+api.add_resource(resources.rsvp,'/rsvp')
 

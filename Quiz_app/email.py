@@ -29,6 +29,12 @@ def send_invoice(sale, user):
     mail.send(msg)
 
 
+def rsvp_email(user):
+    msg = Message('PCA Event RSVP Confirmation', recipients=[user.email])
+    msg.html = render_template('email.html', user = user, type = 'rsvp')
+    mail.send(msg)
+
+
 ################################################################################################################################################################################################
     
 

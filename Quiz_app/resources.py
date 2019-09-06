@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from .models import Media, User, RevokedTokenModel, Gallery, Events, Blogs, Contact, Sales ,Invoices,  Pages
-from .email import  send_contact_message, contact_confirmation_email
+from .email import  send_contact_message, contact_confirmation_email, rsvp_email
 from .views import get_month_name, date_now, month_now, year_now
 from sqlalchemy import exc, func, cast, DATE, or_
 from flask import request, session, redirect, url_for, flash, g,json,jsonify,abort, Response
@@ -409,3 +409,33 @@ class Azan(Resource):
         r = r.json()
    
         return r
+
+
+
+rsvp_arguments = reqparse.RequestParser()
+rsvp_arguments.add_argument('event', required = True)
+rsvp_arguments.add_argument('userID', required = True)
+class rsvp(Resource):
+    @jwt_required
+    def post(self):
+      data = rsvp_arguments.parse_args()
+      event = data['event']
+      current_user = User.query.filter_by(userID = data['userID']).first()
+      current_event = Events.query.filter_by(event_ID = event).first()
+      
+
+      if (current_event.inventory < 1):
+        result= {'message': 'Sorry Event has no more slots'}
+        return result
+      current_event.inventory = current_event.inventory - 1
+
+      sale = Sales(current_user.userID, current_user.firstname, current_user.lastname, current_user.email, 0 , 0, date_now(), month_now(), year_now())
+      db.session.add(sale)
+      invoice = Invoices(sale.sale_ID, current_event.event_ID, current_event.name, 0, 1)
+      db.session.add(invoice)
+      result = {'message':200}
+      rsvp_email(current_user)
+      db.session.commit()
+        
+
+      return result

@@ -14,7 +14,7 @@ class Profile extends React.Component{
 
 
   updateFormHandler = (event) => {
-    console.log(this.props.state);
+    //console.log(this.props.state);
     event.preventDefault();
     const data = {
       userID: this.props.state.userID,
@@ -27,7 +27,7 @@ class Profile extends React.Component{
     var request = {
       "async": true,
       "crossDomain": true,
-      "url": "https://www.pakcan.com/api/updateProfile",
+      "url": "http://localhost:5000/updateProfile",
       "method": "POST",
       "headers": {
         "Content-Type": "application/json",

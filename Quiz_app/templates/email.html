@@ -24,6 +24,18 @@
 {% endif %}
 
 
+{% if type == 'rsvp' %}
+   <p>Hi {{ user.firstname }} {{ user.lastname }},</p>
+
+
+   <p>Thank you for showing your interest in Pakistan Canada Association (PCA) Event. Your RSVP has been received and this is your confirmation.</p>
+   <hr>
+   <p> Warmly, <br/>
+    Pakistan Canada Association
+   </p>
+
+{% endif %}
+
 {%if type=='reset_password' %}
 
       <h3><b>New Password Request</b></h3>

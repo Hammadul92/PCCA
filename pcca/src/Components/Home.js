@@ -22,7 +22,7 @@ class Home extends React.Component{
           UNSAFE_componentWillMount(){
     
               
-              axios.get('https://www.pakcan.com/api/gallery').then(response=>{
+              axios.get('http://localhost:5000/gallery').then(response=>{
                 var arr=[];
                 for (var key in response.data.images) {
                   arr.push(response.data.images[key]);
@@ -51,7 +51,7 @@ class Home extends React.Component{
 
         if (this.state.isLoaded){
             let l = this.state.images.length;
-            console.log(this.state.images.length - 1);
+            //console.log(this.state.images.length - 1);
             gal = (<img src={this.state.images[l-8].img_url} alt="img" className="img-responsive" /> );
             gal1 = (<img src={this.state.images[l-1].img_url} alt="img" className="img-responsive" /> );
             gal2 = (<img src={this.state.images[l-2].img_url} alt="img" className="img-responsive" /> );
@@ -64,7 +64,7 @@ class Home extends React.Component{
         }
 
         // if (this.state.isLoaded){
-        // console.log(this.state.images.length)
+        console.log('LOG IMAGES',this.state.images.length)
         // }
 
         return (
