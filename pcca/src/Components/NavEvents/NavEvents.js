@@ -61,6 +61,62 @@ class NavEvents extends Component{
 
 
 		const events = this.state.events.map(event =>{
+			console.log(event)
+			if (parseFloat(event.price) <1)
+			{
+				return(
+						<div className="event" key={event.key}>
+						<div className="row">
+						<div className="col-md-4 col-sm-6 col-xs-12">
+							<div className="img-container"><img src={event.mainimage} alt={event.name} /></div>
+						</div>
+						<div className="col-md-8 col-sm-6 col-xs-12">
+							<div className="clearfix">
+								<h2>{event.name}</h2>
+								<span className="pull-right">{event.date}</span>
+							</div>
+							<div className="desc" dangerouslySetInnerHTML={{ __html: event.desc }}  />						    
+							<div className="row">
+								<div className="col-md-3 pull-right">
+									<span className="price">$ {event.price} CAD</span>
+									<div className="input-group">
+
+										<div className="input-group-btn" ><a className="btn"> RSVP </a></div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+						</div>
+					</div>
+				
+			)}
+			
+			if (parseFloat(event.inventory) <1){
+				return (
+					<div className="event" key={event.key}>
+					<div className="row">
+					<div className="col-md-4 col-sm-6 col-xs-12">
+						<div className="img-container"><img src={event.mainimage} alt={event.name} /></div>
+					</div>
+					<div className="col-md-8 col-sm-6 col-xs-12">
+						<div className="clearfix">
+							<h2>{event.name} SOLD OUT!</h2>
+							<span className="pull-right">{event.date}</span>
+						</div>
+						<div className="desc" dangerouslySetInnerHTML={{ __html: event.desc }}  />						    
+						<div className="row">
+							<div className="col-md-3 pull-right">
+								<span className="price">$ {event.price} CAD</span>
+							</div>
+						</div>
+						
+					</div>
+					</div>
+				</div>
+
+				)
+			}
 			return (
 				
 					<div className="event" key={event.key}>
