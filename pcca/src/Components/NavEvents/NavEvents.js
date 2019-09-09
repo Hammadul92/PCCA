@@ -27,7 +27,7 @@ class NavEvents extends Component{
 		this.setState({loading: true});
 		let item = {key: event.key, quantity: this.state.quantity , price: event.price, title: event.name};
 		let all_tickets = this.props.state.tickets;
-		console.log(this.props.state.tickets);
+		//console.log(this.props.state.tickets);
 		let new_item = true;
         if(all_tickets.length > 0){
         	for(let ticket in all_tickets){
@@ -57,6 +57,8 @@ class NavEvents extends Component{
 	}
 
 
+
+
 	render (){
 
 
@@ -78,7 +80,7 @@ class NavEvents extends Component{
 							<div className="desc" dangerouslySetInnerHTML={{ __html: event.desc }}  />						    
 							<div className="row">
 								<div className="col-md-3 pull-right">
-									<span className="price">$ {event.price} CAD</span>
+									<span className="price">Free Event</span>
 									<div className="input-group">
 
 										<div className="input-group-btn" ><a className="btn"> RSVP </a></div>
