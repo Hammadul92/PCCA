@@ -37,6 +37,10 @@
     margin: 0 15px;
 }
 
+.navbar-inverse .container{
+    margin-bottom: 0;
+}
+
 
 
 

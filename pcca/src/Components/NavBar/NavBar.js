@@ -68,7 +68,7 @@ class NavBar extends React.Component{
 										<li><NavLink to="/team" activeStyle={{fontWeight: "bold", color: "White"}}>Our Team</NavLink></li>
 										<li><NavLink to="/about" activeStyle={{fontWeight: "bold", color: "White"}}>About Us</NavLink></li>
 										<li><NavLink to="/contact" activeStyle={{fontWeight: "bold", color: "White"}}>Contact</NavLink></li>
-										
+										<li><a href="https://www.naturallysplendid.com/static/media/PCA_Combined_Membership_Form_-_Revised_April_2019.docx" download> Membership Form</a></li>
 
 									</ul>
 								

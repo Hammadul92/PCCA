@@ -4,6 +4,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../store/actions';
 import Spinner from '../Spinner/Spinner';
+import {NavLink , Link} from 'react-router-dom';
 
 
 class NavEvents extends Component{
@@ -56,14 +57,62 @@ class NavEvents extends Component{
 
 	}
 
+	book_rsvp=(event_ID)=>{
+
+		const data = {
+			userID: this.props.state.userID,
+			event: event_ID
+		};
+
+		var add_rsvp = {
+			"async": true,
+			"crossDomain": true,
+			"url": "http://localhost:5000/rsvp",
+			"method": "POST",
+			"headers": {
+			  "Content-Type": "application/json",
+			  "Accept": "*/*",
+			  "Cache-Control": "no-cache",
+			  "Host": "localhost:5000",
+			  "accept-encoding": "gzip, deflate",
+			  "Connection": "keep-alive",
+			  "cache-control": "no-cache",
+			  "Authorization": "Bearer " + this.props.state.token
+			},
+			"processData": false,
+			"data": data
+	
+		  };
+
+		  axios(add_rsvp).then(response => {
+			this.props.flash(response.data.message);
+
+		  }).catch(error=> {
+			//console.log(error);
+		  });
+	}
+
+	rsvp = (event_key) =>{
+		console.log(event_key);
+        let rsvp = null;
+        if(!this.props.state.loggedin){
+        	rsvp = <div className="clearfix"> <Link to="/login" className="btn pull-right"> RSVP </Link></div>;
+        }else{
+        	rsvp = <div className="clearfix"><a className="btn pull-right" onClick={() => this.book_rsvp(event_key)}> RSVP </a></div>;
+        }
+
+        return rsvp;
+	}
+
 
 
 
 	render (){
 
 
+        
+
 		const events = this.state.events.map(event =>{
-			console.log(event)
 			if (parseFloat(event.price) <1)
 			{
 				return(
@@ -78,15 +127,8 @@ class NavEvents extends Component{
 								<span className="pull-right">{event.date}</span>
 							</div>
 							<div className="desc" dangerouslySetInnerHTML={{ __html: event.desc }}  />						    
-							<div className="row">
-								<div className="col-md-3 pull-right">
-									<span className="price">Free Event</span>
-									<div className="input-group">
-
-										<div className="input-group-btn" ><a className="btn"> RSVP </a></div>
-									</div>
-								</div>
-							</div>
+							
+							{this.rsvp(event.key)}
 							
 						</div>
 						</div>
