@@ -12,7 +12,7 @@ class News extends React.Component{
   componentWillMount(){
       
       //axios.get('https://www.pakcan.com/api:5000/blogs').then(response=>{
-      axios.get('http://localhost:5000/blogs').then(response=>{
+      axios.get('https://www.pakcan.com/api/blogs').then(response=>{
       this.setState({blogs: response.data.blogs});
       }).catch(error=>{this.setState({error:true})});
 

@@ -22,7 +22,7 @@ class Home extends React.Component{
           UNSAFE_componentWillMount(){
     
               
-              axios.get('http://localhost:5000/gallery').then(response=>{
+              axios.get('https://www.pakcan.com/api/gallery').then(response=>{
                 var arr=[];
                 for (var key in response.data.images) {
                   arr.push(response.data.images[key]);
