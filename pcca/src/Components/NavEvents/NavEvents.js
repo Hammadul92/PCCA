@@ -13,7 +13,8 @@ class NavEvents extends Component{
 		events: [],
 		quantity: 1,
 		error: false,
-		loading: true
+		loading: true,
+		message: null
 	}
 
 	componentWillMount(){
@@ -85,7 +86,8 @@ class NavEvents extends Component{
 		  };
 
 		  axios(add_rsvp).then(response => {
-			this.props.flash(response.data.message);
+			this.setState({message: response.data.message});
+			console.log(this.state)
 
 		  }).catch(error=> {
 			//console.log(error);
@@ -93,7 +95,6 @@ class NavEvents extends Component{
 	}
 
 	rsvp = (event_key) =>{
-		console.log(event_key);
         let rsvp = null;
         if(!this.props.state.loggedin){
         	rsvp = <div className="clearfix"> <Link to="/login" className="btn pull-right"> RSVP </Link></div>;
@@ -111,7 +112,7 @@ class NavEvents extends Component{
 
 
         
-
+        var msg = <div className="msg"> {this.state.message} </div>; 
 		const events = this.state.events.map(event =>{
 			if (parseFloat(event.price) <1)
 			{
@@ -202,8 +203,7 @@ class NavEvents extends Component{
 			
 		}
 
-
-            return <div className="container"><h1> Events & Tickets </h1> {show} </div>;
+            return <div className="container"><h1> Events & Tickets </h1> {msg} {show} </div>;
 
 	}
 }
