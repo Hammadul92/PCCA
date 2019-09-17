@@ -433,7 +433,7 @@ class rsvp(Resource):
       db.session.add(sale)
       invoice = Invoices(sale.sale_ID, current_event.event_ID, current_event.name, 0, 1)
       db.session.add(invoice)
-      result = {'message':200}
+      result = {'message': 'We Have Successfully processed request for your RSVP. Please Check your email'}
       rsvp_email(current_user)
       db.session.commit()
         
